@@ -1,0 +1,1206 @@
+<html lang="id" data-theme="dark" style="color-scheme: dark;"><head><!-- frame-runtime --><script>window.__FRAME_PREAMBLE={"v":1,"cred":"cookie","capabilities":{"artifact":"artifact.Kiow93e4.js","assets":"assets.DOAjpBS9.js","comments":"comments.DrhK3r8W.js","db":"db.zFlAA4qL.js","downloads":"downloads.axDW2QAi.js","embed":"embed.DcZf-TSv.js","endpoints":"endpoints.BPfoKaE1.js","mcp":"mcp.C8qKIFvQ.js","network":"network.B5UA9Su4.js","permissions":"permissions.DWFFeHI0.js","room":"room.BF1j0KPr.js","sample":"sample.C7KQQdQj.js","self":"artifact.Kiow93e4.js","user":"user.CCh6oTS_.js"},"transforms":"_transforms.CkRgqq9F.js","comments":"_comments.DUaNQZcg.js","translate":"_translate.DqxC5ek1.js","ldx":"_ldx.CqNtBrkk.js"}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </script><script>(function(){"use strict";function sr(t){return t==="cookie"||t==="query"?t:void 0}var Kn=3e5;function ir(t,e){try{const r=t("navigation")[0],n=[r.responseStart,r.redirectEnd-r.redirectStart,r.domContentLoadedEventStart,e(),r.connectEnd-r.domainLookupStart,r.responseStart-r.requestStart];r.requestStart>0||(n.length=4);for(let a=0;a<n.length;a++)if(n[a]>=0&&n[a]<=3e5)n[a]=n[a]|0;else{if(a<4)return;n.length=4}return n}catch{return}}var lr=["light","dark","system"],cr=/^[A-Za-z0-9_-]{1,64}$/,St=/^[a-zA-Z_:][a-zA-Z0-9_:.-]{0,127}$/,ur=new Set(["class","hidden","value","checked","style","title","alt","placeholder","lang","dir","role","tabindex","disabled","readonly","contenteditable","open","colspan","rowspan"]);function fr(t){const e=t.toLowerCase();return e.startsWith("data-")||e.startsWith("aria-")||ur.has(e)}var At="data-ldx-props";function dr(t,e){if(e.toLowerCase()===At)return!0;const r=t.getAttribute(At);if(r===null)return!1;try{const n=JSON.parse(r);if(n===null||typeof n!="object"||Array.isArray(n))return!0;const a=e.toLowerCase();return Object.keys(n).some(s=>s.toLowerCase()===a)}catch{return!0}}var Gn="http://www.w3.org/1999/xhtml",hr="http://www.w3.org/2000/svg",pr=new Set(["script","style","iframe","noscript","noframes","noembed","xmp","plaintext","template","title","textarea","object","embed"]),mr=new Set(["script","style"]);function vr(t){const e=t.localName.toLowerCase();return t.namespaceURI==="http://www.w3.org/1999/xhtml"?!pr.has(e):t.namespaceURI===hr?!mr.has(e):!1}function Ve(t,e){return t===e||(t===160||t===32)&&(e===160||e===32)}function _r(t,e){const r=t.length,n=e.length;let a=0;for(;a<r&&a<n&&Ve(t.charCodeAt(a),e.charCodeAt(a));)a++;let s=0;for(;s<r-a&&s<n-a&&Ve(t.charCodeAt(r-1-s),e.charCodeAt(n-1-s));)s++;return{p:a,s}}function yr(t,e){const r=t.firstChild;if(t.childNodes.length!==1||r===null||r.nodeType!==Node.TEXT_NODE){t.textContent=e;return}const n=r.data,a=n.length,s=e.length,{p:c,s:d}=_r(n,e);c===a&&d===0&&a===s||r.replaceData(c,a-c-d,e.slice(c,s-d));const O=r.data,w=t.ownerDocument.getSelection?.()??null,b=w!==null&&w.rangeCount>0&&(w.anchorNode===r||w.focusNode===r)?{anchor:w.anchorNode,anchorOffset:w.anchorOffset,focus:w.focusNode,focusOffset:w.focusOffset}:null;let m=-1,R=-1;for(let h=0;h<O.length&&h<e.length;h++){const p=O.charCodeAt(h),D=e.charCodeAt(h);p!==D&&Ve(p,D)&&(m<0&&(m=h),R=h)}const M=m>=0;if(M&&r.replaceData(m,R-m+1,e.slice(m,R+1)),M&&b!==null&&b.anchor!==null&&b.focus!==null)try{w.setBaseAndExtent(b.anchor,b.anchorOffset,b.focus,b.focusOffset)}catch{}}var gr=new Set(["html","head","body","frameset"]);function wr(t){return t.namespaceURI==="http://www.w3.org/1999/xhtml"&&gr.has(t.localName)}function br(t){if(t===null||typeof t!="object")return!1;const e=t;if(typeof e.target!="string"||!cr.test(e.target)||e.text!==void 0&&typeof e.text!="string")return!1;if(e.attrsSet!==void 0){if(e.attrsSet===null||typeof e.attrsSet!="object")return!1;for(const[r,n]of Object.entries(e.attrsSet))if(!St.test(r)||typeof n!="string")return!1}if(e.attrsRemoved!==void 0){if(!Array.isArray(e.attrsRemoved))return!1;for(const r of e.attrsRemoved)if(typeof r!="string"||!St.test(r))return!1}return!0}function Er(t,e){if(t===null||typeof t!="object")return!1;const{seq:r,elements:n}=t;if(typeof r!="number"||!Number.isSafeInteger(r)||!Array.isArray(n)||n.length===0||n.length>64)return!1;for(let a=0;a<n.length;a++)if(!e(n[a]))return!1;return!0}function Sr(t){return t===null||typeof t!="object"?!1:Er(t.__frame_patch,br)}function Ar(t){if(t===null||typeof t!="object")return!1;const e=t.__frame_init;return e!==null&&typeof e=="object"}function kr(t){return t!==null&&typeof t=="object"&&t.__frame_size_poke===!0}function Rr(t){if(t===null||typeof t!="object")return!1;const e=t.__frame_host_visible;return e!==null&&typeof e=="object"&&typeof e.visible=="boolean"}function Tr(t){if(t===null||typeof t!="object")return!1;const e=t.__frame_theme;if(e===null||typeof e!="object")return!1;const r=e.theme;return typeof r=="string"&&lr.includes(r)}var Lr=["ok","empty","snapshot_error","snapshot_timeout","unclonable","oversize","unavailable","restore_error","withheld"],Or=["TypeError","RangeError","ReferenceError","SyntaxError","DataCloneError","QuotaExceededError","AbortError","TimeoutError","SecurityError","Error","other"];function Mr(t){return typeof t=="string"&&Or.includes(t)?t:"other"}var Pr=Object.freeze({until:null,now:!1}),Nr="__claude_hot",Cr="__claude_hot_in",jr=/^__claude_hot(?:_in)?(?::|$)/,kt=/^[0-9a-z]{1,32}$/,Xe=t=>t===void 0?Nr:"__claude_hot:"+t,be=t=>t===void 0?Cr:"__claude_hot_in:"+t;function Fr(t,e){const r=[];for(let n=0;n<t.length;n++){const a=t.key(n);a!==null&&a!==e&&jr.test(a)&&r.push(a)}for(const n of r)t.removeItem(n)}function Ir(t){let e=null;try{e=q(JSON.parse(t)?.hot)}catch{return null}return e===null||typeof e.k!="string"||!kt.test(e.k)?null:le(e.g)?{k:e.k,g:e.g}:{k:e.k}}var zn=262144,Dr=3e3,xr=5e3,Rt=/^[a-z0-9._:-]{1,64}$/,Hr=["none","hot-restart","hard-reload"],qr=["asset","doc","added","removed"],Br=1500,Ur=/^[0-9a-f]{64}$/;function q(t){return t!==null&&typeof t=="object"?t:null}function le(t){return typeof t=="number"&&Number.isInteger(t)&&t>=0&&t<2**31}function Tt(t){return t===void 0||typeof t=="number"&&Number.isFinite(t)}function Kr(t){return t===void 0||typeof t=="string"&&Rt.test(t)}function Lt(t){const e=q(t);return e!==null&&(e.until===null||typeof e.until=="number"&&Number.isFinite(e.until))&&typeof e.now=="boolean"}function Ye(t){const e=q(t);return e!==null&&typeof e.ver=="string"&&e.ver.length<=128&&Tt(e.seq)&&typeof e.handoff=="string"&&Lr.includes(e.handoff)&&Kr(e.note)}function Gr(t){const e=q(t);return e!==null&&le(e.gen)&&(e.phase==="final"||e.phase==="pending")&&(e.from===null||Ye(e.from))}function zr(t){const e=q(t);return e!==null&&e.kv===1&&le(e.gen)&&Ye(e.from)&&Object.hasOwn(e,"data")}function $r(t){const e=q(t);return e!==null&&e.__frame_hot_snapshot===!0&&le(e.gen)&&typeof e.timeoutMs=="number"&&e.timeoutMs>=0&&e.timeoutMs<=6e4&&(e.handoff===void 0||typeof e.handoff=="boolean")&&(e.deadline===void 0||Lt(e.deadline))&&Tt(e.seq)&&(e.note===void 0||typeof e.note=="string")&&(e.key===void 0||typeof e.key=="string")}function Wr(t){const e=q(t);return e!==null&&e.__frame_hot_start===!0&&le(e.gen)&&Ye(e.from)}function Vr(t){return typeof t=="string"&&t.length>=1&&t.length<=128}function Ot(t){return q(t)!==null&&!Array.isArray(t)}function Xr(t){const e=q(t);return e!==null&&e.__frame_cap_grant===!0&&typeof e.cap=="string"&&Vr(e.ver)&&(e.grant===void 0||Ot(e.grant))&&(e.budgets===void 0||Ot(e.budgets)&&Object.values(e.budgets).every(Number.isFinite))&&(e.brokerGen===void 0||le(e.brokerGen))}function Yr(t){const e=q(t);return e!==null&&e.__frame_cap_rewired===!0&&(e.caps===void 0||Array.isArray(e.caps)&&e.caps.every(r=>typeof r=="string"))&&(e.brokerGen===void 0||le(e.brokerGen))}function Mt(t){const e=q(t);return e!==null&&typeof e.ver=="string"&&e.ver.length<=128&&Number.isFinite(e.seq)}function Pt(t){if(t==null||typeof t=="string")return!0;const e=q(t);return e!==null&&typeof e.doc=="string"&&typeof e.profile=="string"}function Jr(t){const e=q(t);return e!==null&&typeof e.path=="string"&&qr.includes(e.kind)&&Pt(e.from)&&Pt(e.to)}function Zr(t){return t===null?null:Object.freeze(t.filter(Jr))}function Qr(t){const e=q(t);return e!==null&&e.__frame_hot_update===!0&&Number.isFinite(e.id)&&Mt(e.from)&&Mt(e.to)&&(e.changed===null||Array.isArray(e.changed))&&Hr.includes(e.required)&&Lt(e.deadline)&&typeof e.verdictTimeoutMs=="number"&&e.verdictTimeoutMs>=0&&e.verdictTimeoutMs<=6e4&&(e.preflight===void 0||typeof e.preflight=="string"&&Ur.test(e.preflight))}var ce=/^[\w.-]+\.js$/;function en(t,e,r){return r?"inert":typeof e=="string"&&ce.test(e)?t?[e]:"inert":t?"inert":"framed"}var Nt=Object.freeze({[Symbol("claude.hot.restart")]:!0});function Ct(t,e){let r;try{r=t??sessionStorage}catch{return null}const n=Xe(e?.k),a=be(e?.k);let s=null;try{s=r.getItem(n)}catch{}try{r.removeItem(n)}catch{}try{Fr(r,a)}catch{}let c=null;if(s!==null&&!(e!==null&&e.g===void 0))try{const d=JSON.parse(s);zr(d)&&(e===null||d.gen===e.g)&&(c=d)}catch{}if(c===null)try{r.removeItem(a)}catch{}return c}function jt(){const t=/^\/_f\/([^/]{1,128})\//.exec(location.pathname);return t?t[1]:""}var tn=/^[^/\\?#]{1,128}$/,Ft=t=>tn.test(t)&&t!=="."&&t!=="..";function It(t,e,r){const n=new URL(t),a="/_f/"+e+"/";if(!e||!n.pathname.startsWith(a)||!Ft(r))return null;const s=n.search.slice(1).split("&").filter(c=>!/^__frame_t(?:=|$)/.test(c)).join("&");return n.origin+"/_f/"+r+"/"+n.pathname.slice(a.length)+(s?"?"+s:"")+n.hash}var Fe="{}";function Ee(t){if(!t)return null;const e={ver:t.ver,handoff:t.handoff};return t.seq!==void 0&&(e.seq=t.seq),t.note!==void 0&&(e.note=t.note),e}function Dt(t,e){return t!==null&&t.note===void 0&&e?.note!==void 0?{...t,note:e.note}:t}function xt(t){const e=t?.k;return e!==null&&typeof e=="object"?e:void 0}function rn(t,e,r,n=null){const a=setTimeout,s=clearTimeout,c=queueMicrotask,d=performance.now.bind(performance),O=new TextEncoder;let w=null,b=null;try{w=history,b=w.replaceState.bind(w)}catch{}const m=(...o)=>{try{console.warn(...o)}catch{}};let R=jt(),M=null;try{M=sessionStorage}catch{}const h={storage:M,fetch:typeof fetch=="function"?fetch.bind(globalThis):null,entry:location.origin+location.pathname+location.search,ver:R,key:n?.k};let p=n?.k;const D=typeof requestAnimationFrame=="function"?requestAnimationFrame:o=>a(()=>o(d()),16);let _=e?.data??{},C=Ee(e?.from),P=e?.gen??0,x=e!==null,W=!1,J=!1,X=null,Te=!1;const Le=new AbortController;let Oe=null,H=null,me=null,qe=!1,oe=()=>{};const l=new Promise(o=>{oe=o});let v=!1,E=!1,I=!1,j,L=null,K=!1,Me=!1,Z=!1,Be=!1,ae=!1,de=!1;const Pe=o=>{for(const u of[Xe(o),be(o)])try{M?.removeItem(u)}catch{}},V=(o,u)=>{try{u!==null&&r.post(o,u)}catch{}},se=()=>ae||=Z&&(H===null||Be),B=()=>{const o={__frame_hot:!0,ready:H!==null,accept:me!==null,demand:!0};de=!ae,de&&(o.booting=!0),v&&(o.readData=!0),I&&(o.threw=!0),L?.assess&&(o.preflight=!0),V(o,X)};let ve=!1,Ne=!1,ie=!1,Ce=!1;const i=()=>{ve||!Te||ie||(ve=!0,V({__frame_reveal_hold:!0},"*"))},g=()=>new Promise(o=>{let u,f=0;const S=F=>{if(u===void 0)u=F;else if(F!==u||++f>=8){o();return}try{D(S)}catch{o()}};try{D(S)}catch{o()}}),y=()=>{ie=!0,V({__frame_reveal_ready:!0},"*")},k=o=>{Ne||(Ne=!0,o.then(u=>{if(u===!1)return;let f=null;try{f=L?.settle?.()??null}catch{}return(f===null?g():new Promise(S=>{a(S,50),Promise.resolve(f).then(S,S)}).then(g)).then(y)}))},Q=()=>{if(Ce||!ie)return;Ce=!0;const o=()=>{try{L?.afterReveal?.()}catch{}};o(),g().then(()=>{o(),y()})},G=(o=!1)=>{if(qe||H===null||!x||!J)return;qe=!0;const u=H,f=_;c(()=>{let S;try{S=u(f)}catch(U){throw oe(!1),U}let F=!1;try{F=typeof S?.then=="function"}catch{}if(!F){oe(!0);return}Promise.resolve(S).then(()=>oe(!0),U=>{oe(!1),c(()=>{throw U})})}),k(o?l:r.dcl.then(()=>l))},ee=o=>typeof o=="string"&&Rt.test(o)?o:void 0,dt=o=>{const u={__frame_hot_restart:!0},f=ee(o?.note);f!==void 0&&(u.note=f),o?.required==="hard-reload"&&(u.required="hard-reload"),V(u,X)},Zt=Object.freeze({get data(){return J||(E=!0),!x&&!v&&(v=!0,J&&B()),_},get from(){return C},get gen(){return P},signal:Le.signal,snapshot(o){typeof o=="function"&&(Oe=o)},ready(o){typeof o!="function"||H!==null||(H=o,i(),B(),W&&V({__frame_hot_ready:!0,gen:P},X),G())},accept(o){typeof o=="function"&&(me=o,B())},restart(o){const u={note:o?.note,required:o?.required};if(J){dt(u);return}const f=j;j={note:ee(f?.note)??u.note,required:f?.required==="hard-reload"||u.required==="hard-reload"?"hard-reload":void 0}}});let Ue=null,Qt=()=>{};const Fn=new Promise(o=>{Qt=o});let In=null;const er=()=>In??=r.dcl.then(()=>{let o=!1;try{o=Ue!==null&&Ue.expect()}catch{}if(!o)return;const u=Ue.maxMs;return new Promise(f=>{Fn.then(f),a(f,u)})}),tr=()=>{if(!K||Me||L===null)return;Me=!0;const o=L;er().then(()=>{try{ie||o.afterStart(xt(e),!1)}catch{}})},rr=o=>{e!==null&&E&&(v=!0),_={},C=null,P=0;try{M?.removeItem(be(n?.k))}catch{}e!==null&&!o&&k(r.dcl.then(()=>H!==null?l:void 0))},Dn=()=>{K=!0,k(er().then(()=>H!==null?l:void 0)),tr()};try{addEventListener("error",()=>{I||H!==null||(I=!0,B())})}catch{}const nr=()=>{a(()=>{!ae&&se()&&de&&B()},0)};try{Z=document.readyState==="complete",Z||addEventListener("load",()=>{Z=!0,nr()},{once:!0})}catch{Z=!0}se(),l.then(()=>{Be=!0,nr()});let he=-1,ht,pt,je=!0,mt=!1,vt,Ke=null;const _t=o=>{const u=Ke===null;Ke=je&&o[0]!=="withheld"?o:["withheld",o[1],Fe];let f=o[0];if(je&&f!=="withheld"){const F={ver:R,handoff:f};ht!==void 0&&(F.seq=ht),pt!==void 0&&(F.note=pt);try{if(M===null)throw new Error("no storage");M.setItem(Xe(p),'{"kv":1,"gen":'+he+',"from":'+JSON.stringify(F)+(vt!==void 0?',"k":'+JSON.stringify(vt):"")+',"data":'+(f==="ok"?o[2]:Fe)+"}")}catch{f="unavailable"}}else{f="withheld",Pe(p);try{L?.release?.()}catch{}}const S={__frame_hot_snapshotted:!0,gen:he,handoff:f,bytes:o[1]};o[3]!==void 0&&(S.errName=o[3]),V(S,X),u&&(f==="snapshot_error"||f==="unclonable"||f==="oversize")&&m("claude.hot: snapshot",f,o[3])},_e=o=>{try{return Mr(o?.name)}catch{return"other"}},ye=(o,u,f=0)=>_t(u===void 0?[o,f,Fe]:[o,f,Fe,_e(u)]),xn=o=>{if(o.gen<=he)return;const u=he>=0;if(he=o.gen,ht=o.seq,pt=ee(o.note),typeof o.key=="string"&&kt.test(o.key)&&o.key!==p&&(Pe(p),p=o.key),je&&=o.handoff!==!1,u){Ke!==null?_t(Ke):mt&&V({__frame_hot_held:!0,gen:he},X);return}Le.abort();const f=Object.freeze({handoff:je,timeoutMs:o.timeoutMs,deadline:o.deadline??Pr}),S=Oe,F=()=>{if(je)try{vt=L?.capture()}catch{}if(S===null){ye("empty");return}let T=!1;const z=a(()=>{T||(T=!0,ye("snapshot_timeout"))},Math.max(0,f.timeoutMs));Promise.resolve().then(()=>S(f)).then(ge=>{if(T)return;T=!0,s(z);let re;try{re=JSON.stringify(ge)}catch(yt){ye("unclonable",yt);return}if(typeof re!="string"){ye("unclonable");return}let ne=re.length;try{ne=O.encode(re).length}catch{}if(ne>262144){ye("oversize",void 0,ne);return}_t(["ok",ne,re])},ge=>{T||(T=!0,s(z),ye("snapshot_error",ge))})};let U=null;try{U=L?.holdForIme()??null}catch{}if(U===null)F();else{mt=!0,V({__frame_hot_held:!0,gen:he},X);const T=()=>{mt=!1,F()};U.then(T,T)}},Hn=o=>{if(!W||x||H===null||o.gen!==P)return;let u=null;try{u=Ct(M,n&&{k:n.k,g:o.gen})}catch{}if(u!==null&&u.gen!==o.gen){u=null;try{M?.removeItem(be(n?.k))}catch{}}_=u?.data??{},C=Dt(Ee(u?.from??o.from),Ee(o.from)),u!==null&&(P=u.gen),x=!0,W=!1;const f=xt(u);l.then(S=>{try{S&&L?.afterStart(f,!0)}catch{}}),G(!0)};let Ge=0;const qn=o=>{const u=me;if(u===null||o.id<=Ge)return;Ge=o.id;const f=L?.assess;if(o.preflight===void 0||f===void 0){or(o,u);return}let S=!1;const F=z=>{S||(S=!0,s(T),o.id===Ge&&or(o,u,z))},U=()=>F(f.timeout(o)),T=a(U,Br+100);f.run(o,window).then(F,U)},or=(o,u,f)=>{let S,F=!1,U=!1,T,z,ge=null;const re=A=>{if(U)return!1;if(T!==void 0&&T!==A)return m(`claude.hot: u.${A}() ignored - u.${T}() was called first`),!1;const te=T===void 0;return T=A,te},ne=A=>{T="restart",m(`claude.hot: ${A} - restarting`)},yt=()=>{if(!re("adopt")||o.id!==Ge)return;const A=o.to.ver;if(ze.required!=="none"){ne(`u.adopt() needs required 'none', it is '${ze.required}'`);return}if(!Ft(A)){ne("u.adopt() cannot address this version");return}if(!R||A===R)return;const te=R,Y=h.entry;let $e="",wt,we=null,We;try{$e=location.href,wt=w.state,we=It($e,te,A),we!==null&&(b(wt,"",we),location.pathname.startsWith("/_f/"+A+"/")?we=location.href:We="navigate event canceled")}catch(Et){We=_e(Et)}if(We!==void 0){z="adopt_failed",ne(`adopt_failed ${We}; URL not changed`);return}we===null?(z="adopt_skipped",m(`claude.hot: adopt_skipped - page already left /_f/${te}/; URL not changed, update still applied`)):z="adopted",R=h.ver=A;try{h.entry=It(Y,te,A)??Y}catch{}const bt=we;ge=()=>{if(R===A){if(bt!==null)try{if(location.href!==bt)m("claude.hot: adopt_revert_skipped - update not applied; URL left where the page navigated");else{if(b(wt,"",$e),location.href!==$e){m("claude.hot: adopt_revert_failed navigate event canceled - URL still at the new version");return}z="adopt_reverted",m("claude.hot: adopt_reverted - adopt() was called but the handler threw; URL restored")}}catch(Et){m(`claude.hot: adopt_revert_failed ${_e(Et)} - URL still at the new version`);return}R=h.ver=te,h.entry=Y,bt===null&&(z=void 0)}}},ze=Object.freeze({from:{ver:o.from.ver,seq:o.from.seq},to:{ver:o.to.ver,seq:o.to.seq},changed:Zr(o.changed),required:o.required,deadline:o.deadline,adopt:yt,defer(){return re("defer")&&ze.deadline.now&&ne("u.defer() past the deadline"),Nt},restart(A){return re("restart"),T==="restart"&&!U&&(S??=ee(A?.note),F||=A?.required==="hard-reload"),Nt},...f?.update}),Bn=(A,te)=>{U=!0,A==="threw"?(ge?.(),S??=_e(te).toLowerCase()):T===void 0&&m(A==="timeout"?"claude.hot: accept handler did not answer in time - restarting":"claude.hot: accept handler settled without defer/restart/adopt - restarting");const Y={__frame_hot_verdict:!0,id:o.id};Y.verdict=A==="threw"||T===void 0||T==="restart"?"restart":T==="adopt"?"applied":"deferred",Y.verdict==="restart"&&(F&&(Y.required="hard-reload"),S!==void 0&&(Y.note=S)),z!==void 0&&(Y.verdict==="applied"||z!=="adopted")&&(Y.adopt=z),V(Object.assign(Y,f?.verdict),X)};let ar=!1;const gt=(A,te)=>ar?!1:(ar=!0,s(Un),Bn(A,te),!0),Un=a(()=>gt("timeout"),o.verdictTimeoutMs);Promise.resolve().then(()=>u(ze)).then(()=>gt("settled"),A=>{!gt("threw",A)&&T==="adopt"&&dt({note:_e(A).toLowerCase()}),m("claude.hot: accept",_e(A))})};try{t.hot===void 0&&Object.defineProperty(t,"hot",{value:Zt,writable:!1,configurable:!1,enumerable:!1})}catch{}return{hot:Zt,boot:h,afterConnect(){Te=!0,(e!==null||H!==null)&&i()},onInit(o,u){X=u,J=!0;const f=Gr(o)?o:null;f?.phase==="final"&&e!==null&&e.gen===f.gen?(x=!0,C=Dt(C,Ee(f.from)),Dn()):(W=f?.phase==="pending",rr(W),x=!W,P=f?.gen??0,C=Ee(f?.from)),B(),de&&a(()=>{ae||(ae=!0,B())},xr),W&&H!==null&&V({__frame_hot_ready:!0,gen:P},u),j!==void 0&&(dt(j),j=void 0),G()},onNoInit(){J=!0,rr(!1),x=!0,G()},onShell(o){return o?.__frame_revealed===!0?(Q(),!1):$r(o)?(xn(o),!0):Wr(o)?(Hn(o),!0):Qr(o)?(qn(o),!0):!1},attachExtras(o){L=o,tr(),o.assess&&B()},inSlot:()=>be(p),hydration(o,u){Ue??={expect:o,maxMs:u}},hydrated(){Qt()},carried(){return x?_:{}},presented:()=>ie}}var $n="frame_ldx_runtime",nn="frame_ldx_build",Wn="script#an-form",on=256;function Ht(t,e,r){for(const n of t)r(n)&&t.delete(n);t.size>=on&&!t.has(e)&&t.delete(t.values().next().value),t.add(e)}function Je(t,e,r){try{const n=t[e];if(typeof n!="function")return;t[e]=function(...a){const s=n.apply(this,a);try{r(this)}catch{}return s}}catch{}}var Ze;function an(){if(Ze)return Ze;const t={media:new Set,contexts:new Set,onStart:null,onPause:null};Ze=t;const e=window.HTMLMediaElement?.prototype;e&&(Je(e,"play",a=>{Ht(t.media,a,s=>s.paused),t.onStart?.(a)}),Je(e,"pause",a=>t.onPause?.(a)));const r=window.AudioContext,n=window.AudioNode?.prototype;return r&&n&&Je(n,"connect",a=>{const s=a.context;s instanceof r&&(Ht(t.contexts,s,c=>c.state==="closed"),t.onStart?.(s))}),t}function sn(t){let e=window;for(let r=0;e.parent&&e.parent!==e&&r<8;r++)if(e=e.parent,t(e))return!0;return!1}function ln(){let t=null;const e=()=>t??parent,r=n=>t?n===t:sn(a=>a===n);return{post(n,a){if(t){e().postMessage(n,a);return}let s=parent;for(let c=0;c<8&&(s.postMessage(n,a),!(!s.parent||s.parent===s));c++)s=s.parent},on(n){const a=s=>{const c=s.source;r(c)&&n(s.data,s.origin,s.isTrusted,()=>{t??=c})};return addEventListener("message",a),()=>removeEventListener("message",a)},port:n=>({post(a,s){if(s?.activation){e().postMessage(a,{targetOrigin:n,includeUserActivation:!0});return}if(s?.transfer){e().postMessage(a,n,s.transfer);return}e().postMessage(a,n)},on(a,s){const c=d=>{r(d.source)&&d.origin===n&&a(d.data,d)};return addEventListener("message",c,s),()=>removeEventListener("message",c,s)}})}}function cn(){const t={post:()=>{},on:()=>()=>{}};return{...t,port:()=>t}}var un=500,fn=2e4,dn="data-token-reads",hn="data-frame-refused-watch",pn="data-frame-unsupported",mn=/(?:^|\s)stylesheet(?:\s|$)/i;function vn(t,e){let r="";if(t instanceof HTMLScriptElement?r=t.src:t instanceof HTMLLinkElement&&mn.test(t.rel)&&(r=t.href),!r)return null;try{const n=new URL(r);return n.origin===location.origin&&n.pathname.startsWith(e)?n.origin+n.pathname:null}catch{return null}}function _n(t,e,r){if(!t||e!=="query")return;const n="/_f/"+t+"/";document.documentElement.setAttribute(hn,"");const a=location.href,s=fetch,c=setTimeout,d={method:"HEAD",cache:"no-store",credentials:"same-origin"},O=h=>h.ok||h.status===304;let w=!1,b=!1;const m=()=>removeEventListener("error",M,!0),R=async h=>{const p=await s(h,d);if(O(p))b=!0;else if(p.status===403){const D=await s(a,d);if(O(D)){const _=(await s(h,d)).status;_===403?(b=!0,document.documentElement.setAttribute(pn,""),r()):_<500&&(b=!0)}else D.status>=400&&D.status<500&&(b=!0)}},M=h=>{if(b||w)return;if(document.documentElement.hasAttribute(dn)){b=!0,m();return}const p=vn(h.target,n);p&&(w=!0,c(()=>{R(p).catch(()=>{}).finally(()=>{w=!1,b&&m()})},un))};addEventListener("error",M,!0),addEventListener("load",m,{once:!0}),c(m,fn)}var Qe="__frame_scroll",yn=150,gn=310,wn=160,bn=3e4;function En(){let t=0,e=!1,r=!1,n=!1,a=0,s=null;const c=_=>{try{sessionStorage.setItem(Qe,JSON.stringify({y:_}))}catch{}},d=()=>{if(clearTimeout(t),s===null)return;const _=s;s=null,c(_)},O=()=>{if(e){e=!1;return}r=!0,s=scrollY,clearTimeout(t),t=setTimeout(d,yn)};try{addEventListener("scroll",O,{passive:!0}),addEventListener("pagehide",d)}catch{}const w=()=>{let _;try{_=sessionStorage.getItem(Qe)}catch{return null}if(_===null)return null;let C;try{C=JSON.parse(_)}catch{C=null}const P=C?.y;if(!(typeof P=="number"&&Number.isFinite(P)&&P>=0)){try{sessionStorage.removeItem(Qe)}catch{}return null}return P};let b=!1;const m=_=>{try{const C=scrollY;scrollTo({top:_,left:0,behavior:"instant"}),a=_,n=!0,clearTimeout(t),s=null,c(_);const P=scrollY;P!==C&&(e=!0),P!==_&&!b&&(b=!0,addEventListener("load",()=>{try{if(scrollY===P){const x=w();m(x!==null?x:a)}}catch{}},{once:!0}))}catch{}},R=()=>{try{return!!location.hash}catch{return!0}};let M=!1;const h=()=>{try{if(M||innerWidth>gn||innerHeight>wn)return;M=!0;const _=Date.now(),C=()=>{try{removeEventListener("resize",C)}catch{}if(Date.now()-_>bn||r||R())return;const P=w();m(P!==null?P:a)};addEventListener("resize",C)}catch{}};let p=!1,D=!1;return{restore(){if(p||(p=!0,R()))return;const _=w();_!==null&&(m(_),h())},promoted(){if(D||(D=!0,R()))return;const _=w();_!==null?(m(_),h()):n&&m(a)}}}function Sn(t,e,r,n){let a=null;try{a=window.trustedTypes?.createPolicy("frame-runtime",{createScriptURL:O=>O})??null}catch{}const s=window.Worker,c=s?.prototype,d=Object.freeze({Worker:s,workerOn:c?.addEventListener,workerPost:c?.postMessage,workerTerminate:c?.terminate,fetch:window.fetch.bind(window),preventDefault:Event.prototype.preventDefault,now:Date.now,policy:a,origins:e});r(t).then(O=>O?.bootTopLevel?O.bootTopLevel(d,n):n.settle()).catch(()=>n.settle())}var Vn="modulepreload",Xn=function(t){return"/"+t},Yn={},An=function(e,r,n){let a=Promise.resolve();function s(c){const d=new Event("vite:preloadError",{cancelable:!0});if(d.payload=c,window.dispatchEvent(d),!d.defaultPrevented)throw c}return a.then(c=>{for(const d of c||[])d.status==="rejected"&&s(d.reason);return e().catch(s)})},kn=window===top,qt=Object.getOwnPropertyDescriptor(window,"claude"),Ie=en(kn,window.__FRAME_PREAMBLE?.topLevel,qt?.writable===!1),et=typeof Ie=="object"&&Ie[0],N=et?cn():ln();(function(){const t=Object.defineProperty,e=globalThis,r=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let n=0;for(let a=0;a<r.length;a++){const s=r[a];try{t(e,s,{value:void 0,writable:!1,configurable:!1})}catch{try{delete e[s]}catch{}try{t(e,s,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof e[s]=="function"&&n++}if(n&&Ie==="framed")try{N.post({__frame_rtc_lockdown_failed:n},"*")}catch{}})();var Bt=1e4,Rn=2e3,tt=2e3,rt=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function Ut(t){for(const e of rt)if(e.endsWith(":*"))try{const r=new URL(t);if(`${r.protocol}//${r.hostname}:*`===e)return!0}catch{}else if(t===e)return!0;return!1}var Se=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities}),Ae=window.__FRAME_PREAMBLE?.transforms,nt=window.__FRAME_PREAMBLE?.comments,ot=window.__FRAME_PREAMBLE?.translate,ke=window.__FRAME_PREAMBLE?.ldx,at=sr(window.__FRAME_PREAMBLE?.cred);function Kt(t){return An(()=>import("/_runtime/"+t),void 0)}var Re=new Set,Gt=setTimeout,Tn=fetch,Ln=AbortController,On=800+800*Math.random(),Mn=3e3,De=null,zt=new Map;function Pn(t,e){let r=zt.get(t);return r||zt.set(t,r=Nn(t,e)),r}function Nn(t,e){if(De?.has(t))return Promise.resolve("csp");if(navigator.onLine===!1)return Promise.resolve("offline");const r=new Ln;let n=!1;return Gt(()=>{n=!0,r.abort()},Mn),Tn("/_runtime/"+t,{signal:r.signal}).then(a=>(r.abort(),a.ok?/javascript/i.test(a.headers.get("content-type")??"")?e instanceof Error&&/:\d+:\d+\)?$/m.test(e.stack??"")?"eval":"served":"mime":"http"),()=>n?"timeout":De?.has(t)?"csp":"net")}function ue(t){if(!De){const e=De=new Set;try{document.addEventListener("securitypolicyviolation",r=>{const n=/\/_runtime\/([^/?#]+)/.exec(r.blockedURI);n&&r.disposition!=="report"&&e.add(n[1])})}catch{}}return Kt(t).catch(()=>new Promise(e=>Gt(e,On)).then(()=>Kt(t+"?r=1")).then(e=>(e!==void 0&&Re.add(t),e)))}function $t(t,e,r){return{contract:t.contract,changes:new Set(t.changes??[]),flags:new Set(t.flags??[]),capabilities:t.capabilities??{},capBudgets:t.capBudgets??{},brokerGen:t.brokerGen,transforms:new Map,shellOrigin:e,shell:r,mount:ft,hooks:xe,pipe:()=>({wrap:(n,a)=>(...s)=>{try{return a(...s)}catch(c){return Promise.reject(c)}}})}}var pe=null,$=null;function Wt(t,e,r){try{Object.defineProperty(t,e,{value:r,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(t,e,{value:r,writable:!1,configurable:!0,enumerable:!0})}catch{}}}var st=!1,xe={editBefore:null,edit:null};function Cn(t,e,r=!1){const n=[];let a;if(r)try{xe.editBefore?.(t)}catch{}for(const s of t.elements){const c=document.querySelector(`[data-id="${s.target}"]`);if(!c){a=s.target;break}if([...Object.keys(s.attrsSet??{}),...s.attrsRemoved??[]].some(d=>!fr(d)||dr(c,d))){a=s.target;break}if(s.text!==void 0&&(!vr(c)||wr(c))){a=s.target;break}for(const[d,O]of Object.entries(s.attrsSet??{}))if(!Xt(c,d)){try{c.setAttribute(d,O)}catch{}Vt(c,d,O)}for(const d of s.attrsRemoved??[])Xt(c,d)||(c.removeAttribute(d),Vt(c,d,null));typeof s.text=="string"&&yr(c,s.text),n.push(s.target)}if(r)try{xe.edit?.(t.seq,n,a)}catch{}if(a!==void 0){N.post({__frame_patch_miss:{seq:t.seq}},e);return}try{document.dispatchEvent(new CustomEvent("claude:edit",{detail:{seq:t.seq,targets:n}}))}catch{}}function Vt(t,e,r){if(!(t instanceof HTMLInputElement))return;const n=e.toLowerCase();n==="checked"?t.checked=r!==null:n==="value"&&t.type!=="file"&&(t.value=r??"")}function Xt(t,e){const r=e.toLowerCase(),n=t;return r==="data-id"||(r==="value"||r==="checked")&&(n.__artifactSecret===!0||/^(password|hidden|file)$/.test(n.type??"")||/(^|\s)(cc-|one-time-code|current-password|new-password)/i.test(`${t.getAttribute("autocomplete")??""} ${n.autocomplete??""}`))}function Yt(t){const e=document.documentElement;t==="light"||t==="dark"?(e.dataset.theme=t,e.style.colorScheme=t,st=!0):st&&(delete e.dataset.theme,e.style.colorScheme="",st=!1)}var fe=new Map,it=null;function lt(){let t;const e={u:new Promise(r=>{t=r}),r:r=>{e.done=!0,t(r)},done:!1,nulled:!1};return e}function He(t,e){t.nulled=!0,t.ver=e,t.r(null)}function ct(t,e){for(const[r,n]of fe)n.done||(e&&n.asked?e(r,n):He(n,t))}var jn=Object.freeze(Object.assign(Object.create(null),{call:Function.prototype.call,apply:Function.prototype.apply,bind:Function.prototype.bind})),ut=!1,ft=(t,e)=>{let r=fe.get(t);if(r?.nulled&&ut)r=lt(),fe.set(t,r);else if(!r||r.done){r?.nulled&&$&&N.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:t,phase:"install"}},$);return}const n=typeof e=="function"?Object.setPrototypeOf(e,jn):Object.assign(Object.create(null),e);typeof n.then=="function"&&delete n.then,r.want=void 0,r.r(Object.freeze(n))};function Jt(){const t=qt?.value??{};Wt(window,"claude",t);for(const e of Object.keys(Se)){if(t[e]!==void 0){Wt(t,e,t[e]);continue}fe.set(e,lt())}if(t.use===void 0){const e=r=>{if(typeof r!="string"||!Object.hasOwn(Se,r))return Promise.resolve(null);let n=fe.get(r);return n?(it&&(n.nulled||n.want!==void 0)&&(n=it(r,n)),n.asked=!0,n.u):Promise.resolve(t[r]??null)};try{Object.defineProperty(t,"use",{value:e,writable:!0,configurable:!0,enumerable:!1})}catch{}}return t}if(Ie==="framed"){let t;const e=Ae&&ce.test(Ae)?ue(Ae).catch(l=>{t={f:Ae,e:l}}):Promise.resolve(void 0),r=l=>{if(l.type==="auxclick"&&l.button!==1)return;const v=l.target,E=v&&v.closest?v.closest("a[href],area[href]"):null;if(!E)return;const I=E.getAttribute("href");if(!I)return;let j;try{j=new URL(I,document.baseURI)}catch{return}if((j.protocol==="http:"||j.protocol==="https:")&&j.origin!==location.origin){l.preventDefault();const L=(E.getAttribute("target")??"").toLowerCase(),K=l.type==="auxclick"||l.metaKey||l.ctrlKey||l.shiftKey||l.altKey||!["","_self","_top","_parent"].includes(L);N.post({__frame_nav:!0,url:j.href,newTab:K},"*")}};addEventListener("click",r,!0),addEventListener("auxclick",r,!0);const n={},a=l=>{l.isTrusted&&(n.pointer=!0)},s=l=>{l.isTrusted&&(n.click=!0)};addEventListener("pointermove",a,{capture:!0,passive:!0}),addEventListener("click",s,{capture:!0,passive:!0});const c={cb:null};addEventListener("keydown",l=>c.cb?.(l),!0);const d={cb:null};addEventListener("keydown",l=>d.cb?.(l));const O=an();e.then(l=>l?.installEscapeForward?.(c,v=>{$&&N.post(v,$)})),e.then(l=>{try{l?.installFocusKeep?.()}catch{}}),e.then(l=>{if(!l?.wireNav)return;const v=N.port("*");l.wireNav(v),removeEventListener("click",r,!0),removeEventListener("auxclick",r,!0),removeEventListener("pointermove",a,!0),removeEventListener("click",s,!0),l.wireEngagement?.(n,v,O)});let w=null;try{w=En()}catch{}const b=document.readyState==="loading"?new Promise(l=>document.addEventListener("DOMContentLoaded",()=>l(),{once:!0})):Promise.resolve();let m=null,R=null;try{R=Ir(window.name),m=Ct(null,R)}catch{}const M=Jt();let h=null;try{h=rn(M,m,{post:(l,v)=>N.post(l,v),dcl:b},R)}catch{}e.then(l=>{try{h&&l?.installHotExtras?.(h)}catch{}});let p=null;const D=()=>Array.isArray(p?.flags)&&p.flags.includes("frame_ldx_runtime")&&!!ke&&ce.test(ke)&&document.querySelector("script#an-form")!==null;try{h?.hydration(D,Dr)}catch{}let _=null,C=0;const P=N.on((l,v,E,I)=>{Ut(v)&&Ar(l)&&(I(),p=l.__frame_init,$=v,P(),clearTimeout(C),_?.())});if(at)for(const l of rt)try{l.endsWith(":*")||N.post({__frame_cred:at},l)}catch{}N.post({__frame_connect:!0},"*");try{h?.afterConnect()}catch{}const x=setTimeout,W=clearTimeout;let J=()=>NaN,X=()=>[];try{J=performance.now.bind(performance),X=performance.getEntriesByType.bind(performance)}catch{}let Te=0;const Le=()=>{try{N.post({__frame_alive:!0},"*")}catch{}Te=x(Le,Rn)},Oe=()=>W(Te);Le(),addEventListener("load",Oe,{once:!0});const H=new Promise(l=>{_=l,C=setTimeout(()=>{P(),l()},Bt)}),me=new WeakSet;addEventListener("error",l=>{l.target&&me.add(l.target)},!0);try{_n(jt(),at,()=>{e.then(l=>{try{l?.drawRefusedNotice?.()}catch{}})})}catch{}const qe=()=>{let l=[];try{l=[...document.querySelectorAll("link[rel~=stylesheet]:not([rel~=alternate])")].filter(E=>!E.sheet&&!E.disabled&&!me.has(E)&&E.getAttribute("href")&&URL.canParse(E.href)&&(!E.media||matchMedia(E.media).matches))}catch{}let v=l.length;return v===0?Promise.resolve():new Promise(E=>{try{const I=tt-J(),j=x(E,I>0?I<tt?I:tt:0),L=()=>{--v===0&&(W(j),E())};for(const K of l)K.addEventListener("load",L,{once:!0}),K.addEventListener("error",L,{once:!0})}catch{E()}})};b.then(()=>{try{w?.restore()}catch{}}),Promise.all([H,b,e]).then(([,,l])=>{if(p?.hostOverlays!==!0||!$)return;let v=!1;try{v=l?.declaresCover?.()===!0}catch{}N.post({__frame_layout:{cover:v}},$)});const oe={cb:null};N.on((l,v)=>{if(Ut(v)&&kr(l)){try{w?.promoted()}catch{}oe.cb?.()}}),H.then(async()=>{if(!p||!$){ct();try{h?.onNoInit()}catch{}return}if(Yt(p.theme),p.hostVisible===!1&&e.then(i=>i?.applyHostVisible?.(!1,O)),p.hostKeys!==void 0){const i=$,g=p.hostKeys;e.then(y=>y?.installHostKeyForward?.(d,g,k=>N.post(k,i)))}try{h?.onInit(p.hot,$)}catch{}const l=$,v=N.port(l),E=(i,g)=>N.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:i,phase:g}},l),I=(i,g,y)=>{new Promise(k=>k(Pn(g,y))).then(k=>E(i,k),()=>E(i))},j=i=>N.post({__frame_cap_recovered:{cap:i}},l);let L=p.brokerGen;const K=()=>h?.boot.ver??"",Me=K(),Z=(i,g)=>{const y=K();W(g.t),g.want=y,g.t=x(()=>{g.done||He(g,y)},Bt),N.post({__frame_cap_want:!0,cap:i,ver:y},l)},Be=(i,g)=>{const y=fe.get(i.cap),k=Se[i.cap];if(!g||!y||y.done||y.want!==i.ver||!ce.test(k))return;if(W(y.t),y.want=void 0,L=i.brokerGen??L,i.ver!==K()){Z(i.cap,y);return}if(!i.grant||i.cap==="network"){He(y,i.ver);return}const Q=pe,G=pe={...Q,capabilities:{...Q.capabilities,[i.cap]:i.grant},capBudgets:{...Q.capBudgets,[i.cap]:{...Q.capBudgets[i.cap],...i.budgets}}};ue(k).then(ee=>{Re.has(k)&&j(i.cap),G.brokerGen=L,ut=!0;try{ee?.install?.(G)}catch{E(i.cap,"install")}finally{ut=!1}},ee=>I(i.cap,k,ee)).then(()=>{y.done||He(y,i.ver)})};let ae=!1,de=!1;N.on((i,g,y)=>{if(g!==l)return;try{if(h?.onShell(i))return}catch{}if(Tr(i)&&Yt(i.__frame_theme.theme),Xr(i)&&Be(i,y),y&&Yr(i)&&(L=i.brokerGen??L),Rr(i)){const G=i.__frame_host_visible.visible;e.then(ee=>ee?.applyHostVisible?.(G,O))}Sr(i)&&Cn(i.__frame_patch,l,y);const k=i?.__fc_mode;k&&typeof k=="object"&&!ae&&nt&&ce.test(nt)&&(ae=!0,ue(nt).then(G=>G.install?.(l,k.on===!0,v)).catch(()=>{}));const Q=i?.__ft_cmd;Q&&typeof Q=="object"&&!de&&ot&&ce.test(ot)&&(de=!0,ue(ot).then(G=>G.install?.(l,Q,v)).catch(()=>{}))});const Pe=Object.keys(p.capabilities??{}).filter(i=>Object.hasOwn(Se,i)).map(i=>[i,Se[i]]).filter(i=>typeof i[1]=="string"&&ce.test(i[1])),V=await Promise.allSettled(Pe.map(([,i])=>ue(i))),se=await e,B=l;if(se?.buildBoot||(t?I("_transforms",t.f,t.e):E("_transforms")),se?.buildBoot)try{pe=se.buildBoot(p,se.TRANSFORMS??{},{shellOrigin:B,mount:ft,hooks:xe,shell:v},i=>N.post({__frame_cap_telemetry:i},B))}catch{E("_transforms","install"),pe=$t(p,B,v)}else pe=$t(p,B,v);se?.buildBoot&&Re.has(Ae??"")&&j("_transforms");const ve=pe;ve.brokerGen=L,V.forEach((i,g)=>{const[y,k]=Pe[g];if(i.status!=="fulfilled"){I(y,k,i.reason);return}Re.has(k)&&j(y);try{i.value?.install?.(ve)}catch{E(y,"install")}});const Ne=p.capWants===!0;Ne&&(it=(i,g)=>{const y=K();if(!y)return g;if(!g.nulled)return g.want!==y&&Z(i,g),g;if(y===g.ver)return g;const k=lt();return fe.set(i,k),Z(i,k),k}),ct(Me,Ne&&K()!==Me?Z:void 0),await b,await qe(),Oe();const ie=ir(X,J);N.post(ie?{__frame_ready:!0,nav:ie}:{__frame_ready:!0},$),e.then(i=>{i?.installSizeReporter?.(B,oe,v),i?.installPaintReporter?.(v)});let Ce=!1;try{Ce=D()}catch{}ke&&Ce?ue(ke).then(i=>i?.boot?.({shellOrigin:l,build:ve.flags.has(nn),hot:h?.hot??null,carried:h?.carried(),presented:()=>h?.presented()??!0})).catch(()=>!1).then(i=>{h?.hydrated(),i!==!0?E("_ldx"):Re.has(ke)&&j("_ldx")}):h?.hydrated()})}else et&&(Jt(),Sn(et,rt,ue,{settle:ct,mount:ft}))})();</script><!-- /frame-runtime -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AtomicRoot — Dokumen Desain Riset &amp; Sistem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F1F2EE;
+    --surface: #FAFBF7;
+    --surface-2: #E8EAE4;
+    --ink: #171A18;
+    --ink-2: #4E554F;
+    --ink-3: #79817B;
+    --rule: #D2D7CE;
+    --ok: #1F5F4E;
+    --stop: #A23A21;
+    --warn: #8A6A12;
+    --link: #285A7A;
+
+    --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --serif: "Spectral", Georgia, "Times New Roman", serif;
+    --mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    color-scheme: light dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111412;
+      --surface: #181C19;
+      --surface-2: #1F241F;
+      --ink: #E7EBE4;
+      --ink-2: #A8B1A8;
+      --ink-3: #828C83;
+      --rule: #2C332D;
+      --ok: #62C2A4;
+      --stop: #E38063;
+      --warn: #D7B451;
+      --link: #77B6D6;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111412;
+    --surface: #181C19;
+    --surface-2: #1F241F;
+    --ink: #E7EBE4;
+    --ink-2: #A8B1A8;
+    --ink-3: #828C83;
+    --rule: #2C332D;
+    --ok: #62C2A4;
+    --stop: #E38063;
+    --warn: #D7B451;
+    --link: #77B6D6;
+  }
+
+  *, *::before, *::after { box-sizing: inherit; }
+
+  html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 1.5rem); -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.68;
+    font-weight: 400;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 1.5rem 6rem; }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 4.5rem 0 2.25rem; border-bottom: 1px solid var(--rule); }
+  .hero .kicker {
+    font-family: var(--mono); font-size: .76rem; color: var(--ink-3);
+    letter-spacing: .02em; margin: 0 0 1.75rem;
+  }
+  h1 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(2.3rem, 7vw, 3.9rem);
+    line-height: 1.02; letter-spacing: -.028em; margin: 0 0 1.1rem;
+  }
+  .hero .sub {
+    font-family: var(--sans); font-weight: 500; font-size: clamp(1.02rem, 2.4vw, 1.3rem);
+    line-height: 1.34; color: var(--ink-2); max-width: 30ch; margin: 0 0 2rem;
+  }
+  .thesis {
+    border-left: 3px solid var(--ok); padding: .1rem 0 .1rem 1.15rem;
+    font-size: 1.08rem; max-width: 62ch; margin: 0;
+  }
+  .thesis strong { font-weight: 600; }
+
+  /* ---------- toc ---------- */
+  nav.toc { margin: 2.5rem 0 0; }
+  nav.toc h2 { font-family: var(--sans); font-size: .95rem; font-weight: 600; margin: 0 0 .7rem; color: var(--ink-2); letter-spacing: 0; border: 0; padding: 0; }
+  nav.toc ol { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 2.5rem; }
+  nav.toc li { break-inside: avoid; margin: 0 0 .32rem; font-size: .93rem; }
+  nav.toc a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid transparent; }
+  nav.toc a:hover { color: var(--ink); border-bottom-color: var(--rule); }
+  nav.toc .num { font-family: var(--mono); font-size: .78rem; color: var(--ink-3); margin-right: .45rem; }
+  @media (max-width: 620px) { nav.toc ol { columns: 1; } }
+
+  /* ---------- sections ---------- */
+  section { padding-top: 3.4rem; }
+  h2 {
+    font-family: var(--sans); font-weight: 600; font-size: clamp(1.45rem, 3.4vw, 1.95rem);
+    line-height: 1.16; letter-spacing: -.018em; margin: 0 0 1.1rem;
+    padding-bottom: .55rem; border-bottom: 1px solid var(--rule);
+  }
+  h2 .num { font-family: var(--mono); font-weight: 400; font-size: .72em; color: var(--ink-3); margin-right: .55rem; }
+  h3 {
+    font-family: var(--sans); font-weight: 600; font-size: 1.14rem; line-height: 1.3;
+    margin: 2.3rem 0 .6rem; letter-spacing: -.008em;
+  }
+  h4 { font-family: var(--sans); font-weight: 600; font-size: .99rem; margin: 1.6rem 0 .45rem; color: var(--ink-2); }
+  p { margin: 0 0 1.05rem; max-width: 68ch; }
+  ul, ol { max-width: 68ch; padding-left: 1.3rem; margin: 0 0 1.05rem; }
+  li { margin-bottom: .45rem; }
+  a { color: var(--link); text-underline-offset: 2px; }
+  strong { font-weight: 600; }
+  em { font-style: italic; }
+  code { font-family: var(--mono); font-size: .86em; background: var(--surface-2); padding: .1em .35em; border-radius: 3px; }
+
+  .lede { font-size: 1.06rem; color: var(--ink-2); max-width: 66ch; }
+
+  /* ---------- callouts ---------- */
+  .note {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 4px;
+    padding: 1rem 1.15rem; margin: 1.4rem 0; font-size: .95rem; max-width: 68ch;
+  }
+  .note p:last-child { margin-bottom: 0; }
+  .note .tag { font-family: var(--sans); font-weight: 600; font-size: .82rem; display: block; margin-bottom: .35rem; }
+  .note.stop { border-left: 3px solid var(--stop); }
+  .note.stop .tag { color: var(--stop); }
+  .note.ok { border-left: 3px solid var(--ok); }
+  .note.ok .tag { color: var(--ok); }
+  .note.warn { border-left: 3px solid var(--warn); }
+  .note.warn .tag { color: var(--warn); }
+
+  /* ---------- fix list ---------- */
+  .fix { border-top: 1px solid var(--rule); padding: 1.15rem 0 .3rem; max-width: 70ch; }
+  .fix:last-of-type { border-bottom: 1px solid var(--rule); margin-bottom: 1.5rem; }
+  .fix h3 { margin: 0 0 .5rem; display: flex; gap: .7rem; align-items: baseline; }
+  .fix h3 .idx { font-family: var(--mono); font-size: .8rem; color: var(--ink-3); flex: 0 0 auto; }
+  .fix .was, .fix .now { display: block; margin-bottom: .55rem; font-size: .96rem; }
+  .fix .was::before { content: "Draf awal — "; font-family: var(--sans); font-weight: 600; color: var(--stop); font-size: .88rem; }
+  .fix .now::before { content: "Perbaikan — "; font-family: var(--sans); font-weight: 600; color: var(--ok); font-size: .88rem; }
+
+  /* ---------- tables ---------- */
+  .tablewrap { overflow-x: auto; margin: 1.3rem 0 1.6rem; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: .9rem; font-family: var(--sans); font-weight: 500; }
+  th, td { text-align: left; padding: .62rem .8rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-weight: 600; color: var(--ink-2); background: var(--surface-2); font-size: .84rem; }
+  tr:last-child td { border-bottom: 0; }
+  td code { font-size: .84em; }
+
+  /* ---------- code ---------- */
+  pre {
+    font-family: var(--mono); font-size: .8rem; line-height: 1.58;
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 4px;
+    padding: 1rem 1.1rem; overflow-x: auto; margin: 1.2rem 0 1.5rem;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  .caption { font-family: var(--sans); font-size: .82rem; color: var(--ink-3); margin: -1rem 0 1.6rem; max-width: 66ch; }
+
+  /* ---------- figures ---------- */
+  figure { margin: 1.6rem 0 1.8rem; }
+  .figscroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); padding: 1rem; }
+  figure svg { display: block; width: 100%; min-width: 620px; height: auto; }
+  figcaption { font-family: var(--sans); font-size: .82rem; color: var(--ink-3); margin-top: .6rem; max-width: 66ch; }
+
+  .svg-box { fill: var(--surface-2); stroke: var(--rule); }
+  .svg-box-t { fill: none; stroke: var(--ok); stroke-dasharray: 4 3; }
+  .svg-box-u { fill: none; stroke: var(--stop); stroke-dasharray: 4 3; }
+  .svg-t { font-family: var(--sans); font-size: 12px; fill: var(--ink); font-weight: 500; }
+  .svg-s { font-family: var(--sans); font-size: 10px; fill: var(--ink-3); }
+  .svg-m { font-family: var(--mono); font-size: 10px; fill: var(--ink-2); }
+  .svg-line { stroke: var(--ink-3); fill: none; }
+  .svg-ok { stroke: var(--ok); fill: none; }
+  .svg-stop { stroke: var(--stop); fill: none; }
+  .fill-ok { fill: var(--ok); }
+  .fill-stop { fill: var(--stop); }
+
+  /* ---------- formula ---------- */
+  .formula {
+    font-family: var(--mono); font-size: .88rem; background: var(--surface);
+    border: 1px solid var(--rule); border-left: 3px solid var(--ink-3);
+    padding: .85rem 1.05rem; margin: 1.1rem 0 1.4rem; overflow-x: auto; border-radius: 4px;
+  }
+
+  /* ---------- references ---------- */
+  .ref { border-top: 1px solid var(--rule); padding: 1.25rem 0; max-width: 70ch; }
+  .ref:last-of-type { border-bottom: 1px solid var(--rule); }
+  .ref .rank { font-family: var(--mono); font-size: .78rem; color: var(--ink-3); }
+  .ref h3 { margin: .3rem 0 .15rem; font-size: 1.06rem; }
+  .ref .meta { font-family: var(--sans); font-size: .85rem; color: var(--ink-3); margin: 0 0 .7rem; }
+  .ref dl { margin: 0; font-size: .95rem; }
+  .ref dt { font-family: var(--sans); font-weight: 600; font-size: .85rem; color: var(--ink-2); margin-top: .55rem; }
+  .ref dd { margin: .1rem 0 0; }
+
+  footer { margin-top: 4.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: .88rem; color: var(--ink-3); }
+
+  @media print {
+    body { background: #fff; font-size: 11pt; }
+    .figscroll, figure svg { min-width: 0; }
+    nav.toc { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">Dokumen desain riset · proyek individu · revisi 3</p>
+  <h1>AtomicRoot</h1>
+  <p class="sub">Otorisasi yang terikat versi untuk sistem multi-agen yang mengeksekusi tool secara konkuren</p>
+  <p class="thesis">Keputusan otorisasi bersifat <strong>mudah basi</strong>. Keputusan itu dihitung atas sebuah status sistem, tetapi dieksekusi atas status sistem yang lain. Di sistem multi-agen konkuren yang menghadapi prompt injection, celah antara dua status itulah permukaan serangannya — bukan kebijakannya yang salah, melainkan kebijakan itu dinilai pada dunia yang sudah tidak ada lagi.</p>
+</header>
+
+<nav class="toc">
+  <h2>Isi dokumen</h2>
+  <ol>
+    <li><a href="#s1"><span class="num">01</span>Yang perlu diperbaiki dari draf awal</a></li>
+    <li><a href="#s2"><span class="num">02</span>Reposisi dan klaim yang dipertahankan</a></li>
+    <li><a href="#s3"><span class="num">03</span>Model ancaman</a></li>
+    <li><a href="#s4"><span class="num">04</span>Formalisasi dan jaminan</a></li>
+    <li><a href="#s5"><span class="num">05</span>Arsitektur sistem</a></li>
+    <li><a href="#s6"><span class="num">06</span>Alur protokol lengkap</a></li>
+    <li><a href="#s7"><span class="num">07</span>Struktur data dan API</a></li>
+    <li><a href="#s8"><span class="num">08</span>Output sistem</a></li>
+    <li><a href="#s9"><span class="num">09</span>Katalog kebijakan</a></li>
+    <li><a href="#s10"><span class="num">10</span>Rencana prototipe</a></li>
+    <li><a href="#s11"><span class="num">11</span>Desain evaluasi</a></li>
+    <li><a href="#s12"><span class="num">12</span>Risiko dan mitigasi</a></li>
+    <li><a href="#s13"><span class="num">13</span>Rencana paper dan venue</a></li>
+    <li><a href="#s14"><span class="num">14</span>Lima paper pondasi</a></li>
+  </ol>
+</nav>
+
+<!-- ============ 1 ============ -->
+<section id="s1">
+<h2><span class="num">01</span>Yang perlu diperbaiki dari draf awal</h2>
+
+<p class="lede">Draf AtomicRoot-mu sudah menemukan masalah yang benar. Yang belum benar adalah cara menjualnya, batas klaimnya, dan beberapa keputusan teknis yang akan langsung diserang reviewer. Berikut dua belas perbaikan konkret, diurutkan dari yang paling menentukan nasib paper.</p>
+
+<div class="fix">
+  <h3><span class="idx">01</span>Jangan menjual "transaksi untuk agen"</h3>
+  <span class="was">Judul dan abstrak berbunyi <em>Transactional Runtime</em>. Ruang itu sudah diisi: Cordon menawarkan semantic transaction sebagai batas eksekusi tingkat task dengan commit/rollback, Atomix menawarkan isolasi konkurensi berbasis epoch, SagaLLM menawarkan jaminan transaksi untuk perencanaan multi-agen. Reviewer akan menaruh paper-mu di tumpukan yang sama dan mencari pembeda; kalau pembedanya tipis, reject.</span>
+  <span class="now">Jual <em>kesegaran otorisasi</em> (authorization freshness), bukan transaksi. Transaksi menjaga <strong>konsistensi status</strong>; AtomicRoot menjaga <strong>validitas keputusan kebijakan</strong>. Dua hal ini berbeda dan bisa dipisahkan dengan contoh: eksekusi yang serializable sempurna pun masih bisa melanggar kebijakan eksfiltrasi, karena serializability tidak peduli pada urutan mana yang aman secara kebijakan. Itu kalimat pembeda yang harus muncul di abstrak.</span>
+</div>
+
+<div class="fix">
+  <h3><span class="idx">02</span>Versi trace global akan membunuh throughput</h3>
+  <span class="was">Tiket diikat ke satu <code>traceVersion</code> global. Konsekuensinya: setiap commit menaikkan versi global, sehingga setiap tiket lain yang sedang beredar langsung basi. Sistem secara efektif menjadi serial, dan grafik throughput-mu akan jelek. Bagian OCC di draf menyebut <em>conflict key</em>, tapi itu bertentangan dengan struktur tiket yang memakai versi tunggal.</span>
+  <span class="now">Ganti versi skalar dengan <strong>version vector atas conflict key</strong>, dan ikat tiket hanya pada <em>footprint kebijakan</em>-nya: himpunan key yang benar-benar dibaca oleh evaluator saat memutuskan. Tiket basi jika dan hanya jika ada key di footprint-nya yang versinya berubah. Agen yang membaca cuaca dan agen yang membaca kalender tidak akan pernah saling menggugurkan. Ini sekaligus menjadi kontribusi konseptual: <em>policy-relevant staleness</em>, bukan staleness status secara umum.</span>
+</div>
+
+<div class="fix">
+  <h3><span class="idx">03</span>Siapkan jawaban untuk "ini cuma ETag / idempotency key"</h3>
+  <span class="was">Compare-and-swap atas nomor versi adalah teknik lama. Reviewer sinis akan bilang: HTTP sudah punya <code>If-Match</code> sejak 1999, API pembayaran sudah punya idempotency key sejak lama.</span>
+  <span class="now">Bedanya harus dinyatakan eksplisit dan dini: ETag melindungi <em>sumber daya</em> dari penulisan atas versi basi. AtomicRoot melindungi <em>keputusan</em> dari eksekusi atas status basi. Argumen tool bisa identik, sumber daya tujuan bisa belum tersentuh siapa pun, dan CAS gaya ETag akan lolos — tetapi keputusannya tetap harus berubah dari ALLOW ke DENY karena agen lain membaca data rahasia. Buat satu contoh kecil di Bagian 2 paper yang menunjukkan ETag lolos dan AtomicRoot menolak. Itu satu paragraf yang menyelamatkan paper.</span>
+</div>
+
+<div class="fix">
+  <h3><span class="idx">04</span>Model ancaman belum menyebut kendali penjadwalan</h3>
+  <span class="was">Disebut "memaksa eksekusi paralel untuk memicu race condition", tetapi tidak diformalkan. Reviewer akan bertanya: seberapa besar kendali penyerang atas urutan? Kalau random, ini bukan serangan, ini hanya flakiness.</span>
+  <span class="now">Nyatakan penyerang sebagai <strong>adversarial scheduler</strong>: ia boleh memilih interleaving mana pun yang diizinkan runtime, termasuk menunda commit agen tertentu dan mempercepat yang lain. Ini analog dengan model penyerang di literatur konkurensi, dan membuat klaim "0% pelanggaran" menjadi klaim kuat atas <em>semua</em> interleaving, bukan atas keberuntungan. Sekaligus membenarkan mengapa evaluasimu memakai eksplorasi interleaving yang sistematis, bukan sekadar menjalankan sistem berkali-kali.</span>
+</div>
+
+<div class="fix">
+  <h3><span class="idx">05</span>Tool tak-terbalikkan butuh protokol dua fase, bukan sekadar "ditahan"</h3>
+  <span class="was">Draf menyebut gateway "menahan" <code>send_email</code> sampai commit berhasil. Belum ada penanganan untuk kegagalan setelah commit: gateway sudah menaikkan versi lalu jaringan putus saat memanggil API eksternal.</span>
+  <span class="now">Pakai <strong>prepare → validate → commit</strong> dengan <em>effect outbox</em> dan idempotency key per efek. Fase prepare memvalidasi dan mencatat niat efek; commit menaikkan versi dan melepas efek dari outbox secara at-least-once dengan deduplikasi di sisi penerima. Nyatakan terus terang batasnya: AtomicRoot menjamin <em>tidak ada efek eksternal yang dilepas tanpa tiket yang segar</em>, bukan exactly-once terhadap dunia luar. Kejujuran ini justru menaikkan kredibilitas.</span>
+</div>
+
+<div class="fix">
+  <h3><span class="idx">06</span>Belum ada teorema</h3>
+  <span class="was">Ada formula LTL untuk kebijakan, tetapi tidak ada pernyataan formal tentang apa yang dijamin mekanismenya.</span>
+  <span class="now">Tambahkan satu teorema soundness dan satu korolari, dengan sketsa bukti setengah halaman (Bagian 4 dokumen ini). Untuk paper tingkat konferensi, teorema kecil yang dibuktikan rapi jauh lebih bernilai daripada klaim besar tanpa bukti. Kalau sempat, model TLA+ yang dicek TLC untuk protokolnya akan menambah bobot besar dengan usaha sedang.</span>
+</div>
+
+<div class="fix">
+  <h3><span class="idx">07</span>Belum ada penanganan liveness</h3>
+  <span class="was">Kalau tiket terus digugurkan, agen bisa berputar meminta izin selamanya. Reviewer sistem pasti menanyakan livelock dan starvation.</span>
+  <span class="now">Sediakan: batas percobaan ulang, exponential backoff dengan jitter, dan setelah ambang tertentu, <em>escalation</em> ke jalur pesimistik (kunci footprint) atau ke persetujuan manusia. Laporkan distribusi jumlah percobaan ulang sebagai metrik, jangan disembunyikan.</span>
+</div>
+
+<div class="fix">
+  <h3><span class="idx">08</span>Persetujuan manusia harus menjadi event dalam trace</h3>
+  <span class="was">Formula <code>¬ExternalSend U HumanApproval</code> mengasumsikan ada event persetujuan, tetapi arsitekturnya belum punya komponen yang menerbitkannya.</span>
+  <span class="now">Tambahkan Escalation Broker: ia mengubah keputusan ESCALATE menjadi event <code>HumanApproval</code> bertanda tangan yang masuk ke trace, dengan cakupan sempit (terikat pada task, tool, hash argumen, dan jendela waktu). Tanpa ini, persetujuan manusia menjadi kapabilitas terbuka — persis lubang yang ingin kamu tutup.</span>
+</div>
+
+<div class="fix">
+  <h3><span class="idx">09</span>Benchmark yang ada tidak punya konkurensi</h3>
+  <span class="was">Rencana evaluasi menyebut "adversarial scheduling" tanpa menyebut di lingkungan apa. AgentDojo, benchmark standar untuk prompt injection pada agen, dirancang untuk eksekusi berurutan.</span>
+  <span class="now">Jadikan <strong>ekstensi benchmark sebagai kontribusi tersendiri</strong>, bukan sekadar alat. Bangun lapisan konkurensi di atas suite yang sudah ada: sub-agen paralel, memori bersama, dan penjadwal yang mengeksplorasi interleaving secara deterministik dengan seed. Paper dengan dua kontribusi (mekanisme + benchmark) jauh lebih mudah diterima daripada paper dengan satu.</span>
+</div>
+
+<div class="fix">
+  <h3><span class="idx">10</span>Metrik belum mengukur biaya keamanan</h3>
+  <span class="was">Metrik yang ada fokus pada pelanggaran dan latensi. Reviewer akan langsung bertanya: berapa banyak tugas jinak yang jadi gagal?</span>
+  <span class="now">Wajib melaporkan <em>benign task completion rate</em> berdampingan dengan violation rate, plus false-abort rate (tiket digugurkan padahal konflik tidak relevan dengan kebijakan). Sistem keamanan yang menolak semuanya punya violation rate 0% dan tidak berguna; tunjukkan kamu sadar itu.</span>
+</div>
+
+<div class="fix">
+  <h3><span class="idx">11</span>Baseline "FAVA" perlu diverifikasi</h3>
+  <span class="was">Draf menyebut FAVA sebagai representasi guardrail berbasis SMT. Aku tidak dapat memastikan sistem dengan nama itu dan karakteristik itu ada; kalau salah kutip, reviewer akan menemukannya.</span>
+  <span class="now">Verifikasi keberadaan dan klaim tepatnya sebelum dipakai. Kalau tidak ketemu, ganti dengan baseline yang jelas ada dan relevan: penegakan kebijakan pada saat pemanggilan tool gaya CaMeL, kontrol privilese gaya Progent, atau information-flow control gaya FIDES, yang kamu implementasikan ulang dalam mode non-atomik. Baseline yang kamu implementasikan sendiri lebih aman daripada baseline yang kamu deskripsikan dari ingatan.</span>
+</div>
+
+<div class="fix">
+  <h3><span class="idx">12</span>Belum ada penyerang adaptif</h3>
+  <span class="was">Serangan yang diuji adalah serangan yang tidak tahu ada AtomicRoot.</span>
+  <span class="now">Tambahkan satu bagian penyerang adaptif: penyerang yang tahu tiket terikat versi, lalu mencoba (a) memecah aksi berbahaya menjadi beberapa aksi yang masing-masing tidak menyentuh footprint kebijakan, (b) memicu abort berulang untuk denial of service, (c) menyusun argumen agar footprint-nya sesempit mungkin. Bagian ini menunjukkan kedewasaan dan biasanya yang membedakan paper diterima dari paper ditolak.</span>
+</div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="s2">
+<h2><span class="num">02</span>Reposisi dan klaim yang dipertahankan</h2>
+
+<h3>Kalimat pitch</h3>
+<p>AtomicRoot adalah lapisan otorisasi runtime yang membuat setiap keputusan kebijakan hanya dapat dieksekusi pada status sistem tempat keputusan itu dihitung. Izin diterbitkan sebagai tiket sekali pakai yang terikat pada versi bagian status yang relevan dengan kebijakan, dan gateway melepaskan efek eksternal hanya jika versi itu belum berubah pada saat commit.</p>
+
+<h3>Tiga klaim yang bisa dipertahankan</h3>
+<ol>
+  <li><strong>Klaim konseptual.</strong> Di sistem agen konkuren, ada kelas kerentanan yang tidak tertangkap baik oleh guardrail per-panggilan maupun oleh kontrol konkurensi klasik: keputusan yang benar pada saat dihitung menjadi salah pada saat dieksekusi. Kami menamainya <em>stale authorization</em> dan menunjukkan bahwa isolasi serializable tidak cukup untuk mencegahnya.</li>
+  <li><strong>Klaim mekanisme.</strong> Pengikatan tiket pada versi footprint kebijakan, dikombinasikan dengan commit CAS dan effect outbox, menghilangkan kelas ini dengan overhead yang terbatas, dan tidak mengorbankan paralelisme antar agen yang footprint kebijakannya tidak beririsan.</li>
+  <li><strong>Klaim empiris.</strong> Di bawah penjadwal bermusuhan pada benchmark agen yang kami perluas, baseline yang ada melanggar kebijakan pada tingkat yang terukur, sementara AtomicRoot tidak, dengan penurunan penyelesaian tugas jinak yang kecil dan overhead latensi yang dapat diterima.</li>
+</ol>
+
+<div class="note warn">
+  <span class="tag">Batas klaim — tulis ini di paper, jangan ditunggu reviewer</span>
+  <p>AtomicRoot tidak mencegah agen tunggal melakukan aksi berbahaya yang diizinkan kebijakan, tidak menyelesaikan masalah <em>apakah kebijakannya benar</em>, tidak menghentikan eksfiltrasi melalui saluran terselubung (timing, nama sumber daya, agregasi), dan tidak melindungi dari infrastruktur yang dibobol. Ia menutup satu kelas kegagalan secara tuntas. Paper yang menutup satu kelas secara tuntas lebih dihargai daripada paper yang mengaku menutup semuanya secara dangkal.</p>
+</div>
+
+<h3>Posisi terhadap pekerjaan terdekat</h3>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Sistem</th><th>Yang dilindungi</th><th>Model penyerang</th><th>Konkurensi</th><th>Celah yang AtomicRoot isi</th></tr></thead>
+  <tbody>
+    <tr><td>CaMeL</td><td>Aliran data dan kapabilitas nilai</td><td>Prompt injection tak langsung</td><td>Eksekusi berurutan</td><td>Kebijakan dievaluasi dan dieksekusi tanpa jeda status; tidak ada notion tiket basi</td></tr>
+    <tr><td>Progent / FIDES</td><td>Privilese dan label aliran informasi</td><td>Prompt injection</td><td>Per-panggilan, tidak transaksional</td><td>Keputusan diambil per aksi tanpa mengikat status; TOCTOU tetap terbuka</td></tr>
+    <tr><td>Cordon</td><td>Efek eksternal yang tak terbalikkan</td><td>Risiko lintas-langkah</td><td>Batas task, commit/rollback</td><td>Fokus containment dan recovery, bukan kesegaran keputusan otorisasi</td></tr>
+    <tr><td>Atomix</td><td>Keandalan alur kerja</td><td>Non-adversarial</td><td>Isolasi berbasis epoch</td><td>Tidak ada penyerang yang mengendalikan jadwal, tidak ada kebijakan temporal</td></tr>
+    <tr><td>Khan (TLA+/Verus)</td><td>Konsistensi memori bersama</td><td>Non-adversarial</td><td>Hierarki isolasi terverifikasi</td><td>Anomali konsistensi, bukan pelanggaran kebijakan keamanan</td></tr>
+    <tr style="background: var(--surface-2);"><td><strong>MasuGate</strong> (Peng &amp; Wu)</td><td>Policy-state serializability (PSS)</td><td>Non-adversarial — "untrusted caller" gaya access-control, benchmark eksplisit LLM-free</td><td>Scoped enforcement atas logical scopes (≈ footprint kebijakan)</td><td>PSS hanya dibuktikan di bawah konkurensi jinak; protokol efek eksternal tak-terbalikkan dinyatakan eksplisit "left to future work"</td></tr>
+    <tr><td><strong>AtomicRoot</strong></td><td><strong>Validitas keputusan otorisasi</strong></td><td><strong>Penjadwal bermusuhan + injeksi</strong></td><td><strong>OCC atas footprint kebijakan</strong></td><td>—</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="caption">Tabel ini sebaiknya masuk paper hampir apa adanya, sebagai Tabel 1. Baris MasuGate ditandai khusus karena mekanismenya paling dekat secara struktural — bacaannya wajib sebelum menulis Bagian 4 dan Bagian 9 paper.</p>
+
+<div class="note stop">
+  <span class="tag">MasuGate (arXiv:2608.02764) — baca ini sebelum yang lain</span>
+  <p>Paper ini sudah membuktikan properti yang secara struktural sama lewat Teorema 2 mereka (<em>Policy-State Serializability by Scoped Enforcement</em>), lengkap dengan bukti formal dan evaluasi PostgreSQL yang jalan. Klaim "kami menemukan stale authorization dan mengikatnya ke footprint" <strong>bukan lagi kontribusi baru</strong> jika ditulis apa adanya. Dua celah yang mereka tinggalkan secara eksplisit menjadi klaim inti AtomicRoot: (1) seluruh evaluasi mereka non-adversarial — tidak ada penyerang yang mengendalikan penjadwalan atau agen yang diinjeksi; (2) bagian Discussion mereka menyatakan langsung bahwa protokol untuk efek eksternal tak-terbalikkan "is left to future work". Teorema 1 dan Effect Outbox di Bagian 4 dan 6 harus ditulis sebagai <em>perluasan eksplisit</em> atas kedua celah itu, bukan sebagai penemuan berdiri sendiri.</p>
+</div>
+
+<h3>Gap per paper dan yang diselesaikan AtomicRoot</h3>
+<p>Untuk setiap paper pondasi atau pembanding, berikut celah spesifik yang diambil sebagai motivasi, dan mekanisme AtomicRoot mana yang langsung menutupnya. Tabel ini adalah kerangka siap pakai untuk Bagian 2 (Latar Belakang) dan Bagian 9 (Karya Terkait) di paper.</p>
+
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Paper</th><th>Gap yang diambil</th><th>Yang diselesaikan AtomicRoot</th></tr></thead>
+  <tbody>
+    <tr><td>CaMeL</td><td>Kebijakan dievaluasi dan tool dieksekusi dalam satu alur interpreter tanpa jeda temporal — desain implisit mengasumsikan satu agen, satu thread. Begitu beberapa worker menjalankan interpreter serupa secara paralel atas status bersama, jeda itu muncul tanpa mekanisme deteksi.</td><td>Tiket <code>τ</code> mengunci footprint pada versi saat evaluasi; begitu agen lain mengubah versi itu sebelum commit, <code>Fresh(τ,S)</code> gagal — inilah mekanisme jeda yang tidak dimiliki CaMeL.</td></tr>
+    <tr><td>AgentDojo</td><td>Suite dan metrik keberhasilan serangan dirancang untuk satu agen berjalan berurutan; tidak ada primitif bawaan untuk sub-agen paralel, status bersama, atau penjadwal yang bisa dipaksa mengeksplorasi interleaving tertentu secara reprodusibel.</td><td>Lapisan ekstensi konkurensi (sub-agen paralel + adversarial scheduler + replay harness berbasis seed) dibangun di atasnya, sehingga klaim "0% pelanggaran" diuji atas ribuan interleaving yang direplay, bukan satu urutan eksekusi.</td></tr>
+    <tr><td>Progent</td><td>Kontrol privilese dievaluasi per pemanggilan tool berdasarkan kapabilitas saat itu; tidak ada pengikatan ke versi status, sehingga dua keputusan yang masing-masing benar sendiri-sendiri bisa gabung jadi pelanggaran saat dieksekusi konkuren.</td><td>Predikat <code>Fresh()</code> menjadikan keputusan privilese fungsi eksplisit dari versi footprint, bukan snapshot sesaat; kapabilitas Progent bisa dibungkus sebagai satu conflict key dalam tiket.</td></tr>
+    <tr><td>FIDES</td><td>Information-flow control melabeli data "tainted" tapi keputusan alir dievaluasi di titik pemanggilan tanpa mengikat ke status global; dua aliran yang masing-masing lolos label check bisa tetap bocor secara agregat.</td><td>Taint diperlakukan sebagai conflict key berversi (mis. <code>taint:agentW3</code>); perubahan label akibat commit agen lain langsung menggugurkan tiket yang footprint-nya bergantung pada label itu.</td></tr>
+    <tr><td>Cordon</td><td>Unit yang dilindungi adalah efek dan reversibilitasnya (commit/rollback semantic transaction); tidak ada gerbang eksplisit atas kesegaran keputusan otorisasi itu sendiri — transaksi bisa commit sempurna sambil melepas efek yang keputusannya sudah basi.</td><td>Pola effect outbox diadopsi, tapi pelepasannya digerbangi <code>Fresh(τ,S)</code> di footprint kebijakan — bukan hanya status transaksi lokal.</td></tr>
+    <tr><td>Atomix</td><td>Isolasi berbasis epoch dan resource frontier dirancang untuk keandalan di bawah kegagalan dan kontensi biasa; tidak ada penyerang yang sengaja mengendalikan penjadwalan, dan tidak ada bahasa kebijakan temporal atas trace keamanan.</td><td>Model ancaman eksplisit dengan adversarial scheduler; kebijakan dinyatakan sebagai formula LTL yang dievaluasi Z3 atas prefiks trace — epoch/frontier Atomix jadi inspirasi skema conflict key, bukan jaminan keamanannya.</td></tr>
+    <tr><td>Khan</td><td>Anomali yang dicegah adalah anomali konsistensi memori/state di lingkungan non-adversarial; eksekusi bebas-anomali dalam kerangka mereka tetap bisa melanggar kebijakan eksfiltrasi karena konsistensi state ≠ kepatuhan kebijakan.</td><td>Predikat kesegaran diikat langsung ke evaluasi kebijakan SMT; counterexample Z3 menunjukkan pelanggaran kebijakan secara langsung, bukan sekadar anomali urutan baca-tulis.</td></tr>
+    <tr style="background: var(--surface-2);"><td><strong>MasuGate</strong></td><td>PSS dan scoped enforcement dibuktikan hanya di bawah konkurensi jinak (baseline Cedar/AGT/Omnigent, benchmark eksplisit "LLM-free"); protokol efek eksternal tak-terbalikkan dinyatakan eksplisit "left to future work".</td><td>Memperluas PSS ke penjadwal bermusuhan dan agen yang bisa diinjeksi (Teorema 1 sebagai kasus yang lebih kuat dari Teorema 2 mereka); mengimplementasikan Effect Outbox sebagai realisasi konkret dari protokol yang mereka sketsakan tapi belum bangun.</td></tr>
+    <tr><td>CONTINUITY</td><td>Mengurus komposisi kontrol lintas-batas — apakah delegasi antar-komponen tetap valid secara semantik saat berpindah boundary; tidak mengatasi kasus keputusan yang semantiknya tetap valid tapi jadi basi karena konkurensi murni di dalam satu boundary.</td><td>Beroperasi di dalam satu boundary keputusan (satu Policy Authority) dan menjamin kesegaran temporalnya; kedua sistem saling melengkapi — CONTINUITY menutup lintas-boundary, AtomicRoot menutup intra-boundary.</td></tr>
+    <tr><td>CoAgent</td><td>Kontrol konkurensi optimistik menargetkan serializability status aplikasi (hasil akhir konsisten seolah berurutan), bukan apakah suatu keputusan kebijakan keamanan tertentu masih berlaku saat efeknya commit; notifikasi konflik tidak membawa alasan kebijakan.</td><td>Target korektnya adalah policy-state serializability, bukan application-state serializability semata; penolakan commit disertai counterexample Z3 yang menjelaskan kebijakan mana yang terpicu.</td></tr>
+    <tr><td>Greshake dkk.</td><td>Mendemonstrasikan empiris bahwa konten eksternal bisa menyuntikkan instruksi berbahaya ke agen LLM-integrated, tapi tidak mengusulkan mekanisme penegakan runtime untuk sistem multi-agen konkuren.</td><td>Menjadikan hasil ini sebagai premis model ancaman — seluruh konten eksternal diasumsikan tidak tepercaya sejak desain gateway dan tiket, bukan ditambahkan belakangan sebagai patch.</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="s3">
+<h2><span class="num">03</span>Model ancaman</h2>
+
+<h3>Dipercaya</h3>
+<ul>
+  <li><strong>Contract Compiler</strong> — hanya sejauh ia menerima instruksi awal dari pengguna melalui kanal tepercaya. Ia tidak pernah membaca konten eksternal.</li>
+  <li><strong>Policy Authority</strong> — mesin evaluasi kebijakan berbasis SMT beserta kunci penandatanganannya.</li>
+  <li><strong>Trace Store</strong> — penyimpan status berversi, bersifat append-only.</li>
+  <li><strong>Transactional Tool Gateway</strong> — satu-satunya jalur menuju tool eksternal.</li>
+</ul>
+
+<h3>Tidak dipercaya</h3>
+<ul>
+  <li><strong>Coordinator Agent</strong> — boleh menyusun rencana sembarang, termasuk rencana jahat hasil injeksi.</li>
+  <li><strong>Worker Agents</strong> — boleh berhalusinasi, berkolusi, mengulang permintaan, dan menyimpan tiket untuk dipakai belakangan.</li>
+  <li><strong>Seluruh konten eksternal</strong> — halaman web, email, PDF, hasil tool, isi memori bersama yang berasal dari konten eksternal.</li>
+</ul>
+
+<h3>Kemampuan penyerang</h3>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Kemampuan</th><th>Penjelasan</th></tr></thead>
+  <tbody>
+    <tr><td>Kendali konten</td><td>Menyisipkan instruksi arbitrer ke dalam data apa pun yang dibaca agen.</td></tr>
+    <tr><td>Kendali argumen</td><td>Memengaruhi nama tool dan argumen yang diminta agen mana pun.</td></tr>
+    <tr><td><strong>Kendali penjadwalan</strong></td><td>Memilih interleaving mana pun yang diizinkan runtime: menunda, mempercepat, atau menyusun ulang titik commit agen mana pun. Inilah tambahan utama dibanding model ancaman standar.</td></tr>
+    <tr><td>Penyimpanan tiket</td><td>Menahan tiket yang sah dan memainkannya kembali kapan saja dalam masa berlakunya.</td></tr>
+    <tr><td>Kolusi</td><td>Mengoordinasikan beberapa worker agar aksi individual yang tampak jinak bergabung menjadi pelanggaran.</td></tr>
+    <tr><td>Pengetahuan desain</td><td>Mengetahui sepenuhnya arsitektur AtomicRoot, termasuk cara footprint dihitung (penyerang adaptif).</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Baris "Kendali penjadwalan" inilah yang secara tegas memisahkan model ancaman AtomicRoot dari sistem stateful-governance terdekat seperti MasuGate, yang mendefinisikan "untrusted caller" hanya dalam pengertian access-control biasa (tidak bisa memalsukan identitas atau melewati runtime) tanpa pernah memodelkan penyerang yang sengaja mengatur urutan commit atau menyuntik rencana lewat konten eksternal.</p>
+
+<h3>Di luar cakupan</h3>
+<p>Pemalsuan tanda tangan, kompromi kunci, kompromi Trace Store atau Gateway, serangan saluran samping pada model, serangan pada ketersediaan infrastruktur, dan kebijakan yang memang salah ditulis oleh pengguna. Sebutkan ini eksplisit; reviewer menghargai batas yang jujur.</p>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="s4">
+<h2><span class="num">04</span>Formalisasi dan jaminan</h2>
+
+<h3>Model sistem</h3>
+<p>Sistem adalah barisan event yang dicatat dalam trace <code>T</code>. Setiap event adalah tuple <code>e = (agentID, tool, args, result, effects, seq)</code>. Status sistem <code>S</code> adalah pemetaan dari <em>conflict key</em> ke versi dan nilai ringkas yang relevan bagi kebijakan. Conflict key adalah nama kanonik atas sumber daya atau atribut keamanan, misalnya <code>data:finance/*</code>, <code>egress:external</code>, <code>taint:agentW3</code>, <code>budget:task42</code>.</p>
+
+<div class="formula">S : Key → (Version, Value)
+V(S) : Key → Version                     // version vector
+T : [Event]                              // append-only
+P : Trace → {ALLOW, DENY, ESCALATE}      // kebijakan, dievaluasi atas prefiks trace</div>
+
+<h3>Footprint kebijakan</h3>
+<p>Ketika Policy Authority mengevaluasi permintaan <code>r</code> atas status <code>S</code>, ia mencatat himpunan key yang benar-benar dibaca selama evaluasi. Himpunan itu adalah <em>footprint</em>:</p>
+
+<div class="formula">FP(r, S) = { k ∈ Key : keputusan P dapat berubah bila V(S)[k] berubah }</div>
+
+<p>Implementasi praktisnya: instrumen pembacaan pada lapisan akses status yang dipakai encoder SMT, lalu tambahkan ketergantungan struktural yang diketahui dari kebijakan (misalnya kebijakan eksfiltrasi selalu bergantung pada key <code>taint:*</code> untuk agen terkait). Aproksimasi ke arah konservatif diperbolehkan dan harus dinyatakan: footprint yang lebih luas berarti lebih banyak abort, tetapi tidak pernah mengorbankan keamanan.</p>
+
+<h3>Tiket</h3>
+<div class="formula">τ = Sign_PA( taskID, agentID, tool, H(args),
+             FP,                          // himpunan conflict key
+             W[k] for k ∈ FP,             // versi yang diamati per key
+             effectClass,                 // reversible | irreversible
+             nonce, notBefore, notAfter )</div>
+
+<p>Perhatikan bedanya dengan draf awal: bukan satu <code>traceVersion</code>, melainkan potongan version vector yang dibatasi pada footprint. Ini yang membuat paralelisme tetap hidup.</p>
+
+<h3>Predikat kesegaran</h3>
+<div class="formula">Fresh(τ, S) ⟺ ∀k ∈ FP(τ) : V(S)[k] = W(τ)[k]</div>
+
+<h3>Aturan commit</h3>
+<p>Gateway melakukan commit untuk <code>τ</code> pada status <code>S</code> jika dan hanya jika <code>Fresh(τ, S)</code> bernilai benar, nonce belum pernah dipakai, waktu berada dalam jendela berlaku, dan hash argumen konkret cocok. Commit bersifat atomik: ia menambahkan event ke trace dan menaikkan versi seluruh key dalam <em>write set</em> efek dalam satu operasi.</p>
+
+<h3>Teorema 1 — Soundness keputusan</h3>
+<p><em>Setiap efek yang dilepas ke dunia luar dibenarkan oleh evaluasi kebijakan atas status yang identik, pada seluruh footprint kebijakan, dengan status pada saat commit.</em></p>
+
+<p><strong>Sketsa bukti.</strong> Andaikan sebuah efek <code>f</code> dilepas pada commit di status <code>S_c</code> dengan tiket <code>τ</code> yang diterbitkan atas status <code>S_e</code>. Aturan commit mensyaratkan <code>Fresh(τ, S_c)</code>, sehingga untuk setiap <code>k ∈ FP</code> berlaku <code>V(S_c)[k] = V(S_e)[k]</code>. Karena Trace Store append-only dan versi hanya naik secara monoton per key, kesamaan versi berarti nilai key tersebut tidak berubah antara <code>S_e</code> dan <code>S_c</code>. Berdasarkan definisi footprint, keputusan <code>P</code> hanya bergantung pada key dalam <code>FP</code>. Maka <code>P</code> dievaluasi atas <code>S_c</code> menghasilkan keputusan yang sama seperti atas <code>S_e</code>, yaitu ALLOW. Atomisitas commit menjamin tidak ada status antara yang teramati. ∎</p>
+
+<h3>Korolari — Tidak ada pelanggaran TOCTOU</h3>
+<p>Jika <code>P</code> sendiri tidak pernah mengizinkan aksi yang melanggar spesifikasi keamanan pada status mana pun, maka tidak ada eksekusi AtomicRoot yang menghasilkan pelanggaran, untuk interleaving apa pun yang dipilih penyerang. Perhatikan bentuk implikasinya: jaminan AtomicRoot bersifat kondisional terhadap kebenaran kebijakan. Itu batas yang harus dinyatakan, bukan disembunyikan.</p>
+
+<div class="note ok">
+  <span class="tag">Yang membuat teorema ini layak ditulis</span>
+  <p>Teoremanya sederhana, tapi ia memisahkan dua hal yang selama ini tercampur di literatur: kebenaran kebijakan dan kesegaran penerapan kebijakan. Semua sistem pembanding menjamin yang pertama dan diam-diam mengasumsikan yang kedua. Menunjukkan bahwa asumsi kedua bisa gagal, lalu menutupnya, adalah kontribusi yang sah.</p>
+</div>
+
+<div class="note stop">
+  <span class="tag">Tulis ini sebagai perluasan, bukan penemuan berdiri sendiri</span>
+  <p>MasuGate (Peng &amp; Wu, arXiv:2608.02764) sudah membuktikan properti yang secara struktural sama lewat Teorema 2 mereka (<em>Policy-State Serializability by Scoped Enforcement</em>), di bawah asumsi konkurensi jinak. Kalimat pembuka bagian ini sebaiknya menyatakan Teorema 1 secara eksplisit sebagai perluasan Teorema 2 ke dua kondisi yang tidak mereka tangani: penjadwal bermusuhan (bukan hanya klien yang taat protokol), dan efek eksternal tak-terbalikkan lewat Effect Outbox (bukan hanya transaksi database, yang eksplisit mereka tulis sebagai "left to future work"). Framing ini memperkuat kredibilitas, bukan melemahkannya — kamu menunjukkan tahu persis di mana bukti orang lain berhenti bekerja.</p>
+</div>
+
+<h3>Opsional tapi sangat bernilai: spesifikasi TLA+</h3>
+<p>Tulis protokol commit dalam TLA+ dan cek dengan TLC atas konfigurasi kecil (3 agen, 4 key, 6 langkah). Cari counterexample untuk invarian "tidak ada efek yang dilepas atas tiket yang tidak segar". Kalau TLC tidak menemukan counterexample, kamu punya satu paragraf yang sangat meyakinkan. Kalau ia menemukan, kamu baru saja menemukan bug desainmu sebelum reviewer menemukannya. Usaha realistis: satu sampai dua minggu.</p>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="s5">
+<h2><span class="num">05</span>Arsitektur sistem</h2>
+
+<figure>
+<div class="figscroll">
+<svg viewBox="0 0 820 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram arsitektur AtomicRoot">
+  <defs>
+    <marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="currentColor"></path>
+    </marker>
+  </defs>
+
+  <!-- untrusted zone -->
+  <rect class="svg-box-u" x="12" y="30" width="200" height="270" rx="6"></rect>
+  <text class="svg-s fill-stop" x="22" y="50">Zona tidak tepercaya</text>
+
+  <rect class="svg-box" x="30" y="64" width="164" height="46" rx="4"></rect>
+  <text class="svg-t" x="44" y="84">Coordinator Agent</text>
+  <text class="svg-s" x="44" y="99">menyusun rencana</text>
+
+  <rect class="svg-box" x="30" y="124" width="164" height="46" rx="4"></rect>
+  <text class="svg-t" x="44" y="144">Worker Agents</text>
+  <text class="svg-s" x="44" y="159">W1 … Wn, paralel</text>
+
+  <rect class="svg-box" x="30" y="184" width="164" height="46" rx="4"></rect>
+  <text class="svg-t" x="44" y="204">Konten eksternal</text>
+  <text class="svg-s" x="44" y="219">web, email, PDF</text>
+
+  <rect class="svg-box" x="30" y="244" width="164" height="40" rx="4"></rect>
+  <text class="svg-t" x="44" y="268">Memori bersama</text>
+
+  <!-- trusted zone -->
+  <rect class="svg-box-t" x="248" y="30" width="330" height="410" rx="6"></rect>
+  <text class="svg-s fill-ok" x="258" y="50">Zona tepercaya — basis komputasi tepercaya</text>
+
+  <rect class="svg-box" x="266" y="64" width="294" height="44" rx="4"></rect>
+  <text class="svg-t" x="280" y="83">1. Contract Compiler</text>
+  <text class="svg-s" x="280" y="98">instruksi pengguna → kontrak kebijakan formal</text>
+
+  <rect class="svg-box" x="266" y="120" width="294" height="58" rx="4"></rect>
+  <text class="svg-t" x="280" y="139">2. Policy Authority (Z3)</text>
+  <text class="svg-s" x="280" y="154">evaluasi kebijakan, hitung footprint,</text>
+  <text class="svg-s" x="280" y="167">terbitkan tiket bertanda tangan</text>
+
+  <rect class="svg-box" x="266" y="190" width="294" height="58" rx="4"></rect>
+  <text class="svg-t" x="280" y="209">3. Trace Store berversi</text>
+  <text class="svg-s" x="280" y="224">append-only, version vector per conflict key,</text>
+  <text class="svg-s" x="280" y="237">sumber kebenaran untuk kesegaran</text>
+
+  <rect class="svg-box" x="266" y="260" width="294" height="70" rx="4"></rect>
+  <text class="svg-t" x="280" y="279">4. Transactional Tool Gateway</text>
+  <text class="svg-s" x="280" y="294">prepare → cek CAS → commit atomik</text>
+  <text class="svg-s" x="280" y="307">effect outbox untuk aksi tak terbalikkan</text>
+  <text class="svg-s" x="280" y="320">idempotency key per efek</text>
+
+  <rect class="svg-box" x="266" y="342" width="142" height="48" rx="4"></rect>
+  <text class="svg-t" x="280" y="361">5. Escalation</text>
+  <text class="svg-s" x="280" y="376">Broker HITL</text>
+
+  <rect class="svg-box" x="418" y="342" width="142" height="48" rx="4"></rect>
+  <text class="svg-t" x="432" y="361">6. Evidence</text>
+  <text class="svg-s" x="432" y="376">Ledger</text>
+
+  <!-- external -->
+  <rect class="svg-box-t" x="614" y="150" width="194" height="200" rx="6" style="stroke: var(--ink-3)"></rect>
+  <text class="svg-s" x="624" y="170">Dunia luar</text>
+
+  <rect class="svg-box" x="630" y="184" width="162" height="44" rx="4"></rect>
+  <text class="svg-t" x="644" y="203">Tool reversible</text>
+  <text class="svg-s" x="644" y="218">baca DB, kalender</text>
+
+  <rect class="svg-box" x="630" y="240" width="162" height="50" rx="4"></rect>
+  <text class="svg-t" x="644" y="259">Tool irreversible</text>
+  <text class="svg-s" x="644" y="274">send_email, transfer</text>
+
+  <rect class="svg-box" x="630" y="300" width="162" height="38" rx="4"></rect>
+  <text class="svg-t" x="644" y="324">Penyetuju manusia</text>
+
+  <!-- arrows -->
+  <g class="svg-line" stroke-width="1.2" color="var(--ink-3)">
+    <path d="M194,140 L262,142" marker-end="url(#ah)"></path>
+    <path d="M194,262 L262,290" marker-end="url(#ah)"></path>
+    <path d="M413,112 L413,116" marker-end="url(#ah)"></path>
+    <path d="M413,182 L413,186" marker-end="url(#ah)"></path>
+    <path d="M413,252 L413,256" marker-end="url(#ah)"></path>
+    <path d="M560,290 L626,258" marker-end="url(#ah)"></path>
+    <path d="M560,282 L626,208" marker-end="url(#ah)"></path>
+    <path d="M408,366 L414,366" marker-end="url(#ah)"></path>
+    <path d="M560,360 L626,325" marker-end="url(#ah)"></path>
+  </g>
+
+  <text class="svg-m" x="200" y="134">minta izin</text>
+  <text class="svg-m" x="200" y="284">bawa tiket</text>
+  <text class="svg-m" x="422" y="196">baca versi</text>
+  <text class="svg-m" x="422" y="266">naikkan versi</text>
+</svg>
+</div>
+<figcaption>Semua jalur menuju dunia luar melewati Gateway. Agen tidak pernah memegang kredensial tool; yang mereka pegang hanyalah tiket yang bisa kedaluwarsa karena status berubah.</figcaption>
+</figure>
+
+<h3>Peran tiap komponen</h3>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Komponen</th><th>Masukan</th><th>Keluaran</th><th>Catatan implementasi</th></tr></thead>
+  <tbody>
+    <tr><td>Contract Compiler</td><td>Instruksi pengguna, katalog tool, template kebijakan organisasi</td><td>TaskContract bertanda tangan: batas tool, batas nilai, penerima yang diizinkan, kebijakan temporal yang aktif</td><td>Boleh memakai LLM untuk penyusunan awal, tetapi hasilnya harus dikonfirmasi pengguna dan dibekukan. Setelah dibekukan, tidak ada agen yang bisa mengubahnya.</td></tr>
+    <tr><td>Policy Authority</td><td>Permintaan tool, prefiks trace, TaskContract</td><td>Keputusan, tiket, atau counterexample</td><td>Z3 melalui z3-solver. Encode kebijakan temporal sebagai batasan atas prefiks trace berhingga (bounded past-time LTL), bukan model checking penuh, agar latensinya masuk akal.</td></tr>
+    <tr><td>Trace Store</td><td>Event commit</td><td>Version vector, prefiks trace</td><td>SQLite atau Redis dengan operasi CAS. Yang penting: kenaikan versi dan penambahan event harus dalam satu transaksi.</td></tr>
+    <tr><td>Tool Gateway</td><td>Tiket, argumen konkret</td><td>Hasil tool atau penolakan</td><td>Satu-satunya pemegang kredensial tool. Menjalankan prepare, cek kesegaran, commit, lalu melepas efek dari outbox.</td></tr>
+    <tr><td>Escalation Broker</td><td>Keputusan ESCALATE</td><td>Event HumanApproval bercakupan sempit</td><td>Cakupan persetujuan harus terikat pada hash argumen dan jendela versi, agar persetujuan tidak berubah menjadi kapabilitas terbuka.</td></tr>
+    <tr><td>Evidence Ledger</td><td>Semua keputusan dan commit</td><td>Rantai hash yang dapat diaudit</td><td>Cukup hash chain sederhana. Jangan tergoda memakai blockchain; reviewer akan menganggapnya berlebihan.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Aliran data per komponen (runtime)</h3>
+<p>Diagram di atas menunjukkan struktur statis dan batas kepercayaan. Berikut pandangan komplementer: bagaimana data konkret mengalir antar-komponen untuk satu permintaan otorisasi, dari permintaan awal hingga efek dilepas. Perhatikan bahwa Worker Agent hanya pernah bicara dengan Gateway — tidak pernah langsung dengan Policy Authority atau Trace Store.</p>
+
+<figure>
+<div class="figscroll">
+<svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Aliran data runtime antar komponen AtomicRoot untuk satu permintaan otorisasi">
+  <defs>
+    <marker id="ah3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="currentColor"></path>
+    </marker>
+  </defs>
+
+  <text class="svg-t" x="14" y="46">Worker Agent</text>
+  <text class="svg-s fill-stop" x="14" y="60">tidak tepercaya</text>
+  <line x1="14" y1="70" x2="806" y2="70" class="svg-line" stroke-width=".8" stroke-dasharray="2 3"></line>
+
+  <text class="svg-t" x="14" y="136">Gateway</text>
+  <text class="svg-s fill-ok" x="14" y="150">tepercaya</text>
+  <line x1="14" y1="160" x2="806" y2="160" class="svg-line" stroke-width=".8" stroke-dasharray="2 3"></line>
+
+  <text class="svg-t" x="14" y="226">Policy Authority</text>
+  <text class="svg-s fill-ok" x="14" y="240">tepercaya</text>
+  <line x1="14" y1="250" x2="806" y2="250" class="svg-line" stroke-width=".8" stroke-dasharray="2 3"></line>
+
+  <text class="svg-t" x="14" y="316">Trace Store</text>
+  <text class="svg-s fill-ok" x="14" y="330">tepercaya</text>
+  <line x1="14" y1="340" x2="806" y2="340" class="svg-line" stroke-width=".8" stroke-dasharray="2 3"></line>
+
+  <path d="M130,70 L130,158" class="svg-line" stroke-width="1.3" color="var(--ink-2)" marker-end="url(#ah3)"></path>
+  <text class="svg-m" x="140" y="100">① authz_request</text>
+  <text class="svg-s" x="140" y="114">{tool, args}</text>
+
+  <path d="M230,160 L230,248" class="svg-line" stroke-width="1.3" color="var(--ink-2)" marker-end="url(#ah3)"></path>
+  <text class="svg-m" x="240" y="190">② forward +</text>
+  <text class="svg-s" x="240" y="204">version snapshot</text>
+
+  <path d="M340,250 L340,338" class="svg-line" stroke-width="1.3" color="var(--ink-2)" marker-end="url(#ah3)"></path>
+  <path d="M368,338 L368,250" class="svg-line" stroke-width="1.3" color="var(--ink-2)" marker-end="url(#ah3)"></path>
+  <text class="svg-m" x="378" y="278">③ baca trace</text>
+  <text class="svg-s" x="378" y="292">prefix + V(S)</text>
+  <text class="svg-s" x="378" y="306">(footprint dicatat)</text>
+
+  <path d="M480,250 L480,162" class="svg-line" stroke-width="1.3" color="var(--ink-2)" marker-end="url(#ah3)"></path>
+  <text class="svg-m" x="490" y="190">④ tiket τ /</text>
+  <text class="svg-s" x="490" y="204">counterexample</text>
+
+  <path d="M560,160 L560,72" class="svg-line" stroke-width="1.3" color="var(--ink-2)" marker-end="url(#ah3)"></path>
+  <text class="svg-m" x="570" y="100">⑤ τ diserahkan</text>
+  <text class="svg-s" x="570" y="114">ke worker</text>
+
+  <path d="M630,70 L630,158" class="svg-line" stroke-width="1.3" color="var(--ink-2)" marker-end="url(#ah3)"></path>
+  <text class="svg-m" x="640" y="100">⑥ commit_request</text>
+  <text class="svg-s" x="640" y="114">{τ, args konkret}</text>
+
+  <path d="M700,160 L700,338" class="svg-ok" stroke-width="1.5" color="var(--ok)" marker-end="url(#ah3)"></path>
+  <text class="svg-m fill-ok" x="574" y="220">⑦ CAS: Fresh(τ,S)?</text>
+  <text class="svg-s fill-ok" x="574" y="234">→ commit atomik</text>
+
+  <path d="M726,338 L726,160" class="svg-line" stroke-width="1.3" color="var(--ink-2)" marker-end="url(#ah3)" stroke-dasharray="3 2"></path>
+  <text class="svg-s" x="732" y="292">COMMITTED /</text>
+  <text class="svg-s" x="732" y="306">STALE_TICKET</text>
+
+  <path d="M780,160 L780,72" class="svg-line" stroke-width="1.3" color="var(--ink-2)" marker-end="url(#ah3)"></path>
+  <text class="svg-m" x="600" y="40">⑧ hasil; efek dilepas ke luar, kuitansi ke Evidence Ledger</text>
+</svg>
+</div>
+<figcaption>Empat komponen tepercaya menangani seluruh siklus hidup satu permintaan otorisasi. Panah ⑦ berwarna berbeda karena inilah satu-satunya titik status benar-benar berubah — semua langkah sebelumnya hanya membaca.</figcaption>
+</figure>
+
+<div class="tablewrap">
+<table>
+  <thead><tr><th>#</th><th>Dari → ke</th><th>Data yang mengalir</th><th>Batas kepercayaan</th></tr></thead>
+  <tbody>
+    <tr><td>①</td><td>Worker Agent → Gateway</td><td><code>POST /authorize {task_id, agent_id, tool, args, observed_version_hint}</code></td><td>Tidak tepercaya → tepercaya. Gateway tidak pernah memercayai isi <code>args</code> sebelum diverifikasi ulang oleh Policy Authority.</td></tr>
+    <tr><td>②</td><td>Gateway → Policy Authority</td><td>Permintaan diteruskan apa adanya, disertai snapshot version vector <code>V(S)</code> saat itu</td><td>Internal tepercaya; tidak menyeberang batas kepercayaan.</td></tr>
+    <tr><td>③</td><td>Policy Authority ↔ Trace Store</td><td>Baca prefiks trace <code>T</code> dan <code>V(S)</code> untuk setiap key yang disentuh evaluasi SMT</td><td>Internal tepercaya. <strong>Inilah titik footprint <code>FP(r,S)</code> dihitung</strong> — setiap key yang dibaca di sini otomatis masuk footprint tiket.</td></tr>
+    <tr><td>④</td><td>Policy Authority → Gateway</td><td>ALLOW: tiket <code>τ</code> (footprint + versi + hash argumen + nonce + jendela waktu, ditandatangani). DENY/ESCALATE: keputusan + counterexample Z3</td><td>Internal tepercaya.</td></tr>
+    <tr><td>⑤</td><td>Gateway → Worker Agent</td><td>Tiket <code>τ</code> diserahkan; DENY/ESCALATE dikembalikan sebagai respons langsung tanpa tiket</td><td>Tepercaya → tidak tepercaya. Tiket adalah kapabilitas sekali pakai, bukan token yang bisa dipakai berulang.</td></tr>
+    <tr><td>⑥</td><td>Worker Agent → Gateway</td><td><code>POST /commit {ticket: τ, args}</code> — argumen konkret dihash ulang dan dicocokkan dengan <code>args_hash</code> di dalam <code>τ</code></td><td>Tidak tepercaya → tepercaya. Titik Gateway memverifikasi tanda tangan, nonce, jendela waktu, dan kecocokan hash.</td></tr>
+    <tr><td>⑦</td><td>Gateway → Trace Store</td><td>Cek <code>Fresh(τ,S)</code> via CAS; jika cocok, commit atomik — event ditambahkan ke trace, versi seluruh write-set dinaikkan, nonce ditandai terpakai</td><td>Internal tepercaya. <strong>Satu-satunya titik status benar-benar berubah.</strong></td></tr>
+    <tr><td>⑧</td><td>Trace Store → Gateway → Worker Agent</td><td><code>200 COMMITTED {version_before, version_after, result_ref, receipt_id}</code> atau <code>409 STALE_TICKET {stale_keys, expected, actual, retry_after_ms}</code>; bila COMMITTED dan efek tergolong irreversible, payload di outbox dilepas ke tool eksternal dan kuitansi dicatat ke Evidence Ledger</td><td>Tepercaya → tidak tepercaya untuk hasil keputusan; tepercaya → dunia luar untuk efek itu sendiri.</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="s6">
+<h2><span class="num">06</span>Alur protokol lengkap</h2>
+
+<h3>Jalur normal, satu permintaan</h3>
+<ol>
+  <li>Worker mengirim <em>authorization request</em>: task, tool, argumen yang diusulkan.</li>
+  <li>Gateway meneruskan ke Policy Authority bersama snapshot version vector saat itu.</li>
+  <li>Policy Authority membangun formula SMT dari TaskContract dan prefiks trace, lalu menyelesaikannya. Selama proses ini, setiap pembacaan status dicatat sebagai footprint.</li>
+  <li>Jika hasilnya ALLOW, Policy Authority menerbitkan tiket yang mengunci footprint beserta versinya, hash argumen, kelas efek, nonce, dan jendela waktu.</li>
+  <li>Worker membawa tiket ke Gateway bersama argumen konkret.</li>
+  <li>Gateway memverifikasi tanda tangan, nonce yang belum terpakai, jendela waktu, dan kecocokan hash argumen.</li>
+  <li>Gateway menjalankan <strong>prepare</strong>: untuk tool reversible, eksekusi dilakukan di shadow state; untuk tool irreversible, payload disusun dan ditaruh di outbox tanpa dikirim.</li>
+  <li>Gateway menjalankan <strong>cek kesegaran CAS</strong> terhadap Trace Store.</li>
+  <li>Jika segar, Gateway melakukan <strong>commit</strong> atomik: menambahkan event ke trace, menaikkan versi semua key dalam write set, menandai nonce terpakai.</li>
+  <li>Setelah commit sukses, efek di outbox dilepas dengan idempotency key.</li>
+  <li>Evidence Ledger mencatat kuitansi berisi hash tiket, versi sebelum dan sesudah, dan hash hasil.</li>
+  <li>Hasil dikembalikan ke worker.</li>
+</ol>
+
+<h3>Jalur konflik: skenario serangan yang jadi contoh utama paper</h3>
+
+<figure>
+<div class="figscroll">
+<svg viewBox="0 0 820 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Linimasa protokol CAS saat terjadi konflik versi">
+  <defs>
+    <marker id="ah2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="currentColor"></path>
+    </marker>
+  </defs>
+
+  <!-- lanes -->
+  <text class="svg-t" x="14" y="56">Worker A</text>
+  <text class="svg-s" x="14" y="70">baca dokumen keuangan</text>
+  <line x1="14" y1="82" x2="806" y2="82" class="svg-line" stroke-width=".8" stroke-dasharray="2 3"></line>
+
+  <text class="svg-t" x="14" y="146">Worker B</text>
+  <text class="svg-s" x="14" y="160">kirim email eksternal</text>
+  <line x1="14" y1="172" x2="806" y2="172" class="svg-line" stroke-width=".8" stroke-dasharray="2 3"></line>
+
+  <text class="svg-t" x="14" y="236">Trace Store</text>
+  <text class="svg-s" x="14" y="250">versi per conflict key</text>
+  <line x1="14" y1="262" x2="806" y2="262" class="svg-line" stroke-width=".8" stroke-dasharray="2 3"></line>
+
+  <!-- time markers -->
+  <g class="svg-m">
+    <text x="176" y="26">t1</text>
+    <text x="330" y="26">t2</text>
+    <text x="490" y="26">t3</text>
+    <text x="650" y="26">t4</text>
+  </g>
+  <g class="svg-line" stroke-width=".6" stroke-dasharray="2 4" color="var(--ink-3)">
+    <line x1="180" y1="32" x2="180" y2="300"></line>
+    <line x1="334" y1="32" x2="334" y2="300"></line>
+    <line x1="494" y1="32" x2="494" y2="300"></line>
+    <line x1="654" y1="32" x2="654" y2="300"></line>
+  </g>
+
+  <!-- A -->
+  <rect class="svg-box" x="120" y="40" width="120" height="32" rx="4"></rect>
+  <text class="svg-m" x="130" y="60">tiket A @ v7</text>
+
+  <rect class="svg-box" x="440" y="40" width="120" height="32" rx="4"></rect>
+  <text class="svg-m" x="450" y="60">commit sukses</text>
+
+  <!-- B -->
+  <rect class="svg-box" x="120" y="130" width="120" height="32" rx="4"></rect>
+  <text class="svg-m" x="130" y="150">tiket B @ v7</text>
+
+  <rect class="svg-box" x="600" y="122" width="150" height="48" rx="4" style="stroke: var(--stop)"></rect>
+  <text class="svg-m fill-stop" x="612" y="141">CAS gagal: 8 ≠ 7</text>
+  <text class="svg-s fill-stop" x="612" y="156">email tidak terkirim</text>
+
+  <!-- trace -->
+  <rect class="svg-box" x="120" y="220" width="120" height="32" rx="4"></rect>
+  <text class="svg-m" x="130" y="240">taint:B = v7</text>
+
+  <rect class="svg-box" x="440" y="220" width="120" height="32" rx="4"></rect>
+  <text class="svg-m" x="450" y="240">taint:B = v8</text>
+
+  <!-- arrows -->
+  <g class="svg-ok" stroke-width="1.3" color="var(--ok)">
+    <path d="M240,56 L436,56" marker-end="url(#ah2)"></path>
+    <path d="M500,72 L500,216" marker-end="url(#ah2)"></path>
+  </g>
+  <g class="svg-stop" stroke-width="1.3" color="var(--stop)">
+    <path d="M240,146 L596,146" marker-end="url(#ah2)"></path>
+    <path d="M560,236 L648,176" marker-end="url(#ah2)"></path>
+  </g>
+
+  <text class="svg-s fill-ok" x="300" y="48">prepare → CAS cocok</text>
+  <text class="svg-s fill-stop" x="300" y="138">B menahan tiketnya, tiba belakangan</text>
+  <text class="svg-s" x="506" y="290">membaca data sensitif menaikkan versi key taint milik seluruh task</text>
+</svg>
+</div>
+<figcaption>Yang menggugurkan tiket B bukan karena B menyentuh sumber daya yang sama dengan A, melainkan karena pembacaan A mengubah key yang ada di dalam footprint kebijakan B. Inilah perbedaan dengan kontrol konkurensi biasa, dan inilah gambar yang harus muncul di halaman pertama paper.</figcaption>
+</figure>
+
+<p>Setelah abort, worker B meminta izin ulang. Policy Authority mengevaluasi permintaan yang sama atas status baru, kali ini menemukan bahwa task sudah terpapar data sensitif, lalu mengembalikan DENY atau ESCALATE beserta counterexample. Perhatikan bahwa argumen email B tidak berubah sama sekali; yang berubah hanyalah dunia tempat permintaan itu dinilai.</p>
+
+<h3>Jalur tool tak-terbalikkan</h3>
+<ol>
+  <li>Prepare menyusun payload dan menyimpannya di outbox dengan status <code>PENDING</code>, beserta idempotency key yang diturunkan dari hash tiket.</li>
+  <li>Cek kesegaran dijalankan. Jika gagal, entri outbox dihapus dan tidak ada yang pernah menyentuh jaringan.</li>
+  <li>Jika sukses, commit dicatat lebih dulu, lalu status outbox menjadi <code>RELEASING</code>.</li>
+  <li>Pengiriman dilakukan dengan retry. Karena idempotency key stabil, pengiriman ganda tidak menghasilkan efek ganda pada penerima yang mendukungnya.</li>
+  <li>Kegagalan permanen dicatat sebagai event <code>EffectFailed</code> sehingga kebijakan berikutnya tahu efek itu tidak terjadi.</li>
+</ol>
+
+<h3>Jalur eskalasi</h3>
+<p>Keputusan ESCALATE tidak memblokir gateway. Permintaan dipindahkan ke Escalation Broker, yang menampilkan kepada manusia: aksi yang diminta, argumen konkret, kebijakan yang terpicu, dan counterexample. Persetujuan menghasilkan event bertanda tangan yang terikat pada hash argumen dan berlaku hanya sampai versi footprint berubah. Dengan begitu, persetujuan manusia pun tunduk pada aturan kesegaran yang sama.</p>
+</section>
+
+<!-- ============ 7 ============ -->
+<section id="s7">
+<h2><span class="num">07</span>Struktur data dan API</h2>
+
+<h4>TaskContract</h4>
+<pre><code>{
+  "task_id": "t-9f21",
+  "issued_by": "user:andi",
+  "issued_at": "2026-09-19T08:14:02Z",
+  "allowed_tools": ["read_doc", "search_web", "send_email"],
+  "constraints": {
+    "email_recipients": ["alice@corp.id"],
+    "max_transfer_idr": 0,
+    "data_classes_readable": ["internal", "finance"]
+  },
+  "policies": ["no_exfil_after_sensitive", "cap_subset", "budget_monotone"],
+  "signature": "ed25519:…"
+}</code></pre>
+
+<h4>Permintaan otorisasi</h4>
+<pre><code>POST /authorize
+{
+  "task_id": "t-9f21",
+  "agent_id": "W3",
+  "tool": "send_email",
+  "args": { "to": "alice@corp.id", "body_ref": "mem:blob-77" },
+  "observed_version_hint": { "taint:t-9f21": 7 }
+}</code></pre>
+
+<h4>Tiket</h4>
+<pre><code>{
+  "ticket_id": "tk-4c81",
+  "task_id": "t-9f21",
+  "agent_id": "W3",
+  "tool": "send_email",
+  "args_hash": "sha256:8ab3…",
+  "footprint": {
+    "taint:t-9f21": 7,
+    "egress:external": 3,
+    "contract:t-9f21": 1
+  },
+  "effect_class": "irreversible",
+  "write_set": ["egress:external", "audit:t-9f21"],
+  "nonce": "n-01H…",
+  "not_before": "2026-09-19T08:15:00Z",
+  "not_after":  "2026-09-19T08:15:30Z",
+  "signature": "ed25519:…"
+}</code></pre>
+
+<h4>Commit</h4>
+<pre><code>POST /commit
+{ "ticket": { … }, "args": { … } }
+
+// 200 OK
+{ "status": "COMMITTED", "version_before": {...}, "version_after": {...},
+  "result_ref": "res-221", "receipt_id": "rc-88f2" }
+
+// 409 Conflict
+{ "status": "STALE_TICKET",
+  "stale_keys": ["taint:t-9f21"],
+  "expected": 7, "actual": 8,
+  "retry_after_ms": 40,
+  "guidance": "re-authorize" }</code></pre>
+
+<h4>Penolakan dengan counterexample</h4>
+<pre><code>{
+  "decision": "DENY",
+  "policy": "no_exfil_after_sensitive",
+  "counterexample": {
+    "trigger_event": { "seq": 118, "agent": "W1", "tool": "read_doc",
+                       "data_class": "finance" },
+    "violating_action": { "agent": "W3", "tool": "send_email",
+                          "to": "alice@corp.id" },
+    "explanation": "task terpapar data kelas finance pada seq 118; "
+                 + "kebijakan melarang pengiriman eksternal sampai ada "
+                 + "event HumanApproval; tidak ada event tersebut dalam trace",
+    "unblock": ["request_human_approval", "redact_body_ref"]
+  }
+}</code></pre>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="s8">
+<h2><span class="num">08</span>Output sistem</h2>
+
+<p>Ini bagian yang sering dilupakan mahasiswa dan justru paling ditanya penguji: apa yang keluar dari sistem ini, dalam bentuk apa, dan untuk siapa.</p>
+
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Output</th><th>Bentuk</th><th>Untuk siapa</th><th>Kegunaan</th></tr></thead>
+  <tbody>
+    <tr><td>Keputusan otorisasi</td><td>ALLOW / DENY / ESCALATE / DEFER</td><td>Agen</td><td>Menentukan apakah agen boleh melanjutkan; DEFER dipakai ketika status belum cukup untuk memutuskan.</td></tr>
+    <tr><td>Tiket</td><td>Objek bertanda tangan, sekali pakai</td><td>Agen → Gateway</td><td>Izin yang bisa kedaluwarsa, bukan kapabilitas permanen.</td></tr>
+    <tr><td>Hasil commit atau konflik</td><td>200 COMMITTED atau 409 STALE_TICKET</td><td>Agen</td><td>Memberi tahu bahwa dunia berubah dan izin perlu dinilai ulang; menyertakan key mana yang berubah agar agen bisa beradaptasi.</td></tr>
+    <tr><td>Counterexample</td><td>Trace minimal yang menunjukkan pelanggaran</td><td>Pengembang, pengguna</td><td>Penjelasan penolakan yang presisi, bukan "ditolak karena kebijakan". Inilah keunggulan memakai SMT dibanding LLM-as-a-judge.</td></tr>
+    <tr><td>Kuitansi bukti</td><td>Entri hash chain: hash tiket, versi sebelum/sesudah, hash hasil</td><td>Auditor</td><td>Membuktikan setelah kejadian bahwa setiap efek punya otorisasi yang segar. Bisa direplay untuk verifikasi independen.</td></tr>
+    <tr><td>Silsilah delegasi</td><td>Graf: kontrak → subtask → tiket → efek</td><td>Auditor, peneliti</td><td>Menjawab "kenapa email ini terkirim" sampai ke instruksi pengguna asal.</td></tr>
+    <tr><td>Telemetri</td><td>Metrik per task dan per key</td><td>Evaluasi paper</td><td>Abort rate, kedalaman retry, latensi otorisasi, tingkat paralelisme efektif.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note ok">
+  <span class="tag">Saran untuk demo ke dosen</span>
+  <p>Buat satu halaman web sederhana yang menampilkan linimasa dua agen berjalan paralel, dengan versi key berubah secara langsung, dan tiket yang berubah warna menjadi merah saat menjadi basi. Demo visual seperti ini membuat kontribusi terasa nyata dalam sepuluh detik, dan bisa langsung menjadi video pendukung saat submit paper.</p>
+</div>
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="s9">
+<h2><span class="num">09</span>Katalog kebijakan</h2>
+
+<p>Pilih enam kebijakan saja, tapi implementasikan semuanya dengan benar. Enam kebijakan yang berjalan lebih meyakinkan daripada dua puluh yang hanya ada di tabel.</p>
+
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Nama</th><th>Maksud</th><th>Bentuk temporal</th><th>Conflict key dalam footprint</th></tr></thead>
+  <tbody>
+    <tr><td><code>no_exfil_after_sensitive</code></td><td>Setelah task terpapar data sensitif, tidak ada pengiriman eksternal tanpa persetujuan manusia</td><td><code>G(ReadSensitive → G(¬ExternalSend U HumanApproval))</code></td><td><code>taint:*</code>, <code>egress:*</code>, <code>approval:*</code></td></tr>
+    <tr><td><code>cap_subset</code></td><td>Gabungan kapabilitas worker tidak melebihi kapabilitas kontrak induk</td><td><code>Caps(W_i ∪ W_j) ⊆ Caps(Contract)</code></td><td><code>caps:*</code>, <code>contract:*</code></td></tr>
+    <tr><td><code>budget_monotone</code></td><td>Total pengeluaran tidak pernah melampaui plafon, termasuk lewat beberapa transaksi paralel</td><td><code>G(Σ spend ≤ cap)</code></td><td><code>budget:task</code></td></tr>
+    <tr><td><code>recipient_pinned</code></td><td>Penerima efek harus berasal dari kontrak, bukan dari konten eksternal</td><td><code>G(Send(x) → x ∈ Contract.recipients)</code></td><td><code>contract:*</code>, <code>taint:args</code></td></tr>
+    <tr><td><code>no_write_after_stale_read</code></td><td>Tulisan yang bergantung pada bacaan yang sudah usang harus dinilai ulang</td><td><code>G(Write(k) → ¬Stale(reads(k)))</code></td><td>key sumber daya terkait</td></tr>
+    <tr><td><code>irreversible_once</code></td><td>Efek tak terbalikkan tidak boleh dieksekusi dua kali untuk niat yang sama</td><td><code>G(Effect(id) → X G ¬Effect(id))</code></td><td><code>effect:idempotency</code></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><code>budget_monotone</code> layak mendapat perhatian khusus: ia adalah contoh terbaik bahwa pemeriksaan per-aksi selalu gagal. Dua transfer masing-masing 600 ribu dengan plafon 1 juta akan lolos secara individual pada status yang sama, dan hanya pengikatan versi yang mencegahnya. Ini contoh yang mudah dipahami penguji tanpa latar belakang keamanan.</p>
+</section>
+
+<!-- ============ 10 ============ -->
+<section id="s10">
+<h2><span class="num">10</span>Rencana prototipe</h2>
+
+<h3>Tumpukan teknologi</h3>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Lapisan</th><th>Pilihan</th><th>Alasan</th></tr></thead>
+  <tbody>
+    <tr><td>Bahasa</td><td>Python 3.11+</td><td>Ekosistem agen dan Z3 paling matang di sini.</td></tr>
+    <tr><td>Solver</td><td>z3-solver</td><td>Standar de facto; mudah dikutip dan direproduksi.</td></tr>
+    <tr><td>Gateway</td><td>FastAPI + asyncio</td><td>Cukup untuk menunjukkan konkurensi nyata tanpa kompleksitas.</td></tr>
+    <tr><td>Trace Store</td><td>SQLite WAL untuk single-node; Redis dengan skrip Lua untuk CAS multi-proses</td><td>Keduanya bisa memberi atomisitas yang dibutuhkan. Mulai dari SQLite.</td></tr>
+    <tr><td>Kerangka agen</td><td>LangGraph atau AutoGen sebagai adapter</td><td>Menunjukkan bahwa AtomicRoot bisa dipasang, bukan menggantikan.</td></tr>
+    <tr><td>Kripto</td><td>Ed25519 via PyNaCl</td><td>Sederhana, cepat, cukup.</td></tr>
+    <tr><td>Verifikasi</td><td>TLA+ / TLC (opsional)</td><td>Untuk memodelkan protokol commit.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Struktur repositori</h3>
+<pre><code>atomicroot/
+├── contract/        # compiler kontrak, skema, penandatanganan
+├── authority/       # encoder SMT, evaluator kebijakan, penerbit tiket
+│   ├── policies/    # 6 kebijakan sebagai modul terpisah
+│   └── footprint.py # instrumentasi pembacaan status
+├── store/           # trace store berversi, CAS, version vector
+├── gateway/         # prepare/commit, effect outbox, idempotency
+├── escalation/      # broker HITL
+├── ledger/          # hash chain kuitansi
+├── adapters/        # integrasi LangGraph / AutoGen
+├── bench/
+│   ├── scheduler/   # penjadwal bermusuhan, eksplorasi interleaving
+│   ├── suites/      # skenario task + injeksi
+│   └── replay/      # replay deterministik berbasis seed
+├── spec/            # model TLA+
+└── eval/            # skrip eksperimen, notebook analisis</code></pre>
+
+<h3>Milestone realistis untuk satu semester</h3>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Minggu</th><th>Target</th><th>Bukti selesai</th></tr></thead>
+  <tbody>
+    <tr><td>1–2</td><td>Baca lima paper pondasi, tulis tabel posisi</td><td>Tabel 1 versi awal, satu halaman</td></tr>
+    <tr><td>3–4</td><td>Trace store berversi + CAS + tiket bertanda tangan</td><td>Uji unit: tiket basi selalu ditolak</td></tr>
+    <tr><td>5–6</td><td>Policy Authority dengan dua kebijakan pertama</td><td>Counterexample keluar untuk kasus eksfiltrasi</td></tr>
+    <tr><td>7</td><td>Perhitungan footprint + instrumentasi pembacaan</td><td>Dua task tanpa irisan berjalan paralel penuh</td></tr>
+    <tr><td>8–9</td><td>Gateway prepare/commit + effect outbox</td><td>Demo: email tidak terkirim saat tiket basi</td></tr>
+    <tr><td>10–11</td><td>Penjadwal bermusuhan dan harness replay</td><td>Seed yang sama menghasilkan interleaving yang sama</td></tr>
+    <tr><td>12–13</td><td>Empat kebijakan sisanya + empat baseline</td><td>Semua baseline berjalan di harness yang sama</td></tr>
+    <tr><td>14–15</td><td>Eksperimen penuh + penyerang adaptif</td><td>Tabel hasil dan grafik latensi</td></tr>
+    <tr><td>16–18</td><td>Penulisan paper, model TLA+ bila sempat</td><td>Draf lengkap siap dikomentari dosen</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note warn">
+  <span class="tag">Urutan yang menyelamatkan proyek</span>
+  <p>Bangun penjadwal bermusuhan dan harness replay <em>sebelum</em> mengerjakan kebijakan yang rumit. Tanpa replay deterministik, kamu akan menghabiskan berminggu-minggu mengejar bug yang tidak bisa direproduksi, dan tidak akan bisa mengklaim apa pun secara meyakinkan. Ini kesalahan paling umum di proyek konkurensi.</p>
+</div>
+</section>
+
+<!-- ============ 11 ============ -->
+<section id="s11">
+<h2><span class="num">11</span>Desain evaluasi</h2>
+
+<h3>Pertanyaan riset</h3>
+<ol>
+  <li>Seberapa sering sistem yang ada melanggar kebijakan ketika penyerang mengendalikan penjadwalan, dan apakah pelanggaran itu memang berasal dari otorisasi yang basi?</li>
+  <li>Apakah AtomicRoot menghilangkan kelas pelanggaran tersebut untuk semua interleaving yang dieksplorasi?</li>
+  <li>Berapa biaya yang harus dibayar dalam penyelesaian tugas jinak, latensi, dan throughput?</li>
+  <li>Seberapa besar kontribusi pengikatan footprint dibanding pengikatan versi global terhadap paralelisme?</li>
+  <li>Apakah penyerang yang mengetahui desain AtomicRoot dapat memulihkan kemampuan serangannya?</li>
+</ol>
+
+<h3>Lingkungan uji</h3>
+<p>Perluas benchmark agen yang sudah mapan dengan lapisan konkurensi, lalu tambahkan tiga domain yang butuh koordinasi: asisten keuangan dengan plafon anggaran, asisten email dengan data berklasifikasi, dan asisten DevOps dengan operasi tak terbalikkan. Untuk setiap domain, sediakan tugas jinak, tugas dengan injeksi, dan tugas ambigu yang seharusnya memicu eskalasi.</p>
+
+<h3>Baseline</h3>
+<ol>
+  <li><strong>No guard.</strong> Batas atas utilitas, batas bawah keamanan.</li>
+  <li><strong>Stateless per-action check.</strong> Kebijakan dievaluasi hanya atas permintaan saat ini.</li>
+  <li><strong>Reusable capability token.</strong> Token bercakupan tapi tidak terikat versi, bisa dipakai ulang.</li>
+  <li><strong>Stateful non-atomic check.</strong> Kebijakan dievaluasi atas riwayat tetapi tanpa pengikatan versi. Inilah baseline paling penting: ia mewakili guardrail canggih yang tetap rentan TOCTOU.</li>
+  <li><strong>Global-version AtomicRoot.</strong> Varian sistemmu sendiri tanpa footprint, untuk memisahkan kontribusi keamanan dari kontribusi kinerja.</li>
+</ol>
+
+<h3>Metrik</h3>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Metrik</th><th>Definisi</th><th>Arah yang baik</th></tr></thead>
+  <tbody>
+    <tr><td>Policy violation rate</td><td>Fraksi eksekusi yang melanggar spesifikasi keamanan</td><td>Turun</td></tr>
+    <tr><td>Stale-authorization violation rate</td><td>Bagian dari pelanggaran yang penyebab akarnya adalah tiket basi</td><td>Turun ke nol</td></tr>
+    <tr><td>Benign task completion</td><td>Fraksi tugas jinak yang selesai benar</td><td>Tetap</td></tr>
+    <tr><td>False abort rate</td><td>Abort yang terjadi padahal keputusan kebijakan tidak akan berubah</td><td>Turun</td></tr>
+    <tr><td>Authorization latency</td><td>p50 dan p99 waktu evaluasi Policy Authority</td><td>Turun</td></tr>
+    <tr><td>End-to-end overhead</td><td>Selisih waktu penyelesaian task terhadap no guard</td><td>Turun</td></tr>
+    <tr><td>Effective parallelism</td><td>Rata-rata jumlah commit yang berhasil bersamaan</td><td>Naik</td></tr>
+    <tr><td>Retry depth</td><td>Distribusi jumlah percobaan ulang per permintaan</td><td>Turun, ekor pendek</td></tr>
+    <tr><td>Escalation rate</td><td>Fraksi permintaan yang dinaikkan ke manusia</td><td>Rendah tapi tidak nol</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Ablasi</h3>
+<ul>
+  <li>Tanpa pengikatan versi (tiket biasa) — menunjukkan mekanisme intinya perlu.</li>
+  <li>Versi global vs footprint — menunjukkan desain footprint yang menyelamatkan kinerja.</li>
+  <li>Tanpa effect outbox — menunjukkan tool tak terbalikkan memang butuh dua fase.</li>
+  <li>Tanpa nonce sekali pakai — menunjukkan replay attack memang tertutup oleh mekanisme itu.</li>
+</ul>
+
+<h3>Kekuatan statistik</h3>
+<p>Laporkan jumlah seed, jumlah interleaving yang dieksplorasi per skenario, dan selang kepercayaan. Untuk klaim "nol pelanggaran", jangan menulis "0%" tanpa konteks; tulis berapa interleaving yang diuji, misalnya nol pelanggaran dari sekian ribu interleaving pada sekian skenario. Reviewer sistem sangat peka pada hal ini.</p>
+</section>
+
+<!-- ============ 12 ============ -->
+<section id="s12">
+<h2><span class="num">12</span>Risiko dan mitigasi</h2>
+
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Risiko</th><th>Tanda awal</th><th>Mitigasi</th></tr></thead>
+  <tbody>
+    <tr><td>Muncul paper yang sangat mirip sebelum submit</td><td>Pencarian arXiv mingguan menemukan judul yang berdekatan</td><td>Pasang alert arXiv untuk kata kunci konkurensi agen dan otorisasi agen. Bila muncul, geser sudut ke sisi yang belum mereka isi (penyerang adaptif, benchmark, atau verifikasi formal) dan kutip mereka dengan hormat sebagai pekerjaan paralel.</td></tr>
+    <tr><td>Footprint terlalu konservatif sehingga sistem hampir serial</td><td>Effective parallelism mendekati satu</td><td>Perhalus granularitas key; pisahkan taint per subtask, bukan per task. Laporkan trade-off ini sebagai temuan, bukan kegagalan.</td></tr>
+    <tr><td>Latensi Z3 meledak pada trace panjang</td><td>p99 otorisasi melewati satu detik</td><td>Evaluasi inkremental atas ringkasan status, bukan atas seluruh trace mentah. Simpan ringkasan monoton per key sehingga panjang trace tidak masuk ke formula.</td></tr>
+    <tr><td>Overhead terlihat besar</td><td>Overhead melebihi dua kali lipat no guard</td><td>Bandingkan terhadap waktu inferensi LLM, yang biasanya mendominasi. Overhead 40 ms terhadap panggilan model 2 detik adalah cerita yang sama sekali berbeda dari overhead 40 ms terhadap RPC 1 ms.</td></tr>
+    <tr><td>Ruang lingkup membengkak</td><td>Masih menambah fitur di minggu ke-12</td><td>Bekukan fitur di minggu ke-9. Enam kebijakan, lima baseline, tiga domain. Titik.</td></tr>
+    <tr><td>Klaim terlalu besar</td><td>Abstrak mengandung kata "mencegah prompt injection"</td><td>Ganti dengan "mencegah pelanggaran kebijakan akibat otorisasi yang basi". Klaim sempit yang terbukti selalu menang atas klaim luas yang goyah.</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<!-- ============ 13 ============ -->
+<section id="s13">
+<h2><span class="num">13</span>Rencana paper dan venue</h2>
+
+<h3>Kerangka paper</h3>
+<ol>
+  <li><strong>Pendahuluan.</strong> Contoh konkret dua agen, gambar linimasa, lalu pernyataan bahwa serializability tidak cukup.</li>
+  <li><strong>Latar belakang dan motivasi.</strong> Guardrail per-panggilan, kontrol konkurensi, dan mengapa keduanya tidak beririsan pada masalah ini. Sertakan studi pengukuran kecil: berapa sering kerangka agen populer mengizinkan eksekusi tool paralel secara default.</li>
+  <li><strong>Model ancaman.</strong> Termasuk penyerang yang mengendalikan jadwal.</li>
+  <li><strong>Desain.</strong> Footprint, tiket, protokol commit.</li>
+  <li><strong>Jaminan formal.</strong> Teorema, korolari, sketsa bukti, model TLA+ bila ada.</li>
+  <li><strong>Implementasi.</strong> Jumlah baris kode, adapter, biaya integrasi.</li>
+  <li><strong>Evaluasi.</strong> Lima pertanyaan riset di atas.</li>
+  <li><strong>Penyerang adaptif.</strong></li>
+  <li><strong>Diskusi dan batasan.</strong></li>
+  <li><strong>Karya terkait.</strong> Letakkan di akhir agar pembeda muncul setelah pembaca paham desainnya.</li>
+</ol>
+
+<h3>Peta venue</h3>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Tingkat</th><th>Venue</th><th>Catatan</th></tr></thead>
+  <tbody>
+    <tr><td>Bidikan tinggi</td><td>USENIX Security, ACM CCS, NDSS, IEEE S&amp;P</td><td>Butuh implementasi kuat, evaluasi luas, dan biasanya artefak. Realistis hanya bila milestone berjalan lancar.</td></tr>
+    <tr><td>Bidikan wajar</td><td>ACSAC, ESORICS, AsiaCCS, DSN, SaTML</td><td>Target paling masuk akal untuk proyek individu satu semester dengan hasil solid.</td></tr>
+    <tr><td>Jalur cepat</td><td>AISec @ CCS, workshop keamanan LLM di NeurIPS/ICLR</td><td>Waktu tinjauan cepat, cocok untuk memvalidasi ide lebih awal lalu diperluas.</td></tr>
+    <tr><td>Jurnal</td><td>IEEE TDSC, ACM TOPS, Computers &amp; Security</td><td>Cocok bila ingin versi panjang dengan pembuktian lengkap.</td></tr>
+    <tr><td>Selalu</td><td>arXiv (cs.CR)</td><td>Pasang preprint lebih awal untuk menandai tanggal ide. Di area yang bergerak secepat ini, itu penting.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note ok">
+  <span class="tag">Strategi dua langkah yang aku sarankan</span>
+  <p>Kirim versi ringkas ke workshop lebih dulu untuk mendapat umpan balik tertulis dan tanggal publikasi, lalu kembangkan menjadi versi penuh untuk konferensi tingkat dua. Ini jauh lebih aman daripada bertaruh sekali pada venue tingkat satu dan kehabisan waktu.</p>
+</div>
+</section>
+
+<!-- ============ 14 ============ -->
+<section id="s14">
+<h2><span class="num">14</span>Lima paper pondasi</h2>
+
+<p class="lede">Dosenmu meminta sekitar lima. Ini lima yang aku pilih, beserta perannya masing-masing: dua sebagai pondasi konseptual dan lingkungan uji, tiga sebagai pembanding terdekat yang harus kamu kalahkan atau bedakan. Verifikasi setiap identitas dan klaimnya langsung di sumbernya sebelum dikutip, karena beberapa di antaranya sangat baru.</p>
+
+<div class="ref">
+  <span class="rank">Pondasi 1 — konsep penegakan kebijakan di titik pemanggilan tool</span>
+  <h3>Defeating Prompt Injections by Design (CaMeL)</h3>
+  <p class="meta">Debenedetti, Shumailov, Fan, Hayes, Carlini, Fabian, Kern, Shi, Terzis, Tramèr · 2025 · arXiv:2503.18813</p>
+  <dl>
+    <dt>Kenapa wajib</dt>
+    <dd>Ini rujukan standar untuk gagasan bahwa pertahanan terhadap prompt injection sebaiknya berupa lapisan sistem di luar model, dengan pemisahan alur kendali dari alur data dan penegakan kebijakan berbasis kapabilitas saat tool dipanggil. Seluruh premis AtomicRoot berdiri di atas gagasan ini.</dd>
+    <dt>Yang kamu ambil</dt>
+    <dd>Kerangka berpikir kapabilitas per nilai, dan cara mereka membingkai "provable security" secara terbatas dan jujur. Tiru gaya pembingkaian klaimnya.</dd>
+    <dt>Yang kamu bedakan</dt>
+    <dd>Mereka mengevaluasi kebijakan dan mengeksekusi tool dalam satu alur yang berurutan, sehingga tidak ada jeda antara keputusan dan eksekusi. Begitu interpreter itu dijalankan oleh beberapa agen yang berbagi status, jeda itu muncul dan tidak ada mekanisme yang menutupnya. Itu kalimat gap-mu.</dd>
+  </dl>
+</div>
+
+<div class="ref">
+  <span class="rank">Pondasi 2 — lingkungan evaluasi yang akan kamu perluas</span>
+  <h3>AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents</h3>
+  <p class="meta">Debenedetti, Zhang, Balunović, Beurer-Kellner, Fischer, Tramèr · NeurIPS 2024 Datasets &amp; Benchmarks</p>
+  <dl>
+    <dt>Kenapa wajib</dt>
+    <dd>Ini benchmark rujukan untuk serangan dan pertahanan prompt injection pada agen. Kalau kamu tidak memakainya, reviewer akan bertanya kenapa. Kalau kamu memakainya apa adanya, reviewer akan bertanya di mana konkurensinya.</dd>
+    <dt>Yang kamu ambil</dt>
+    <dd>Struktur suite, pasangan tugas jinak dan tugas terinjeksi, serta cara mereka mendefinisikan keberhasilan serangan. Pakai ulang metrik utilitasnya agar hasilmu bisa dibandingkan orang lain.</dd>
+    <dt>Yang kamu bedakan</dt>
+    <dd>Ekstensi konkurensi adalah kontribusi keduamu. Jelaskan secara eksplisit apa yang kamu tambahkan: sub-agen paralel, status bersama, dan penjadwal yang bisa direplay.</dd>
+  </dl>
+</div>
+
+<div class="ref">
+  <span class="rank">Pembanding 1 — tetangga terdekat di sisi transaksi</span>
+  <h3>Cordon: Semantic Transactions for Tool-Using LLM Agents</h3>
+  <p class="meta">Chen, Liu, Xu, Dong, Li, Pu, Zhai · 2026 · arXiv:2606.17573</p>
+  <dl>
+    <dt>Kenapa wajib</dt>
+    <dd>Ini sistem yang paling mungkin dianggap reviewer sebagai "sudah dikerjakan". Mereka memperkenalkan semantic transaction sebagai batas eksekusi tingkat task yang mengikat niat tool, silsilah hasil, status lokal yang dapat dibalik, efek eksternal yang distaging, dan otoritas terdelegasi ke dalam satu unit commit dan rollback.</dd>
+    <dt>Yang kamu ambil</dt>
+    <dd>Pola effect outbox dan staging efek tak terbalikkan sebelum commit. Tidak perlu menemukan ulang; kutip dan bangun di atasnya.</dd>
+    <dt>Yang kamu bedakan</dt>
+    <dd>Unit yang mereka lindungi adalah efek dan pemulihannya. Unit yang kamu lindungi adalah keputusan otorisasi dan kesegarannya. Transaksi mereka bisa commit dengan sempurna dan tetap melepas efek yang keputusannya sudah basi, karena tidak ada pengikatan keputusan ke versi status yang relevan bagi kebijakan.</dd>
+  </dl>
+</div>
+
+<div class="ref">
+  <span class="rank">Pembanding 2 — tetangga terdekat di sisi konkurensi</span>
+  <h3>Atomix: Timely, Transactional Tool Use for Reliable Agentic Workflows</h3>
+  <p class="meta">Mohammadi, Potamitis, Klein, Arora, Bindschaedler · 2026 · arXiv:2602.14849</p>
+  <dl>
+    <dt>Kenapa wajib</dt>
+    <dd>Mereka memperkenalkan isolasi konkurensi berbasis epoch dan pelacakan resource frontier untuk pemakaian tool yang andal. Ini mekanisme yang secara struktural paling mirip dengan CAS-mu, jadi pembedanya harus tajam.</dd>
+    <dt>Yang kamu ambil</dt>
+    <dd>Cara mereka melacak sumber daya lintas langkah. Berguna untuk merancang skema conflict key-mu.</dd>
+    <dt>Yang kamu bedakan</dt>
+    <dd>Tujuan mereka adalah keandalan alur kerja di bawah konkurensi biasa. Tidak ada penyerang, tidak ada kebijakan keamanan temporal, dan tidak ada notion bahwa sebuah izin bisa menjadi tidak sah karena agen lain membaca sesuatu. Tegaskan bahwa isolasi saja tidak menghasilkan keamanan kebijakan.</dd>
+  </dl>
+</div>
+
+<div class="ref">
+  <span class="rank">Pembanding 3 — tetangga terdekat di sisi formal</span>
+  <h3>Verified Detection and Prevention of Concurrency Anomalies in Multi-Agent Large Language Model Systems</h3>
+  <p class="meta">Khan · 2026 · arXiv:2606.17182</p>
+  <dl>
+    <dt>Kenapa wajib</dt>
+    <dd>Paper ini memformalkan anomali konkurensi pada sistem LLM multi-agen dalam TLA+ dan membangun hierarki konsistensi yang diperiksa mesin, dengan artefak runtime. Kalau kamu mengklaim kontribusi formal tentang konkurensi agen tanpa mengutip ini, kredibilitasmu akan dipertanyakan.</dd>
+    <dt>Yang kamu ambil</dt>
+    <dd>Kosakata anomali dan pendekatan pemodelan TLA+. Kalau kamu jadi menulis spesifikasi TLA+, struktur mereka bisa jadi acuan.</dd>
+    <dt>Yang kamu bedakan</dt>
+    <dd>Anomali yang mereka cegah adalah anomali <em>konsistensi</em> dalam lingkungan non-adversarial. Eksekusi yang sepenuhnya bebas anomali dalam kerangka mereka masih bisa melanggar kebijakan eksfiltrasi, karena konsistensi tidak sama dengan kepatuhan kebijakan. Tunjukkan itu dengan satu contoh tandingan konkret — kalau berhasil, itu paragraf paling kuat di paper-mu.</dd>
+  </dl>
+</div>
+
+<h3>Lima pendukung, untuk bagian karya terkait</h3>
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Paper</th><th>Identitas</th><th>Perannya</th></tr></thead>
+  <tbody>
+    <tr><td>CONTINUITY: Security-Context Contracts for Composable LLM Agent Controls</td><td>2026, arXiv:2609.05269</td><td>Sangat dekat dengan ide ContextSeal-mu yang lain, dan juga menyinggung permit yang basi atau di-replay. Wajib dikutip dan dibedakan: mereka mengurus komposisi kontrol lintas batas, kamu mengurus kesegaran keputusan di bawah konkurensi.</td></tr>
+    <tr><td>Progent: Securing AI Agents with Privilege Control</td><td>2025, arXiv:2504.11703</td><td>Baseline kontrol privilese yang bisa kamu implementasikan ulang dalam mode non-atomik.</td></tr>
+    <tr><td>Securing AI Agents with Information-Flow Control (FIDES)</td><td>Costa dkk., 2025, arXiv:2505.23643</td><td>Pembanding di jalur information-flow; berguna untuk menjelaskan mengapa label saja tidak menutup TOCTOU.</td></tr>
+    <tr><td>CoAgent: Concurrency Control for Multi-Agent Systems</td><td>2026, arXiv:2606.15376</td><td>Kontrol konkurensi optimistik untuk multi-agen dengan mekanisme notifikasi dan serializability. Pembanding kinerja yang bagus dan menunjukkan kamu mengikuti literatur terbaru.</td></tr>
+    <tr><td>Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection</td><td>Greshake dkk., AISec 2023</td><td>Kutipan asal untuk indirect prompt injection. Satu kalimat di pendahuluan, tapi wajib ada.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note stop">
+  <span class="tag">Sebelum menulis sitasi</span>
+  <p>Beberapa paper di atas terbit sangat baru dan aku menemukannya lewat pencarian, bukan dari ingatan. Buka setiap halaman arXiv-nya, pastikan judul, penulis, tahun, dan nomor identitasnya persis, dan baca setidaknya abstrak serta bagian karya terkait sebelum mengutip. Sitasi yang salah adalah hal pertama yang ditemukan reviewer teliti, dan itu merusak kepercayaan terhadap seluruh paper. Hal yang sama berlaku untuk FAVA yang ada di draf awalmu: pastikan dulu keberadaannya sebelum dijadikan baseline.</p>
+</div>
+</section>
+
+<footer>
+  <p>Dokumen desain AtomicRoot · revisi 3 · disusun 22 September 2026. Bagian 1 memuat perubahan terhadap draf awal; Bagian 2 kini menyertakan tabel gap-per-paper dan reposisi terhadap MasuGate; Bagian 5 kini menyertakan diagram alur data runtime per komponen; Bagian 14 memuat daftar bacaan yang perlu diverifikasi sendiri.</p>
+</footer>
+
+</div>
+
+
+</body></html>
