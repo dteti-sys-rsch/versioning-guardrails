@@ -9,6 +9,7 @@ from atomicroot.framework.storage import dumps, uid
 
 FIELDS = frozenset({"task_id", "objective", "purpose", "budget_limit", "allowed_tools",
                     "allowed_resources", "allowed_recipients", "allowed_agents", "unknown_release", "policies"})
+OPTIONAL_FIELDS = frozenset({"classification_restrictions", "inference_egress"})
 
 
 def policy_key(definition):
@@ -20,7 +21,7 @@ class ContractService:
 
     def _validate(self, proposal, snapshot):
         proposal = freeze_json(proposal)
-        if type(proposal) is not dict or set(proposal) != FIELDS:
+        if type(proposal) is not dict or not FIELDS <= set(proposal) or not set(proposal) <= FIELDS | OPTIONAL_FIELDS:
             raise ValueError("unsupported or missing proposal fields; activation is all-or-nothing")
         valid_identity(proposal["task_id"])
         money_integer(proposal["budget_limit"])
@@ -35,6 +36,21 @@ class ContractService:
         if not proposal["allowed_agents"]: raise ValueError("explicit agent delegation required")
         for identity in proposal["allowed_resources"] + proposal["allowed_agents"]: valid_identity(identity)
         if proposal["unknown_release"] not in ("DENY", "ESCALATE"): raise ValueError("unsupported UNKNOWN release rule")
+        if "classification_restrictions" in proposal and type(proposal["classification_restrictions"]) is not bool:
+            raise ValueError("classification_restrictions must be boolean")
+        rules = proposal.get("inference_egress", [])  # official default: no inference egress
+        if type(rules) is not list or len(rules) > 16: raise ValueError("invalid inference egress scope")
+        for rule in rules:
+            if type(rule) is not dict or set(rule) != {"provider", "resource", "purpose", "labels"}:
+                raise ValueError("unsupported inference scope fields")
+            valid_identity(rule["provider"])
+            valid_identity(rule["resource"])
+            if (rule["provider"] not in proposal["allowed_recipients"] or
+                    rule["resource"] not in proposal["allowed_resources"] or rule["purpose"] != proposal["purpose"]):
+                raise ValueError("inference scope must fit approved contract scope")
+            if (type(rule["labels"]) is not list or not rule["labels"] or len(rule["labels"]) > 3 or
+                    any(type(v) is not str or v not in {"PUBLIC", "SENSITIVE", "UNKNOWN"} for v in rule["labels"])):
+                raise ValueError("explicit inference data labels required")
         if type(proposal["policies"]) is not list or len(proposal["policies"]) > 8:
             raise ValueError("at most eight custom policies")
         definitions, seen = [], set()
@@ -91,7 +107,7 @@ class ContractService:
                        "fact_sources": registry_preview(), "unsupported": [],
                        "assumptions": ["task-level exposure is conservative", "external content is untrusted instructions",
                                        "owner labels do not certify factual accuracy"],
-                       "built_in_policies": ["scope", "budget_monotone", "no_exfil_after_sensitive", "unknown_release"]}
+                       "built_in_policies": ["scope", "provider_scope", "budget_monotone", "no_exfil_after_sensitive", "unknown_release"]}
             digest = args_hash({"proposal": data, "base_version": base, "preview": preview})
         proposal_id = uid("proposal")
         with self.store.transaction() as conn:

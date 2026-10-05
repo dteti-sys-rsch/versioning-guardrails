@@ -41,6 +41,10 @@ class SimulatedReceiver:
                     key = f"read:{task}:{operation}"
                     result = {"content": payload["resource_snapshot"]["content"], "digest": args["digest"],
                               "instruction_trust": "UNTRUSTED", "factual_accuracy": "UNVERIFIED"}
+                elif simulator == "classification":
+                    key = f"inference:{task}:{operation}"
+                    result = {"provider": args["to"], "resource": args["resource"], "digest": args["digest"],
+                              "outcome": "OFFLINE_SIMULATION", "candidate_label": "UNKNOWN"}
                 else:
                     raise ValueError("receiver has no registered simulator")
                 conn.execute("INSERT INTO receiver_state(key,value) VALUES (?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",

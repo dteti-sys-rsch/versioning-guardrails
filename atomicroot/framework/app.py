@@ -12,6 +12,7 @@ from atomicroot.framework.runtime import RuntimeAuthority, IntentGateway, operat
 from atomicroot.framework.outbox import Dispatcher, SimulatedReceiver
 from atomicroot.framework.registry import registry_preview
 from atomicroot.framework.schema import schema
+from atomicroot.framework.classification import ClassificationProposals
 
 
 class FrameworkRuntime:
@@ -21,6 +22,7 @@ class FrameworkRuntime:
         self.contracts = ContractService(self.store, self.broker)
         self.storage = StorageService(self.store)
         self.labels = LabelManager(self.store)
+        self.classification = ClassificationProposals(self.store)
         self.authority = RuntimeAuthority(self.store, self.broker, signing_key, harness)
         self.gateway = IntentGateway(self.store, self.broker, self.authority.verify_key, harness)
         self.receiver = SimulatedReceiver(self.store)
@@ -89,6 +91,26 @@ def create_phase3_app(runtime, identity_resolver):
         exact(body, {"digest", "version", "label", "purposes"})
         return await run_in_threadpool(runtime.labels.set_label, resource, body["digest"], body["version"],
                                       body["label"], body["purposes"], identity(request))
+
+    @app.post("/classification/proposals")
+    async def classification_begin(body: dict, request: Request):
+        exact(body, {"resource", "digest", "content_version", "model_id", "model_version", "criteria_version", "criteria_hash"})
+        return await run_in_threadpool(runtime.classification.begin, **body, principal=identity(request))
+
+    @app.post("/classification/proposals/{proposal_id}/result")
+    async def classification_result(proposal_id: str, body: dict, request: Request):
+        return await run_in_threadpool(runtime.classification.record, proposal_id, body, identity(request))
+
+    @app.get("/classification/proposals/{proposal_id}")
+    async def classification_status(proposal_id: str, request: Request):
+        return await run_in_threadpool(runtime.classification.status, proposal_id, identity(request))
+
+    @app.post("/classification/proposals/{proposal_id}/accept")
+    async def classification_accept(proposal_id: str, body: dict, request: Request):
+        exact(body, {"task_id", "purpose"})
+        result = await run_in_threadpool(runtime.labels.accept_classification, proposal_id,
+                                        body["task_id"], body["purpose"], identity(request))
+        return JSONResponse(result, status_code=409 if result["status"] == "STALE" else 200)
 
     @app.post("/authorize")
     async def authorize(body: dict, request: Request):

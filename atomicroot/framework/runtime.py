@@ -112,6 +112,7 @@ class RuntimeAuthority:
                 normalized = {**request, "args": {**request["args"], "amount": request["args"].get("amount", 0)},
                               "recipient": request["args"].get("to", ""), "resource": request["args"].get("resource", ""),
                               "unknown_release": contract["unknown_release"], "resolved_label": "PUBLIC"}
+                normalized["inference_egress"] = contract.get("inference_egress", [])
                 resource = None
                 if spec.resource:
                     resource, label = LabelManager.resolve(reader, normalized["resource"], request["args"]["digest"], request["purpose"])

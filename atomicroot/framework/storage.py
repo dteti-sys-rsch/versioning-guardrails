@@ -49,6 +49,9 @@ class FrameworkStore(TraceStore):
                 receipt TEXT NOT NULL, PRIMARY KEY(task,operation));
             CREATE TABLE IF NOT EXISTS receiver_state (
                 key TEXT PRIMARY KEY, value TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS classification_proposals (
+                id TEXT PRIMARY KEY, resource TEXT NOT NULL,
+                status TEXT NOT NULL, data TEXT NOT NULL);
         """)
 
     @contextmanager

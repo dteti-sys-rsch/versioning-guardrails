@@ -16,6 +16,12 @@ machines, actual test results and assumptions. Examples are in
 [examples/phase3](examples/phase3). The manual CLI is [phase3_cli.py](phase3_cli.py).
 The earlier audit and migration record remains in [PHASE2_UPDATE.md](PHASE2_UPDATE.md).
 
+The conditional Phase 3 compatibility patch records classifier evidence
+separately from authoritative labels and adds explicit provider ingestion scope
+through the existing Gateway/outbox, with an offline simulator only. See
+[PHASE3_COMPAT_AUDIT.md](PHASE3_COMPAT_AUDIT.md) for the requirement matrix,
+additive migration, API changes and actual test results.
+
 ## Run
 
 Python 3.11+:
