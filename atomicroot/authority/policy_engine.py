@@ -6,11 +6,13 @@ from typing import Any
 from types import MappingProxyType
 import json
 import re
+import threading
+from functools import wraps
 
 import z3
 
 
-class EvaluationError(Exception):
+class EvaluationError(ValueError):
     pass
 
 
@@ -50,6 +52,55 @@ class Const:
 @dataclass(frozen=True)
 class RequestAmount:
     pass
+
+
+@dataclass(frozen=True)
+class RequestField:
+    name: str
+
+
+REQUEST_FIELDS = MappingProxyType({"tool": "str", "agent_id": "str", "purpose": "str",
+                                  "recipient": "str", "resource": "str"})
+
+
+@dataclass(frozen=True)
+class SetConst:
+    values: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class Eq:
+    left: Any
+    right: Any
+
+
+@dataclass(frozen=True)
+class Lt:
+    left: Any
+    right: Any
+
+
+@dataclass(frozen=True)
+class Sub:
+    left: Any
+    right: Any
+
+
+@dataclass(frozen=True)
+class Member:
+    left: Any
+    right: Any
+
+
+@dataclass(frozen=True)
+class Subset:
+    left: Any
+    right: Any
+
+
+@dataclass(frozen=True)
+class Or:
+    children: tuple[Any, ...]
 
 
 @dataclass(frozen=True)
@@ -123,20 +174,22 @@ FACT_SOURCES = MappingProxyType({
 })
 
 
-def resolve(ref: Ref, request: dict[str, Any]) -> str:
-    spec = FACT_SOURCES.get(ref.kind)
+def resolve(ref: Ref, request: dict[str, Any], sources=None) -> str:
+    spec = (FACT_SOURCES if sources is None else sources).get(ref.kind)
     if spec is None or ref.identity != spec.identity:
         raise EvaluationError("unsupported fact source or identity scope")
     if ref.identity == "task":
         identity = valid_identity(request["task_id"])
     elif ref.identity == "document":
-        identity = valid_identity(request["args"]["doc_id"])
+        identity = valid_identity(request["args"].get("doc_id", request["args"].get("resource")))
+    elif ref.identity == "operation":
+        identity = valid_identity(request["task_id"]) + ":" + valid_identity(request["operation_id"])
     else:
         raise EvaluationError("unknown identity")
     return f"{spec.prefix}:{identity}"
 
 
-def ast_type(node: Any) -> str:
+def ast_type(node: Any, sources=None) -> str:
     """Bound traversal first, then check every node's operand types."""
     pending = [(node, 1)]
     count = 0
@@ -145,13 +198,13 @@ def ast_type(node: Any) -> str:
         count += 1
         if count > MAX_AST_NODES or depth > MAX_AST_DEPTH:
             raise EvaluationError("AST exceeds node/depth limits")
-        if type(current) in (Ref, Const, RequestAmount):
+        if type(current) in (Ref, Const, RequestAmount, RequestField, SetConst):
             children = ()
-        elif type(current) in (Add, Le):
+        elif type(current) in (Add, Le, Sub, Lt, Eq, Member, Subset):
             children = (current.left, current.right)
         elif type(current) is Not:
             children = (current.child,)
-        elif type(current) is And and type(current.children) is tuple:
+        elif type(current) in (And, Or) and type(current.children) is tuple:
             children = current.children
         elif type(current) is If:
             children = (current.condition, current.yes, current.no)
@@ -167,23 +220,40 @@ def ast_type(node: Any) -> str:
                 return "bool"
             if type(current.value) is int and abs(current.value) <= MAX_INTEGER:
                 return "int"
+            if type(current.value) is str and len(current.value) <= 256:
+                return "str"
             raise EvaluationError("invalid or oversized constant")
+        if type(current) is SetConst:
+            finite_strings(current.values)
+            return "set"
+        if type(current) is RequestField:
+            if current.name not in REQUEST_FIELDS:
+                raise EvaluationError("unknown request field")
+            return REQUEST_FIELDS[current.name]
         if type(current) is RequestAmount:
             return "int"
         if type(current) is Ref:
-            spec = FACT_SOURCES.get(current.kind)
+            spec = (FACT_SOURCES if sources is None else sources).get(current.kind)
             if spec is None or current.identity != spec.identity:
                 raise EvaluationError("unsupported fact source or identity scope")
             return spec.value_type
-        if type(current) in (Add, Le):
+        if type(current) in (Add, Le, Sub, Lt):
             if infer(current.left) != "int" or infer(current.right) != "int":
                 raise EvaluationError("arithmetic operands must be integer")
-            return "int" if type(current) is Add else "bool"
+            return "int" if type(current) in (Add, Sub) else "bool"
+        if type(current) is Eq:
+            if infer(current.left) != infer(current.right):
+                raise EvaluationError("equality types must match")
+            return "bool"
+        if type(current) in (Member, Subset):
+            if infer(current.left) != ("str" if type(current) is Member else "set") or infer(current.right) != "set":
+                raise EvaluationError("invalid finite set operands")
+            return "bool"
         if type(current) is Not:
             if infer(current.child) != "bool":
                 raise EvaluationError("Not operand must be boolean")
             return "bool"
-        if type(current) is And:
+        if type(current) in (And, Or):
             if any(infer(child) != "bool" for child in current.children):
                 raise EvaluationError("And operands must be boolean")
             return "bool"
@@ -196,19 +266,19 @@ def ast_type(node: Any) -> str:
     return infer(node)
 
 
-def dependencies(node: Any, request: dict[str, Any]) -> set[str]:
+def dependencies(node: Any, request: dict[str, Any], sources=None) -> set[str]:
     """Visit every branch, even when runtime evaluation will not take it."""
-    ast_type(node)
+    ast_type(node, sources)
     def visit(current):
         if isinstance(current, Ref):
-            return {resolve(current, request)}
-        if isinstance(current, (Const, RequestAmount)):
+            return {resolve(current, request, sources)}
+        if isinstance(current, (Const, RequestAmount, RequestField, SetConst)):
             return set()
-        if isinstance(current, (Add, Le)):
+        if isinstance(current, (Add, Le, Sub, Lt, Eq, Member, Subset)):
             return visit(current.left) | visit(current.right)
         if isinstance(current, Not):
             return visit(current.child)
-        if isinstance(current, And):
+        if isinstance(current, (And, Or)):
             return set().union(*(visit(c) for c in current.children))
         return visit(current.condition) | visit(current.yes) | visit(current.no)
     return visit(node)
@@ -217,8 +287,9 @@ def dependencies(node: Any, request: dict[str, Any]) -> set[str]:
 class StatusReader:
     """The only route to policy state; all reads use one SQLite Snapshot."""
 
-    def __init__(self, snapshot):
+    def __init__(self, snapshot, sources=None):
         self.snapshot = snapshot
+        self.sources = FACT_SOURCES if sources is None else sources
         self.reads: dict[str, int] = {}
         self.values: dict[str, Any] = {}
 
@@ -229,7 +300,7 @@ class StatusReader:
             raise EvaluationError(f"missing fact: {key}")
         if type(version) is not int or version < 0:
             raise EvaluationError("invalid fact version")
-        if len(json.dumps(value, allow_nan=False).encode("utf-8")) > MAX_STATE_BYTES:
+        if len(json.dumps(value, allow_nan=False, ensure_ascii=False, separators=(",", ":")).encode("utf-8")) > MAX_STATE_BYTES:
             raise EvaluationError("fact exceeds size limit")
         self.reads[key] = version
         self.values[key] = value
@@ -246,6 +317,34 @@ class StatusReader:
         return footprint
 
 
+def finite_strings(value):
+    if type(value) not in (list, tuple) or len(value) > 64 or any(
+            type(v) is not str or len(v) > 256 for v in value):
+        raise EvaluationError("expected finite string set (<=64 items, <=256 chars/item)")
+    return tuple(sorted(set(value)))
+
+
+def literal(value, kind):
+    if kind == "bool":
+        if type(value) is not bool:
+            raise EvaluationError("expected boolean fact")
+        return z3.BoolVal(value)
+    if kind == "int":
+        if type(value) is not int or abs(value) > MAX_INTEGER:
+            raise EvaluationError("expected bounded integer fact")
+        return z3.IntVal(value)
+    if kind == "str":
+        if type(value) is not str or len(value) > 256:
+            raise EvaluationError("expected bounded string fact")
+        return z3.StringVal(value)
+    if kind == "set":
+        result = z3.EmptySet(z3.StringSort())
+        for item in finite_strings(value):
+            result = z3.SetAdd(result, z3.StringVal(item))
+        return result
+    raise EvaluationError("unknown fact type")
+
+
 def encode(node: Any, request: dict[str, Any], reader: StatusReader,
            facts: list[Any], cache: dict[str, Any]):
     if isinstance(node, Const):
@@ -253,23 +352,36 @@ def encode(node: Any, request: dict[str, Any], reader: StatusReader,
             return z3.BoolVal(node.value)
         if type(node.value) is int:
             return z3.IntVal(node.value)
+        if type(node.value) is str:
+            return z3.StringVal(node.value)
         raise EvaluationError("invalid constant")
+    if isinstance(node, SetConst):
+        return literal(node.values, "set")
+    if isinstance(node, RequestField):
+        return literal(request[node.name], REQUEST_FIELDS[node.name])
     if isinstance(node, RequestAmount):
         amount = money_integer(request["args"].get("amount"))
         return z3.IntVal(amount)
     if isinstance(node, Ref):
-        key = resolve(node, request)
-        if key not in cache:
-            spec = FACT_SOURCES[node.kind]
+        key = resolve(node, request, reader.sources)
+        # Several typed fields may share one versioned row (e.g. contract).
+        spec = reader.sources[node.kind]
+        cache_key = key if reader.sources is FACT_SOURCES else f"{key}/{node.kind}"
+        if cache_key not in cache:
             value = spec.decode(reader.read(key))
-            if spec.value_type == "bool":
-                symbol = z3.Bool(f"state_{len(cache)}")
-                facts.append(symbol == z3.BoolVal(value))
-            else:
-                symbol = z3.Int(f"state_{len(cache)}")
-                facts.append(symbol == value)
-            cache[key] = symbol
-        return cache[key]
+            concrete = literal(value, spec.value_type)
+            symbol = z3.Const(f"state_{len(cache)}", concrete.sort())
+            facts.append(symbol == concrete)
+            cache[cache_key] = symbol
+        return cache[cache_key]
+    if isinstance(node, (Sub, Lt, Eq, Member, Subset)):
+        left = encode(node.left, request, reader, facts, cache)
+        right = encode(node.right, request, reader, facts, cache)
+        if isinstance(node, Sub): return left - right
+        if isinstance(node, Lt): return left < right
+        if isinstance(node, Eq): return left == right
+        if isinstance(node, Member): return z3.IsMember(left, right)
+        return z3.IsSubset(left, right)
     if isinstance(node, Add):
         return encode(node.left, request, reader, facts, cache) + encode(node.right, request, reader, facts, cache)
     if isinstance(node, Le):
@@ -278,6 +390,8 @@ def encode(node: Any, request: dict[str, Any], reader: StatusReader,
         return z3.Not(encode(node.child, request, reader, facts, cache))
     if isinstance(node, And):
         return z3.And(*(encode(c, request, reader, facts, cache) for c in node.children))
+    if isinstance(node, Or):
+        return z3.Or(*(encode(c, request, reader, facts, cache) for c in node.children))
     if isinstance(node, If):
         # Encoding all branches also records their dynamic dependencies.
         return z3.If(encode(node.condition, request, reader, facts, cache),
@@ -286,6 +400,20 @@ def encode(node: Any, request: dict[str, Any], reader: StatusReader,
     raise EvaluationError("unsupported AST node")
 
 
+_Z3_LOCK = threading.RLock()
+
+
+def _serialized_z3(function):
+    @wraps(function)
+    def run(*args, **kwargs):
+        # The shared default Z3 context is process-local and must not be used
+        # concurrently by API threads with separate database connections.
+        with _Z3_LOCK:
+            return function(*args, **kwargs)
+    return run
+
+
+@_serialized_z3
 def solve(policy: str, expr: Any, request: dict[str, Any], reader: StatusReader,
           write_set: list[str], *, timeout_ms: int = 1000,
           solver_factory=None) -> PolicyResult:
@@ -293,9 +421,9 @@ def solve(policy: str, expr: Any, request: dict[str, Any], reader: StatusReader,
     try:
         if type(timeout_ms) is not int or not 0 < timeout_ms <= MAX_SOLVER_TIMEOUT_MS:
             raise EvaluationError("invalid solver timeout")
-        if ast_type(expr) != "bool":
+        if ast_type(expr, reader.sources) != "bool":
             raise EvaluationError("policy root must be boolean")
-        static_keys = dependencies(expr, request)
+        static_keys = dependencies(expr, request, reader.sources)
         facts: list[Any] = []
         cache: dict[str, Any] = {}
         safe = encode(expr, request, reader, facts, cache)
@@ -325,9 +453,12 @@ def solve(policy: str, expr: Any, request: dict[str, Any], reader: StatusReader,
             evidence = [e for e in events if e["tool"] == "read_document" and
                         json.loads(e["args"]).get("_resolved_data_class") in {"finance", "sensitive"}]
             explanation = f"task {task_id} was exposed to sensitive data; external send denied"
-        else:
+        elif policy == "budget_monotone":
             evidence = [e for e in events if e["tool"] in {"transfer_funds", "make_payment", "purchase"}]
             explanation = f"projected spend exceeds contract cap for task {task_id}"
+        else:
+            evidence = events
+            explanation = f"{policy}: constraint violated for task {task_id}"
         return PolicyResult("DENY", footprint, [], explanation,
                             evidence[-1] if evidence else None,
                             {"tool": request["tool"], "args": request["args"]},

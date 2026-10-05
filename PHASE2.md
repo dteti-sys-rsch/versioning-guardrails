@@ -1,20 +1,13 @@
-# AtomicRoot — Phase 3 research prototype
+# AtomicRoot — Phase 2 research prototype
 
 AtomicRoot binds an ALLOW ticket to the versions of the policy state it read. A
 Gateway accepts the ticket only if `Fresh(ticket, state)` holds inside the same
 SQLite transaction that consumes the ticket, appends an event, updates policy
 state, and bumps the write set. Tool effects remain simulated.
 
-**Z3 remains the only policy evaluator.** Phase 3 extends the same AST, signing
-format and SQLite Trace Store with reviewed contracts, a trusted fact/tool
-registry, explicit labels, selective operation consent and a transactional
-outbox. COMMITTED accepts an immutable intent; RELEASED records a durable
-simulated receiver receipt. No real email, money transfer or deployment occurs.
-
-See [PHASE3.md](PHASE3.md) for the API, grammar, source/update matrix, state
-machines, actual test results and assumptions. Examples are in
-[examples/phase3](examples/phase3). The manual CLI is [phase3_cli.py](phase3_cli.py).
-The earlier audit and migration record remains in [PHASE2_UPDATE.md](PHASE2_UPDATE.md).
+The October 2026 Phase 2 update uses **Z3 as the only policy evaluator**.
+The audit matrix, reproduced gaps, migration notes and actual verification
+results are in [PHASE2_UPDATE.md](PHASE2_UPDATE.md).
 
 ## Run
 
@@ -25,21 +18,9 @@ py -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e ".[test]"
 .\.venv\Scripts\python.exe -m pytest atomicroot/tests -q
 .\.venv\Scripts\python.exe demo.py
-.\.venv\Scripts\python.exe phase3_cli.py demo
-.\.venv\Scripts\python.exe phase3_cli.py schema
 ```
 
-For Phase 3 integrations use `FrameworkRuntime` and `create_phase3_app` from
-`atomicroot.framework.app`. Supply a trusted identity resolver; worker bodies
-cannot set their identity or role. The demo uses explicit named identity and
-approval fixtures. The runtime never auto-approves.
-
-The existing Phase 2 entry points and tests remain available for reproducible
-baseline comparisons. Legacy direct-effect Commit rejects any activated Phase 3
-task. Existing Phase 2 task data needs a reviewed explicit migration; it is not
-silently relabelled or reset by the new Contract Service.
-
-## Historical Phase 2 design (retained regression interface)
+## Phase 2 design
 
 - `atomicroot/authority/policy_engine.py` defines a small typed AST (`Ref`,
   `Const`, `RequestAmount`, `Add`, `Le`, `Not`, `And`, `If`). Unknown nodes or
@@ -148,7 +129,5 @@ second Commit as stale. Unrelated keys do not invalidate each other.
   longer manually add taint/spend after Commit because Commit owns those
   updates. No valid ALLOW/DENY case for the two original policies changed.
 
-The historical Phase 2 interface ends here. Phase 3 adds the simulated outbox
-and approval workflow in `atomicroot/framework`; the four full policy benchmark
-templates, full adversarial scheduler, agent frameworks/LLMs, and large
-benchmarks remain outside the current scope.
+Out of scope: the four later policies, external effect outbox, approval broker,
+full adversarial scheduler, agent frameworks/LLMs, and benchmarks.

@@ -183,6 +183,9 @@ class TraceStore:
         with self._lock:
             self._conn.execute("BEGIN IMMEDIATE")
             try:
+                if self._conn.execute("SELECT 1 FROM conflict_keys WHERE key=?",
+                                      (f"contract3:{event_data['task_id']}",)).fetchone():
+                    raise ValueError("Phase 3 task requires IntentGateway and transactional outbox")
                 keys = set(footprint) | set(write_set)
                 before = {}
                 for key in keys:

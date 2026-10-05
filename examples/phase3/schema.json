@@ -1,0 +1,873 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AtomicRoot Phase 3 contract and request schema",
+  "description": "Also enforce UTF-8 byte limits, AST types, 256 nodes/depth32, registered sources and current versions in the service.",
+  "$defs": {
+    "expression": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "const"
+            },
+            "value": {
+              "type": [
+                "boolean",
+                "integer",
+                "string"
+              ]
+            }
+          },
+          "required": [
+            "op",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "values": {
+              "type": "array",
+              "maxItems": 64,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "maxLength": 256
+              }
+            }
+          },
+          "required": [
+            "op",
+            "values"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "request"
+            },
+            "name": {
+              "enum": [
+                "tool",
+                "agent_id",
+                "purpose",
+                "recipient",
+                "resource"
+              ]
+            }
+          },
+          "required": [
+            "op",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "amount"
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "not"
+            },
+            "child": {
+              "$ref": "#/$defs/expression"
+            }
+          },
+          "required": [
+            "op",
+            "child"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "and",
+                "or"
+              ]
+            },
+            "children": {
+              "type": "array",
+              "maxItems": 256,
+              "items": {
+                "$ref": "#/$defs/expression"
+              }
+            }
+          },
+          "required": [
+            "op",
+            "children"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "if"
+            },
+            "condition": {
+              "$ref": "#/$defs/expression"
+            },
+            "yes": {
+              "$ref": "#/$defs/expression"
+            },
+            "no": {
+              "$ref": "#/$defs/expression"
+            }
+          },
+          "required": [
+            "op",
+            "condition",
+            "yes",
+            "no"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "add",
+                "sub",
+                "eq",
+                "le",
+                "lt",
+                "member",
+                "subset"
+              ]
+            },
+            "left": {
+              "$ref": "#/$defs/expression"
+            },
+            "right": {
+              "$ref": "#/$defs/expression"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "budget_limit"
+            },
+            "scope": {
+              "const": "task"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "allowed_recipients"
+            },
+            "scope": {
+              "const": "task"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "allowed_tools"
+            },
+            "scope": {
+              "const": "task"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "allowed_resources"
+            },
+            "scope": {
+              "const": "task"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "allowed_agents"
+            },
+            "scope": {
+              "const": "task"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "purpose"
+            },
+            "scope": {
+              "const": "task"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "unknown_release"
+            },
+            "scope": {
+              "const": "task"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "budget_used"
+            },
+            "scope": {
+              "const": "task"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "budget_reserved"
+            },
+            "scope": {
+              "const": "task"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "exposure"
+            },
+            "scope": {
+              "const": "task"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "document_version"
+            },
+            "scope": {
+              "const": "document"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "document_digest"
+            },
+            "scope": {
+              "const": "document"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "label"
+            },
+            "scope": {
+              "const": "document"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "approval"
+            },
+            "scope": {
+              "const": "operation"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "ref"
+            },
+            "fact": {
+              "const": "operation_committed"
+            },
+            "scope": {
+              "const": "operation"
+            }
+          },
+          "required": [
+            "op",
+            "fact",
+            "scope"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "policy": {
+      "type": "object",
+      "properties": {
+        "policy_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "scope": {
+          "const": "task"
+        },
+        "applies_to": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "enum": [
+              "read_document",
+              "send_email",
+              "transfer_funds",
+              "deploy"
+            ]
+          }
+        },
+        "when": {
+          "$ref": "#/$defs/expression"
+        },
+        "constraint": {
+          "$ref": "#/$defs/expression"
+        },
+        "on_violation": {
+          "enum": [
+            "DENY",
+            "ESCALATE"
+          ]
+        }
+      },
+      "required": [
+        "policy_id",
+        "version",
+        "scope",
+        "applies_to",
+        "when",
+        "constraint",
+        "on_violation"
+      ],
+      "additionalProperties": false
+    },
+    "proposal": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "budget_limit": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9223372036854775807
+        },
+        "allowed_tools": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "enum": [
+              "read_document",
+              "send_email",
+              "transfer_funds",
+              "deploy"
+            ]
+          }
+        },
+        "allowed_resources": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          }
+        },
+        "allowed_recipients": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "maxLength": 256
+          }
+        },
+        "allowed_agents": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "minItems": 1
+        },
+        "unknown_release": {
+          "enum": [
+            "DENY",
+            "ESCALATE"
+          ]
+        },
+        "policies": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/policy"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "policy_id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "required": [
+                  "policy_id",
+                  "version"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "task_id",
+        "objective",
+        "purpose",
+        "budget_limit",
+        "allowed_tools",
+        "allowed_resources",
+        "allowed_recipients",
+        "allowed_agents",
+        "unknown_release",
+        "policies"
+      ],
+      "additionalProperties": false
+    },
+    "request": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "agent_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "operation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "purpose": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "tool": {
+              "const": "read_document"
+            },
+            "args": {
+              "type": "object",
+              "properties": {
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                },
+                "resource": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                }
+              },
+              "required": [
+                "digest",
+                "resource"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "task_id",
+            "agent_id",
+            "operation_id",
+            "purpose",
+            "tool",
+            "args"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "agent_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "operation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "purpose": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "tool": {
+              "const": "send_email"
+            },
+            "args": {
+              "type": "object",
+              "properties": {
+                "body": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 8192
+                },
+                "to": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "required": [
+                "body",
+                "to"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "task_id",
+            "agent_id",
+            "operation_id",
+            "purpose",
+            "tool",
+            "args"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "agent_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "operation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "purpose": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "tool": {
+              "const": "transfer_funds"
+            },
+            "args": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9223372036854775807
+                },
+                "to": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "required": [
+                "amount",
+                "to"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "task_id",
+            "agent_id",
+            "operation_id",
+            "purpose",
+            "tool",
+            "args"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "agent_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "operation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "purpose": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "tool": {
+              "const": "deploy"
+            },
+            "args": {
+              "type": "object",
+              "properties": {
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                },
+                "resource": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                },
+                "to": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "required": [
+                "digest",
+                "resource",
+                "to"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "task_id",
+            "agent_id",
+            "operation_id",
+            "purpose",
+            "tool",
+            "args"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/proposal"
+    },
+    {
+      "$ref": "#/$defs/request"
+    }
+  ]
+}
