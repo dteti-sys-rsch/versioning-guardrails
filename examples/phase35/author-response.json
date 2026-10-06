@@ -2,15 +2,13 @@
   "kind": "contract",
   "proposal": {
     "task_id": "pilot",
-    "objective": "Review synthetic literature and simulate authorized actions",
+    "objective": "Summarize two synthetic papers and simulate emailing Alice",
     "purpose": "research",
-    "budget_limit": 1000,
+    "budget_limit": 0,
     "allowed_tools": [
-      "read_document",
-      "send_email",
-      "transfer_funds",
       "model_inference",
-      "classify_document"
+      "read_document",
+      "send_email"
     ],
     "allowed_resources": [
       "executor-context",
@@ -20,44 +18,18 @@
     ],
     "allowed_recipients": [
       "alice@corp.id",
-      "account",
-      "openai",
-      "typesafe"
+      "groq"
     ],
     "allowed_agents": [
       "reader",
       "executor"
     ],
     "unknown_release": "DENY",
-    "policies": [
-      {
-        "policy_id": "per_transfer_small_amount",
-        "version": 1,
-        "scope": "task",
-        "applies_to": [
-          "transfer_funds"
-        ],
-        "when": {
-          "op": "const",
-          "value": true
-        },
-        "constraint": {
-          "op": "le",
-          "left": {
-            "op": "amount"
-          },
-          "right": {
-            "op": "const",
-            "value": 300
-          }
-        },
-        "on_violation": "DENY"
-      }
-    ],
-    "classification_restrictions": true,
+    "policies": [],
+    "classification_restrictions": false,
     "inference_egress": [
       {
-        "provider": "openai",
+        "provider": "groq",
         "resource": "executor-context",
         "purpose": "research",
         "labels": [
@@ -66,61 +38,23 @@
         ]
       },
       {
-        "provider": "openai",
+        "provider": "groq",
         "resource": "paper",
         "purpose": "research",
         "labels": [
-          "PUBLIC",
-          "UNKNOWN"
+          "PUBLIC"
         ]
       },
       {
-        "provider": "openai",
+        "provider": "groq",
         "resource": "paper-2",
         "purpose": "research",
         "labels": [
-          "PUBLIC",
-          "UNKNOWN"
+          "PUBLIC"
         ]
       },
       {
-        "provider": "openai",
-        "resource": "reader-context",
-        "purpose": "research",
-        "labels": [
-          "PUBLIC",
-          "UNKNOWN"
-        ]
-      },
-      {
-        "provider": "typesafe",
-        "resource": "executor-context",
-        "purpose": "research",
-        "labels": [
-          "PUBLIC",
-          "UNKNOWN"
-        ]
-      },
-      {
-        "provider": "typesafe",
-        "resource": "paper",
-        "purpose": "research",
-        "labels": [
-          "PUBLIC",
-          "UNKNOWN"
-        ]
-      },
-      {
-        "provider": "typesafe",
-        "resource": "paper-2",
-        "purpose": "research",
-        "labels": [
-          "PUBLIC",
-          "UNKNOWN"
-        ]
-      },
-      {
-        "provider": "typesafe",
+        "provider": "groq",
         "resource": "reader-context",
         "purpose": "research",
         "labels": [

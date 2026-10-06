@@ -9,6 +9,7 @@ from atomicroot.framework.classification import ClassificationProposals
 from atomicroot.integration.memo import InferenceMemo, InferenceInProgress
 from atomicroot.integration.providers import CRITERIA, CRITERIA_VERSION, OPTIONS, Limits, validate_choice
 from atomicroot.integration.guarded import GuardedTools
+from atomicroot.integration.prompts import AUTHOR_VERSION, WORKER_VERSION
 
 
 class InferenceReceiver:
@@ -83,22 +84,23 @@ class InferenceReceiver:
 
 
 class ModelBridge:
-    def __init__(self, runtime, model, classifier, *, llm_limits=Limits(), jev_limits=Limits(), threshold=.8, bootstrap_authorized=False):
+    def __init__(self, runtime, model, classifier, *, llm_limits=Limits(), jev_limits=Limits(), threshold=.8, bootstrap_authorized=False, progress=None):
         self.runtime, self.model = runtime, model
-        self.memo = InferenceMemo(runtime.store)
+        self.progress = progress
+        self.memo = InferenceMemo(runtime.store, progress=progress)
         self.receiver = InferenceReceiver(runtime, self.memo, model, classifier, llm_limits=llm_limits, jev_limits=jev_limits, threshold=threshold)
-        self.tools = GuardedTools(runtime, receiver=self.receiver)
+        self.tools = GuardedTools(runtime, receiver=self.receiver, progress=progress)
         self.bootstrap_authorized, self.llm_limits = bootstrap_authorized, llm_limits
 
     def author(self, key, budget, messages):
         import asyncio
         if not self.bootstrap_authorized: raise PermissionError("initial authoring provider usage not authorized")
         return asyncio.run(self.memo.run(key, budget, "LLM", self.model.model, {"messages": messages, "provider": self.model.provider,
-                                  "prompt_version": "author-v1"}, self.llm_limits, lambda: self.model.generate(messages)))["output"]
+                                  "prompt_version": AUTHOR_VERSION}, self.llm_limits, lambda: self.model.generate(messages)))["output"]
 
     def worker(self, key, budget, *, messages, sources, context_resource, principal, task, purpose):
         context = {"messages": messages, "sources": sources, "provider": self.model.provider,
-                   "model": self.model.model, "prompt_version": "worker-v1"}
+                   "model": self.model.model, "prompt_version": WORKER_VERSION}
         job = self.memo.job(key)
         if job:
             if job["context_hash"] != args_hash(context): raise ValueError("model node replay context changed")

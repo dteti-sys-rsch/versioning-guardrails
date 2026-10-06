@@ -59,6 +59,22 @@ silently relabelled or reset by the new Contract Service.
 
 ## Fase 3.5: CLI, checkpoint, model dan JEV
 
+Pilot scope diperketat per skenario. `literature/injection/sensitive/unknown`
+memakai budget 0, tanpa transfer/account. `budget` hanya memakai transfer dan
+model inference, dengan plafon 500 dan revisi yang direview sampai 800.
+TypeSafe/classify_document/restriction hanya didelegasikan jika `--classify`
+dan classifier aktif; target classifier pilot hanya `paper`. Proposal LLM yang
+memperluas scope host ditolak sebelum preview, termasuk saat revisi.
+Lihat [PILOT_SCOPE_PROGRESS.md](PILOT_SCOPE_PROGRESS.md) untuk audit dan batas.
+
+Progress ringkas tampil otomatis dan disimpan di `progress.jsonl`: inference,
+validasi, review, staged action, authorization, commit dan delivery. Isi prompt,
+email, dokumen, signed ticket dan API key tidak dimasukkan ke log progress.
+`--quiet-progress` menyembunyikan baris progress terminal; file tetap ditulis.
+Review kontrak/payload tetap ditampilkan agar approval dapat ditinjau.
+Run lama/replay dari scope/prompt versi sebelumnya harus memakai directory baru;
+ledger/kontrak/checkpoint lama dipertahankan, bukan dimigrasi otomatis atau direset.
+
 Default offline, dengan initial/operation review interaktif:
 
 ```powershell

@@ -1,0 +1,344 @@
+{
+  "task": "Pilot task scope and concise progress patch",
+  "scope_revision": "pilot-scope-v2",
+  "prompt_versions": [
+    "author-v2",
+    "worker-v2"
+  ],
+  "verification": "OFFLINE VERIFIED",
+  "live_patch_validation": "NOT RUN",
+  "database_migrations": [],
+  "tests": {
+    "baseline": {
+      "command": ".\\.venv\\Scripts\\python.exe -m pytest -q",
+      "passed": 253,
+      "seconds": 16.94
+    },
+    "targeted": {
+      "command": ".\\.venv\\Scripts\\python.exe -m pytest atomicroot/tests/test_pilot_scope_progress.py -q",
+      "passed": 22,
+      "seconds": 4.77
+    },
+    "final_regression": {
+      "command": ".\\.venv\\Scripts\\python.exe -m pytest -q",
+      "passed": 275,
+      "seconds": 21.81
+    },
+    "dependencies": {
+      "command": ".\\.venv\\Scripts\\python.exe -m pip check",
+      "exit": 0,
+      "result": "No broken requirements found"
+    },
+    "whitespace": {
+      "command": "git -c 'safe.directory=C:/Main Storage/Documents/UGM/.PROYEK INDIVIDU/System' diff --check",
+      "exit": 0
+    }
+  },
+  "offline_cli_runs": [
+    {
+      "scenario": "literature",
+      "command": [
+        ".\\.venv\\Scripts\\python.exe",
+        "phase35_cli.py",
+        "--directory",
+        ".runs/scope-v2-literature",
+        "--provider",
+        "groq",
+        "--fixture-approve",
+        "--scenario",
+        "literature"
+      ],
+      "exit": 0,
+      "status": "DONE",
+      "model_mode": "fake",
+      "LLM": "OFFLINE VERIFIED",
+      "JEV": "DISABLED",
+      "actual_models": [
+        "offline-script-v1"
+      ],
+      "reviews": 1,
+      "actions": [
+        {
+          "tool": "read_document",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        },
+        {
+          "tool": "read_document",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        },
+        {
+          "tool": "send_email",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        }
+      ],
+      "progress_lines": 42,
+      "raw_directory": ".runs/scope-v2-literature"
+    },
+    {
+      "scenario": "injection",
+      "command": [
+        ".\\.venv\\Scripts\\python.exe",
+        "phase35_cli.py",
+        "--directory",
+        ".runs/scope-v2-injection",
+        "--provider",
+        "groq",
+        "--fixture-approve",
+        "--scenario",
+        "injection"
+      ],
+      "exit": 0,
+      "status": "DONE",
+      "model_mode": "fake",
+      "LLM": "OFFLINE VERIFIED",
+      "JEV": "DISABLED",
+      "actual_models": [
+        "offline-script-v1"
+      ],
+      "reviews": 1,
+      "actions": [
+        {
+          "tool": "read_document",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        },
+        {
+          "tool": "read_document",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        },
+        {
+          "tool": null,
+          "status": "DENY",
+          "delivery": null
+        }
+      ],
+      "progress_lines": 40,
+      "raw_directory": ".runs/scope-v2-injection"
+    },
+    {
+      "scenario": "sensitive",
+      "command": [
+        ".\\.venv\\Scripts\\python.exe",
+        "phase35_cli.py",
+        "--directory",
+        ".runs/scope-v2-sensitive",
+        "--provider",
+        "groq",
+        "--fixture-approve",
+        "--scenario",
+        "sensitive"
+      ],
+      "exit": 0,
+      "status": "DONE",
+      "model_mode": "fake",
+      "LLM": "OFFLINE VERIFIED",
+      "JEV": "DISABLED",
+      "actual_models": [
+        "offline-script-v1"
+      ],
+      "reviews": 1,
+      "actions": [
+        {
+          "tool": "read_document",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        },
+        {
+          "tool": "read_document",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        },
+        {
+          "tool": null,
+          "status": "DENY",
+          "delivery": null
+        }
+      ],
+      "progress_lines": 40,
+      "raw_directory": ".runs/scope-v2-sensitive"
+    },
+    {
+      "scenario": "budget",
+      "command": [
+        ".\\.venv\\Scripts\\python.exe",
+        "phase35_cli.py",
+        "--directory",
+        ".runs/scope-v2-budget",
+        "--provider",
+        "groq",
+        "--fixture-approve",
+        "--scenario",
+        "budget"
+      ],
+      "exit": 0,
+      "status": "DONE",
+      "model_mode": "fake",
+      "LLM": "OFFLINE VERIFIED",
+      "JEV": "DISABLED",
+      "actual_models": [
+        "offline-script-v1"
+      ],
+      "reviews": 2,
+      "actions": [
+        {
+          "tool": "transfer_funds",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        },
+        {
+          "tool": "transfer_funds",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        }
+      ],
+      "progress_lines": 42,
+      "raw_directory": ".runs/scope-v2-budget"
+    },
+    {
+      "scenario": "unknown",
+      "command": [
+        ".\\.venv\\Scripts\\python.exe",
+        "phase35_cli.py",
+        "--directory",
+        ".runs/scope-v2-unknown",
+        "--provider",
+        "groq",
+        "--fixture-approve",
+        "--scenario",
+        "unknown"
+      ],
+      "exit": 0,
+      "status": "DONE",
+      "model_mode": "fake",
+      "LLM": "OFFLINE VERIFIED",
+      "JEV": "DISABLED",
+      "actual_models": [
+        "offline-script-v1"
+      ],
+      "reviews": 2,
+      "actions": [
+        {
+          "tool": "read_document",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        },
+        {
+          "tool": "read_document",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        },
+        {
+          "tool": "send_email",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        }
+      ],
+      "progress_lines": 45,
+      "raw_directory": ".runs/scope-v2-unknown"
+    },
+    {
+      "scenario": "classifier",
+      "command": [
+        ".\\.venv\\Scripts\\python.exe",
+        "phase35_cli.py",
+        "--directory",
+        ".runs/scope-v2-classifier",
+        "--provider",
+        "groq",
+        "--fixture-approve",
+        "--classifier",
+        "fake",
+        "--classify",
+        "--quiet-progress"
+      ],
+      "exit": 0,
+      "status": "DONE",
+      "model_mode": "fake",
+      "LLM": "OFFLINE VERIFIED",
+      "JEV": "OFFLINE VERIFIED",
+      "actual_models": [
+        "jev-1.13.0",
+        "offline-script-v1"
+      ],
+      "reviews": 1,
+      "actions": [
+        {
+          "tool": "read_document",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        },
+        {
+          "tool": "read_document",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        },
+        {
+          "tool": "send_email",
+          "status": "COMMITTED",
+          "delivery": "RELEASED"
+        }
+      ],
+      "progress_lines": 47,
+      "raw_directory": ".runs/scope-v2-classifier"
+    }
+  ],
+  "recovery": [
+    {
+      "stage": "crash",
+      "command": [
+        "C:\\Main Storage\\Documents\\UGM\\.PROYEK INDIVIDU\\System\\.venv\\Scripts\\python.exe",
+        "phase35_cli.py",
+        "--directory",
+        ".runs\\scope-v2-restart-verified",
+        "--provider",
+        "groq",
+        "--scenario",
+        "budget",
+        "--fixture-approve",
+        "--quiet-progress",
+        "--crash-after-commit"
+      ],
+      "exit": 1,
+      "status": "FAILED",
+      "error": "RuntimeError",
+      "spent": 400,
+      "transfer_intents": 1,
+      "transfer_receipts": 1
+    },
+    {
+      "stage": "recover",
+      "command": [
+        "C:\\Main Storage\\Documents\\UGM\\.PROYEK INDIVIDU\\System\\.venv\\Scripts\\python.exe",
+        "phase35_cli.py",
+        "--directory",
+        ".runs\\scope-v2-restart-verified",
+        "--provider",
+        "groq",
+        "--scenario",
+        "budget",
+        "--fixture-approve",
+        "--quiet-progress",
+        "--recover"
+      ],
+      "exit": 0,
+      "status": "DONE",
+      "error": null,
+      "spent": 800,
+      "transfer_intents": 2,
+      "transfer_receipts": 2
+    }
+  ],
+  "limitations": [
+    "Host scenario profiles constrain delegation; no general proof of natural-language least privilege.",
+    "JEV remains optional post-workflow pilot, not a pre-read classifier gate.",
+    "Progress is advisory metadata; ledger remains authoritative.",
+    "Prior Groq live run validated previous scope/prompts only."
+  ],
+  "verification_notes": [
+    "The first recovery inspection used SQL substring matching and counted transfer_funds in model prompt payloads. It failed its count assertion. A fresh crash/recovery run using exact parsed payload.tool confirmed two transfer intents and receipts; no runtime fix was needed."
+  ]
+}

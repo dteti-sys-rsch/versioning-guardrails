@@ -1,16 +1,19 @@
 """Durable inference memo and bounded attempts. Provider billing is not exactly once."""
 import asyncio
 import json
+from time import perf_counter
 from atomicroot.authority.ticket import args_hash, freeze_json
 from atomicroot.framework.storage import dumps, uid
+from atomicroot.integration.progress import emit
 
 
 class InferenceInProgress(RuntimeError): pass
 
 
 class InferenceMemo:
-    def __init__(self, store):
+    def __init__(self, store, *, progress=None):
         self.store = store
+        self.progress = progress
         with store._lock:
             store._conn.executescript("""
                 CREATE TABLE IF NOT EXISTS inference_jobs (
@@ -48,7 +51,9 @@ class InferenceMemo:
             with self.store.transaction() as conn:
                 row = self.store.row(conn, "SELECT * FROM inference_memo WHERE id=?", (key,))
                 if row and row["binding"] != binding: raise ValueError("memo payload/model/scope mismatch")
-                if row and row["response"]: return json.loads(row["response"])
+                if row and row["response"]:
+                    emit(self.progress, "INFERENCE_CACHE", operation=key, model=model)
+                    return json.loads(row["response"])
                 active = self.store.row(conn, "SELECT id,started FROM inference_attempts WHERE call_id=? AND status='STARTED' ORDER BY rowid DESC LIMIT 1", (key,))
                 if active:
                     if active["started"] + limits.timeout + 1 > self.store.now():
@@ -66,9 +71,12 @@ class InferenceMemo:
                 conn.execute("INSERT INTO inference_attempts VALUES (?,?,?,?,?,?,'STARTED',NULL,NULL,?,?)",
                              (attempt, key, budget, kind, model, self.store.now(), allowance, price))
             try:
+                emit(self.progress, "INFERENCE_CALL", operation=key, model=model, attempt=per_call + 1)
+                started = perf_counter()
                 # No SQLite transaction/lock crosses this await.
                 async with asyncio.timeout(limits.timeout): response = freeze_json(await invoke())
             except Exception as exc:
+                emit(self.progress, "INFERENCE_FAILED", operation=key, error=type(exc).__name__)
                 with self.store.transaction() as conn:
                     # Avoid provider exception bodies that might contain credentials/input.
                     conn.execute("UPDATE inference_attempts SET status='UNKNOWN',error=? WHERE id=?", (type(exc).__name__, attempt))
@@ -79,6 +87,9 @@ class InferenceMemo:
                 reported = sum(v for v in usage.values() if type(v) is int and v >= 0) if type(usage) is dict else 0
                 conn.execute("UPDATE inference_attempts SET status='RETURNED',usage=?,reserved_tokens=max(reserved_tokens,?) WHERE id=?", (dumps(usage), reported, attempt))
                 conn.execute("UPDATE inference_memo SET response=? WHERE id=? AND binding=?", (dumps(response), key, binding))
+            emit(self.progress, "INFERENCE_RETURNED", operation=key, elapsed_ms=round((perf_counter() - started) * 1000),
+                 input_tokens=usage.get("input_tokens") if type(usage) is dict else None,
+                 output_tokens=usage.get("output_tokens") if type(usage) is dict else None)
             return response
 
     def attempts(self):

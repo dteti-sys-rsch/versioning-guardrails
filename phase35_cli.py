@@ -9,6 +9,8 @@ from atomicroot.framework.storage import dumps
 from atomicroot.integration.pilot import PilotHost
 from atomicroot.integration.inference import ModelBridge
 from atomicroot.integration.workflow import AgentWorkflow
+from atomicroot.integration.progress import Progress, emit
+from atomicroot.integration.prompts import AUTHOR_VERSION, WORKER_VERSION
 from atomicroot.integration.providers import live_model, model_configuration, discover_models, MODEL_PROVIDERS, JevClassifier, FakeClassifier, DisabledClassifier, ReplayModel, ReplayClassifier, Limits
 
 
@@ -90,20 +92,30 @@ def execute(args):
     limits = Limits(max_calls=args.max_calls, max_tokens=args.max_tokens, max_output_tokens=args.max_output_tokens,
                     max_retries=args.max_retries, timeout=args.timeout, spend_cap_usd=args.spend_cap,
                     input_price_per_million=args.input_price, output_price_per_million=args.output_price)
-    host = PilotHost(directory, args.scenario, model_provider=config["provider"])
+    classification_enabled = args.classify and args.classifier != "disabled"
+    host = PilotHost(directory, args.scenario, model_provider=config["provider"], classification_enabled=classification_enabled)
     model = (live_model(args.provider, config["model"], limits, trusted_router=args.trust_router_route) if args.model_mode == "live" else
              ReplayModel(json.loads(Path(args.model_replay).read_text(encoding="utf-8")), provider=config["provider"]) if args.model_mode == "replay" else host.fake_model())
     classifier = {"disabled": lambda: DisabledClassifier(), "fake": lambda: FakeClassifier(),
                   "replay": lambda: ReplayClassifier(json.loads(Path(args.classifier_replay).read_text(encoding="utf-8"))),
                   "jev": lambda: JevClassifier(limits=limits)}[args.classifier]()
     bridge = ModelBridge(host.runtime, model, classifier, bootstrap_authorized=args.authorize_model_usage or not model.live,
-                         llm_limits=limits, jev_limits=limits, threshold=args.threshold)
-    bound = {"scenario": args.scenario, "model": model.model, "model_mode": args.model_mode}
+                         llm_limits=limits, jev_limits=limits, threshold=args.threshold,
+                         progress=Progress(directory / "progress.jsonl", quiet=args.quiet_progress))
+    bound = {"scenario": args.scenario, "model": model.model, "model_mode": args.model_mode,
+             "scope_revision": host.scope_limits["revision"], "classification_enabled": classification_enabled,
+             "classifier_mode": args.classifier, "classifier_model": classifier.model if classification_enabled else None}
     # Preserve old OpenAI run bindings. New providers require their own directory;
     # checkpoint reuse must never redirect an existing task's data egress.
     if args.provider != "openai": bound["provider"] = config["provider"]
     saved = bridge.memo.job("cli-config")
-    if saved and saved != bound: raise ValueError("directory belongs to a different scenario/model; choose a new directory")
+    if saved and saved != bound:
+        report.update(LLM="BLOCKED", error="RUN_CONFIGURATION_CHANGED", next_step="use a new directory; existing ledger/checkpoint is preserved")
+        (directory / "status-blocked.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+        emit(bridge.progress, "WORKFLOW", status="RUN_CONFIGURATION_CHANGED")
+        host.runtime.store.close()
+        print(dumps(report))
+        return 2
     bridge.memo.save_job("cli-config", bound)
     goal = args.goal or {
         "budget": "Simulate two payments of 400. Current cap is 500; propose an increase through contract review when needed.",
@@ -118,7 +130,7 @@ def execute(args):
             raise RuntimeError("explicit crash fixture after commit before node checkpoint")
     flow = AgentWorkflow(host.runtime, bridge, directory / "graph.sqlite", task="pilot", principals=host.principals,
         approver=host.approver, context_resources={r: r + "-context" for r in host.principals}, host=host.contract,
-        max_steps=args.max_steps, after_effect=crash_fixture)
+        max_steps=args.max_steps, after_effect=crash_fixture, host_validator=host.validate_proposal, scope_limits=host.scope_limits)
     transcript = []
     paused = False
     try:
@@ -132,13 +144,19 @@ def execute(args):
             if args.fixture_approve:
                 fixture_decision(host.runtime, review["review_id"], host.approver)
                 transcript.append({"approval_source": "EXPLICIT_TRUSTED_FIXTURE"})
+                emit(bridge.progress, "HUMAN_DECISION", status="FIXTURE_APPROVED", review=review["review_id"])
             elif not human_decision(host.runtime, review["review_id"], host.approver):
+                emit(bridge.progress, "HUMAN_DECISION", status="PAUSED", review=review["review_id"])
                 paused = True
                 break
+            else:
+                decision = host.runtime.broker.status(review["review_id"], host.approver)
+                emit(bridge.progress, "HUMAN_DECISION", status=decision["status"], review=review["review_id"])
             result = flow.resume(args.run)
         report.update(LLM="LIVE VERIFIED" if model.live and result.get("status") == "DONE" else "BLOCKED" if model.live and paused else "FAILED" if model.live else "OFFLINE VERIFIED",
                       workflow_status="PAUSED" if paused else result.get("status"), model=model.model,
-                      prompt_versions=["author-v1", "worker-v1"], limits=vars(limits), observations=result.get("observations", []))
+                      prompt_versions=[AUTHOR_VERSION, WORKER_VERSION], limits=vars(limits), observations=result.get("observations", []),
+                      progress_file="progress.jsonl", scope_revision=host.scope_limits["revision"])
         if args.classify and not paused and result.get("contract"):
             if classifier.live:
                 import asyncio
@@ -174,6 +192,7 @@ def execute(args):
         report["error"] = type(exc).__name__
         print("Workflow failed: " + type(exc).__name__)
     finally:
+        emit(bridge.progress, "WORKFLOW", status=report.get("workflow_status", report["LLM"]))
         report["attempts"] = bridge.memo.attempts()
         (directory / "status.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
         (directory / "transcript.json").write_text(json.dumps(transcript, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -212,6 +231,7 @@ def main():
     p.add_argument("--classify", action="store_true")
     p.add_argument("--accept-restriction", action="store_true")
     p.add_argument("--threshold", type=float, default=.8)
+    p.add_argument("--quiet-progress", action="store_true", help="hide progress lines; local progress.jsonl is still written")
     p.add_argument("--max-steps", type=int, default=8)
     p.add_argument("--max-calls", type=int, default=12)
     p.add_argument("--max-tokens", type=int, default=200_000)
@@ -224,6 +244,10 @@ def main():
     args = p.parse_args()
     if args.model_mode == "replay" and not args.model_replay: p.error("--model-replay required")
     if args.classifier == "replay" and not args.classifier_replay: p.error("--classifier-replay required")
+    if args.classify and args.classifier == "disabled": p.error("--classify requires --classifier fake|replay|jev")
+    if args.classifier != "disabled" and not args.classify: p.error("--classifier requires --classify")
+    if args.accept_restriction and not args.classify: p.error("--accept-restriction requires --classify")
+    if args.classify and args.scenario == "budget": p.error("budget scenario has no document classification target")
     raise SystemExit(execute(args))
 
 
