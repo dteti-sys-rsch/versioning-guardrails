@@ -88,22 +88,42 @@ def builtin_constraints(request):
     if tool.resource and tool.external:
         sensitive = Or((sensitive, Const(request["resolved_label"] == "SENSITIVE")))
         unknown = Or((unknown, Const(request["resolved_label"] == "UNKNOWN")))
-    inference = request["tool"] == "classify_document"
+    inference = request["tool"] in {"classify_document", "model_inference"}
+    model_context = request["tool"] == "model_inference"
     # Separate pre-existing ingestion authorization, never a predicted label.
     provider_rules = []
     if inference:
         for rule in request.get("inference_egress", []):
-            provider_rules.append(And((
+            if rule["resource"] != request["resource"]: continue
+            constraints = (
                 Eq(RequestField("recipient"), Const(rule["provider"])),
                 Eq(RequestField("resource"), Const(rule["resource"])),
                 Eq(RequestField("purpose"), Const(rule["purpose"])),
                 Member(Const(request["resolved_label"]), SetConst(tuple(rule["labels"])))
-            )))
+            )
+            if model_context: constraints += (Subset(task("exposure"), SetConst(tuple(rule["labels"]))),)
+            provider_rules.append(And(constraints))
     provider_scope = Or(tuple(provider_rules)) if inference else Const(True)
+    # Model context is server-created and checked against every input's approved
+    # provider scope by Authority. This exception authorizes inference only;
+    # sensitive external release remains a hard DENY for business tools.
+    if model_context:
+        source_rules = []
+        for source in request["model_source_bindings"]:
+            applicable = []
+            for rule in request.get("inference_egress", []):
+                if rule["resource"] != source["resource"]: continue
+                applicable.append(And((
+                    Eq(RequestField("recipient"), Const(rule["provider"])),
+                    Eq(RequestField("purpose"), Const(rule["purpose"])),
+                    Member(Const(source["label"]), SetConst(tuple(rule["labels"])))
+                )))
+            source_rules.append(Or(tuple(applicable)))
+        provider_scope = And((provider_scope, *source_rules))
     return [
         ("scope", And(tuple(scope)), "DENY"),
         ("provider_scope", provider_scope, "DENY"),
         ("budget_monotone", Le(Add(Add(task("budget_used"), task("budget_reserved")), RequestAmount()), task("budget_limit")), "DENY"),
-        ("no_exfil_after_sensitive", If(Const(tool.external), Not(sensitive), Const(True)), "DENY"),
+        ("no_exfil_after_sensitive", If(Const(tool.external and not model_context), Not(sensitive), Const(True)), "DENY"),
         ("unknown_release", If(Const(tool.external and not inference), Not(unknown), Const(True)), request["unknown_release"]),
     ]

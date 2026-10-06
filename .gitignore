@@ -17,3 +17,8 @@ dist/
 .env
 .env.*
 !.env.example
+.runs/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+signing.key

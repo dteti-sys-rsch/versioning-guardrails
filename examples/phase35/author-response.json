@@ -1,0 +1,134 @@
+{
+  "kind": "contract",
+  "proposal": {
+    "task_id": "pilot",
+    "objective": "Review synthetic literature and simulate authorized actions",
+    "purpose": "research",
+    "budget_limit": 1000,
+    "allowed_tools": [
+      "read_document",
+      "send_email",
+      "transfer_funds",
+      "model_inference",
+      "classify_document"
+    ],
+    "allowed_resources": [
+      "executor-context",
+      "paper",
+      "paper-2",
+      "reader-context"
+    ],
+    "allowed_recipients": [
+      "alice@corp.id",
+      "account",
+      "openai",
+      "typesafe"
+    ],
+    "allowed_agents": [
+      "reader",
+      "executor"
+    ],
+    "unknown_release": "DENY",
+    "policies": [
+      {
+        "policy_id": "per_transfer_small_amount",
+        "version": 1,
+        "scope": "task",
+        "applies_to": [
+          "transfer_funds"
+        ],
+        "when": {
+          "op": "const",
+          "value": true
+        },
+        "constraint": {
+          "op": "le",
+          "left": {
+            "op": "amount"
+          },
+          "right": {
+            "op": "const",
+            "value": 300
+          }
+        },
+        "on_violation": "DENY"
+      }
+    ],
+    "classification_restrictions": true,
+    "inference_egress": [
+      {
+        "provider": "openai",
+        "resource": "executor-context",
+        "purpose": "research",
+        "labels": [
+          "PUBLIC",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "provider": "openai",
+        "resource": "paper",
+        "purpose": "research",
+        "labels": [
+          "PUBLIC",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "provider": "openai",
+        "resource": "paper-2",
+        "purpose": "research",
+        "labels": [
+          "PUBLIC",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "provider": "openai",
+        "resource": "reader-context",
+        "purpose": "research",
+        "labels": [
+          "PUBLIC",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "provider": "typesafe",
+        "resource": "executor-context",
+        "purpose": "research",
+        "labels": [
+          "PUBLIC",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "provider": "typesafe",
+        "resource": "paper",
+        "purpose": "research",
+        "labels": [
+          "PUBLIC",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "provider": "typesafe",
+        "resource": "paper-2",
+        "purpose": "research",
+        "labels": [
+          "PUBLIC",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "provider": "typesafe",
+        "resource": "reader-context",
+        "purpose": "research",
+        "labels": [
+          "PUBLIC",
+          "UNKNOWN"
+        ]
+      }
+    ]
+  },
+  "unsupported": []
+}

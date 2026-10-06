@@ -1,0 +1,13 @@
+{
+  "model_provider": "openai",
+  "model_from": "OPENAI_MODEL",
+  "model_mode": "fake",
+  "classifier_mode": "disabled",
+  "jev_model": "jev-1.13.0",
+  "threshold": 0.8,
+  "max_calls_per_kind": 12,
+  "max_tokens_per_kind": 200000,
+  "max_retries": 0,
+  "timeout_seconds": 30,
+  "initial_authoring_scope": "explicit host consent; PUBLIC/synthetic only"
+}

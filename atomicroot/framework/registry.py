@@ -78,6 +78,7 @@ TOOLS = MappingProxyType({t.name: t for t in (
     ToolDefinition("transfer_funds", "transfer", True, True, False, frozenset({"to", "amount"}), ("reserved",)),
     ToolDefinition("deploy", "deploy", True, False, True, frozenset({"resource", "digest", "to"})),
     ToolDefinition("classify_document", "classification", True, False, True, frozenset({"resource", "digest", "to"})),
+    ToolDefinition("model_inference", "inference", True, False, True, frozenset({"resource", "digest", "to"})),
 )})
 
 

@@ -1,4 +1,4 @@
-# AtomicRoot — Phase 3 research prototype
+# AtomicRoot — Phase 3.5 research prototype
 
 AtomicRoot binds an ALLOW ticket to the versions of the policy state it read. A
 Gateway accepts the ticket only if `Fresh(ticket, state)` holds inside the same
@@ -22,6 +22,18 @@ through the existing Gateway/outbox, with an offline simulator only. See
 [PHASE3_COMPAT_AUDIT.md](PHASE3_COMPAT_AUDIT.md) for the requirement matrix,
 additive migration, API changes and actual test results.
 
+Phase 3.5 adds LangGraph, two worker roles, durable checkpoints/Broker interrupts,
+one OpenAI model adapter, guarded tools, and optional TypeSafe JEV inference.
+Provider selection now also supports Groq and a pinned trusted local 9Router;
+see [PROVIDERS.md](PROVIDERS.md) for setup, audit and verification status.
+**The original Phase 3.5 run passed 231 tests offline. Live OpenAI/JEV smoke has NOT RUN: credentials are
+unavailable. Phase 3.5 is not live validated.** See [PHASE35.md](PHASE35.md) for
+the requirement audit, compatibility bug, migration, boundaries and actual results.
+
+Subsequent provider testing: one user-run **Groq literature smoke is live verified**
+(six returned calls, two reads and one simulated send). This does not validate live
+attack/race scenarios or JEV/9Router inference. See [PROVIDERS.md](PROVIDERS.md).
+
 ## Run
 
 Python 3.11+:
@@ -44,6 +56,82 @@ The existing Phase 2 entry points and tests remain available for reproducible
 baseline comparisons. Legacy direct-effect Commit rejects any activated Phase 3
 task. Existing Phase 2 task data needs a reviewed explicit migration; it is not
 silently relabelled or reset by the new Contract Service.
+
+## Fase 3.5: CLI, checkpoint, model dan JEV
+
+Default offline, dengan initial/operation review interaktif:
+
+```powershell
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/my-review
+```
+
+Fixture approval untuk demo otomatis diberi flag eksplisit. Pilih directory baru
+untuk setiap skenario; menjalankan task lama tidak mereset budget/exposure:
+
+```powershell
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/public --fixture-approve --classifier fake --classify
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/email --scenario injection --fixture-approve
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/secret --scenario sensitive --fixture-approve
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/payments --scenario budget --fixture-approve
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/consent --scenario unknown --fixture-approve
+```
+
+Restart sesudah commit tetapi sebelum node acknowledgement:
+
+```powershell
+# Fault fixture disengaja: command pertama gagal setelah pembayaran pertama.
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/restart --scenario budget --fixture-approve --crash-after-commit
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/restart --scenario budget --fixture-approve --recover
+```
+
+Untuk pause manusia, pilih `pause`, lalu jalankan command yang sama dengan
+`--resume`. Approval tetap melalui Broker principal host; teks resume tidak
+memberi izin. `--recover` melanjutkan node yang gagal, tanpa ledger reset.
+
+Live memakai provider yang dipilih host melalui `--provider openai|groq|9router`.
+Default OpenAI mempertahankan konfigurasi lama. Untuk OpenAI, export
+`OPENAI_API_KEY` dan `OPENAI_MODEL`; untuk Groq, export `GROQ_API_KEY` dan
+opsional `GROQ_MODEL` (default `openai/gpt-oss-120b`). `--model ID` mengalahkan
+environment model. Jangan simpan key di source. `--prompt-api-key` meminta
+key tanpa echo dan menggunakannya hanya dalam proses CLI tersebut.
+Contoh variable ada di [.env.example](.env.example); CLI tidak memuatnya otomatis.
+Authoring prompt awal diasumsikan diizinkan ke provider. Scope dokumen/konteks
+berikutnya diperiksa melalui Gateway dan harus direview pada kontrak:
+
+```powershell
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/live --model-mode live --authorize-model-usage --max-calls 12 --max-tokens 200000 --timeout 30 --max-retries 0
+# Groq: masukkan key secara tersembunyi, lalu review kontrak secara interaktif.
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/groq-live --provider groq --model-mode live --prompt-api-key --authorize-model-usage --max-calls 12 --max-tokens 200000 --timeout 30 --max-retries 0
+# Daftar model 9Router lokal: metadata saja, belum melakukan inference.
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/router-models --provider 9router --list-models
+```
+
+JEV opsional: export `TYPESAFE_API_KEY`; default versioned model `jev-1.13.0`
+atau export `TYPESAFE_MODEL` dengan ID versioned yang tersedia pada akun.
+CLI memeriksa SDK model listing sebelum classification; tidak fallback ke alias.
+JEV dan LLM memiliki attempt budgets terpisah, maksimum 12 masing-masing termasuk
+retry (JEV metadata listing juga dihitung):
+
+```powershell
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/jev --classifier jev --classify
+```
+
+`--threshold` mengatur abstention provisional. `--spend-cap` membutuhkan
+`--input-price` dan `--output-price` per juta token dari pricing yang Anda verifikasi;
+tanpa pricing, biaya tidak dilaporkan. Token allowance konservatif memakai byte
+payload + output bound, bukan tokenizer/cost oracle. Usage aktual disimpan bila
+provider melaporkan; provider billing/hidden token accounting bukan jaminan host.
+Provider tanpa idempotency masih dapat menagih ulang setelah lost response.
+
+Mode replay menerima file mapping digest→output dengan `--model-mode replay
+--model-replay PATH` atau `--classifier replay --classifier-replay PATH`.
+Input/model/criteria/scope yang berubah tidak boleh memakai record lama.
+Setiap run menghasilkan `status.json`, `transcript.json`, ledger dan checkpoint
+di directory run; fake model juga menulis `model-replay.json`. Jangan membagikan
+`signing.key` atau directory run yang berisi data pribadi. Semua fixtures bawaan
+adalah synthetic; jangan menggantinya dengan dokumen privat untuk smoke live.
+
+Lihat [examples/phase35](examples/phase35) dan [PHASE35_RESULTS.json](PHASE35_RESULTS.json).
 
 ## Historical Phase 2 design (retained regression interface)
 
@@ -155,6 +243,6 @@ second Commit as stale. Unrelated keys do not invalidate each other.
   updates. No valid ALLOW/DENY case for the two original policies changed.
 
 The historical Phase 2 interface ends here. Phase 3 adds the simulated outbox
-and approval workflow in `atomicroot/framework`; the four full policy benchmark
-templates, full adversarial scheduler, agent frameworks/LLMs, and large
+and approval workflow in `atomicroot/framework`; Phase 3.5 adds the framework
+and model adapters described above. Full adversarial scheduling and large
 benchmarks remain outside the current scope.

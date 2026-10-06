@@ -1,0 +1,158 @@
+{
+  "date": "2026-10-06",
+  "regression": {
+    "command": ".venv/Scripts/python.exe -m pytest atomicroot/tests -q",
+    "passed": 253,
+    "seconds": 10.79,
+    "added_tests": 22
+  },
+  "baseline": {
+    "command": ".venv/Scripts/python.exe -m pytest atomicroot/tests -q",
+    "passed": 231,
+    "seconds": 12.23
+  },
+  "smoke": {
+    "groq_fake": {
+      "command": "phase35_cli.py --directory .runs/groq-selection-offline --provider groq --fixture-approve",
+      "status": "DONE",
+      "mode": "fake",
+      "actual_models": [
+        "offline-script-v1"
+      ],
+      "committed_actions": 3
+    },
+    "groq_live": {
+      "command": "phase35_cli.py --directory .runs/groq-selection-live --provider groq --model-mode live --authorize-model-usage",
+      "status": "BLOCKED",
+      "missing": [
+        "GROQ_API_KEY"
+      ],
+      "inference": "NOT RUN"
+    },
+    "router_metadata": {
+      "command": "phase35_cli.py --directory .runs/router-selection-models --provider 9router --list-models",
+      "models": [
+        "ag/claude-opus-4-6-thinking",
+        "ag/claude-sonnet-4-6",
+        "ag/gemini-3-flash",
+        "ag/gemini-3-flash-agent",
+        "ag/gemini-3.1-pro-low",
+        "ag/gemini-3.5-flash-extra-low",
+        "ag/gemini-3.5-flash-high",
+        "ag/gemini-3.5-flash-low",
+        "ag/gemini-3.6-flash-high",
+        "ag/gemini-3.6-flash-low",
+        "ag/gemini-3.6-flash-medium",
+        "ag/gemini-3.7-flash-high",
+        "ag/gemini-3.7-flash-low",
+        "ag/gemini-3.7-flash-medium",
+        "ag/gemini-3.8-flash",
+        "ag/gemini-3.8-flash-high",
+        "ag/gemini-3.8-flash-low",
+        "ag/gemini-3.8-flash-medium",
+        "ag/gemini-pro-agent",
+        "ag/gpt-oss-120b-medium",
+        "atria/Atria-Dawn-Preview",
+        "cx/codex-auto-review",
+        "cx/gpt-5.5",
+        "cx/gpt-5.5-review",
+        "cx/gpt-5.6-luna",
+        "cx/gpt-5.6-luna-review",
+        "cx/gpt-5.6-luna[1m]",
+        "cx/gpt-5.6-sol",
+        "cx/gpt-5.6-sol-review",
+        "cx/gpt-5.6-sol[1m]",
+        "cx/gpt-5.6-terra",
+        "cx/gpt-5.6-terra-review",
+        "cx/gpt-5.6-terra[1m]",
+        "cx/gpt-6-astra",
+        "cx/gpt-6-astra[1m]",
+        "cx/gpt-6-luna",
+        "cx/gpt-6-luna[1m]",
+        "cx/gpt-6-sol",
+        "cx/gpt-6-sol[1m]",
+        "cx/gpt-6.1-sol",
+        "cx/gpt-daybreak-blue-latest",
+        "cx/gpt-reserve"
+      ],
+      "inference": "NOT RUN"
+    }
+  },
+  "dependencies": {
+    "langgraph": "1.2.12",
+    "langgraph-checkpoint-sqlite": "3.1.1",
+    "openai": "3.24.0",
+    "typesafe-sdk": "0.7.2"
+  },
+  "pip_check": "No broken requirements found",
+  "db_migration": null,
+  "live_runs": {
+    "groq_literature_01": {
+      "date_observed": "2026-10-06",
+      "executed_by": "user",
+      "artifact_directory": ".runs/groq-live-01",
+      "exact_shell_command": "not captured in artifacts",
+      "scenario": "literature",
+      "model_mode": "live",
+      "model_configuration": {
+        "provider": "groq",
+        "model": "openai/gpt-oss-120b",
+        "endpoint": "https://api.groq.com/openai/v1"
+      },
+      "actual_models": [
+        "openai/gpt-oss-120b"
+      ],
+      "workflow_status": "DONE",
+      "prompt_versions": [
+        "author-v1",
+        "worker-v1"
+      ],
+      "limits": {
+        "max_calls": 12,
+        "max_tokens": 200000,
+        "max_output_tokens": 1600,
+        "max_retries": 0,
+        "timeout": 30,
+        "spend_cap_usd": null,
+        "input_price_per_million": null,
+        "output_price_per_million": null
+      },
+      "versions": {
+        "langgraph": "1.2.12",
+        "langgraph-checkpoint-sqlite": "3.1.1",
+        "openai": "3.24.0",
+        "typesafe-sdk": "0.7.2"
+      },
+      "returned_calls": 6,
+      "attempts": 6,
+      "reported_usage": {
+        "input_tokens": 10546,
+        "output_tokens": 2754
+      },
+      "contract_reviews": 1,
+      "business_intents": [
+        {
+          "tool": "read_document",
+          "status": "RELEASED",
+          "resource": "paper",
+          "recipient": null
+        },
+        {
+          "tool": "read_document",
+          "status": "RELEASED",
+          "resource": "paper-2",
+          "recipient": null
+        },
+        {
+          "tool": "send_email",
+          "status": "RELEASED",
+          "resource": null,
+          "recipient": "alice@corp.id"
+        }
+      ],
+      "classifier_status": "DISABLED",
+      "cost_usd": null,
+      "assessment": "Literature live smoke succeeded; not attack/concurrency validation or model benchmark"
+    }
+  }
+}
