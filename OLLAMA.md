@@ -28,7 +28,7 @@ Ollama server harus berjalan dengan model lokal sudah tersedia. Metadata model:
 Workflow nyata dengan review manusia, hanya source/efek sintetis pilot:
 
 ```powershell
-.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/ollama-live --provider ollama --model qwen3:8b --model-mode live --authorize-model-usage --timeout 120 --max-calls 12 --max-tokens 200000 --max-output-tokens 1600 --max-retries 0
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/ollama-live-v3 --provider ollama --model qwen3:8b --model-mode live --authorize-model-usage --timeout 120 --max-calls 12 --max-tokens 200000 --max-output-tokens 1600 --max-retries 0
 ```
 
 Default tetap mode fake jika `--model-mode live` tidak diberikan. Fake success
@@ -97,3 +97,56 @@ aksi bisnis dibedakan dari adapter/author probes.
 Sumber resmi: [API chat](https://docs.ollama.com/api/chat),
 [Thinking](https://docs.ollama.com/capabilities/thinking),
 [FAQ konfigurasi/local-only](https://docs.ollama.com/faq).
+
+## Patch worker-v3 setelah run pengguna STEP_LIMIT
+
+Audit ledger `.runs/ollama-live` membuktikan dua read berhasil, lalu enam respons
+worker memilih `model_inference`. GuardedTools menolak semuanya sebelum business
+authorization; tidak ada email. Ini kegagalan pemilihan aksi, bukan solver/CAS
+failure. Hasil run lama dipertahankan.
+
+| Gap aktual | Patch / evidence |
+|---|---|
+| Task contract memuat host inference, sehingga worker memilihnya | Prompt v3: available_actions eksplisit; infer/classify host-managed; summary ditulis langsung dalam email body |
+| JSON mode tidak membatasi pilihan tool | Schema action/done/contract berdasarkan intersection capability worker dan allowed_tools, hanya untuk native Ollama worker |
+| Schema generation dapat dipalsukan/berubah | Schema masuk immutable context dan memo binding; Authority membandingkannya dengan schema tepercaya dari snapshot kontrak yang sama |
+| Canonicalization menaruh args sebelum discriminator pada grammar | Native serializer mengembalikan property order sesuai required array yang terikat context: kind/tool/args |
+| Schema ganda memperbesar context sampai batas ingest 8192 bytes | Schema disimpan sekali dalam context; prompt memuat daftar aksi ringkas. Limit ingest tetap sama |
+| Resume/cache dari versi lama | Prompt versions sekarang terikat cli-config; perubahan ditolak tanpa reset ledger/checkpoint |
+
+Schema adalah pembatas **generation**, bukan otoritas permission. Daemon yang
+mengabaikan schema tetap ditolak host; test mereproduksi aksi model_inference asli
+dan membuktikan tidak ada nested call/business effect. Schema revision tetap
+tersedia; ContractService/host validator/Broker memeriksa proposal penuh. Tidak ada
+fallback evaluator, remapping inference menjadi email, hardcoded summary atau
+perluasan tools. Z3/CAS/ticket/approval tetap menjadi jalur enforcement.
+
+Author tetap prompt v2 dan JSON mode; worker memakai v3. Fake/replay/cloud adapter
+memakai prompt yang diperjelas, tetapi tidak diklaim memiliki native constrained
+decoding baru. Context format menerima tambahan response_schema hanya jika schema
+tepercaya cocok; key dan dependency lama tidak dinonaktifkan. Tidak ada migrasi DB.
+
+File patch: `prompts.py`, `providers.py`, `inference.py`, `egress.py`, `guarded.py`,
+CLI run binding, example config, docs dan `test_worker_output_schema.py`.
+Baseline aktual sebelum patch: **294 passed in 10.51s**. Hasil patch serta seluruh
+percobaan live (termasuk kegagalan selama perbaikan) dicatat terpisah pada
+`OLLAMA_WORKER_RESULTS.json`. Rujukan fitur: [Ollama structured outputs](https://docs.ollama.com/capabilities/structured-outputs).
+
+### Hasil patch aktual
+
+- Test terarah: **7 passed in 1.15s**. Regression akhir: **301 passed in 20.83s**.
+- Percobaan live schema awal tetap STEP_LIMIT karena mengulang proposal kontrak.
+  Percobaan berikutnya membaca ulang satu source dan mencapai batas ingest context
+  8192 bytes. Keduanya dipertahankan pada raw result; limit tidak dinaikkan.
+- Variant final: **DONE / LIVE VERIFIED**, **6/6 calls RETURNED**, dua resource
+  berbeda dibaca dan satu `send_email` ke `alice@corp.id` RELEASED. Body hasil Qwen
+  merangkum kedua observasi: atomic authorization/versioned state serta replay
+  prevention/durable operation identity. Bukan body template/scripted.
+- Run terakhir memakai **explicit trusted synthetic fixture approval**, bukan
+  persetujuan manusia interaktif. JEV DISABLED, seluruh email/transfer simulasi.
+- Satu workflow final (1/1) menunjukkan Qwen3:8b dapat menjalankan pilot setelah
+  perbaikan protocol/prompt. Ini bukan jaminan untuk semua model, dokumen atau
+  workload. Smoke tidak menguji stale race; regression mekanisme tetap terpisah.
+- Tidak ada perubahan dependency, schema DB, budget/label/grant/ticket enforcement.
+  `git diff --check` exit 0. Gunakan directory baru (`ollama-live-v3`) agar run
+  v2 yang gagal tetap tersedia sebagai bukti dan tidak tercampur prompt baru.

@@ -6,12 +6,20 @@ from atomicroot.authority.policy_engine import valid_identity
 
 def validate_model_context(reader, document, request):
     context = json.loads(document["content"])
-    if type(context) is not dict or set(context) != {"messages", "sources", "provider", "model", "prompt_version"}:
+    fields = {"messages", "sources", "provider", "model", "prompt_version"}
+    if type(context) is not dict or set(context) not in (fields, fields | {"response_schema"}):
         raise ValueError("invalid server model context")
     if context["provider"] != request["recipient"] or not isinstance(context["model"], str):
         raise ValueError("model provider binding mismatch")
     if type(context["messages"]) is not list or type(context["sources"]) is not list:
         raise ValueError("invalid model messages/sources")
+    if "response_schema" in context:
+        from atomicroot.integration.prompts import worker_response_schema
+        # Use the same Authority snapshot; schema cannot grant another tool or
+        # become a worker-controlled escape from the host's capability bounds.
+        contract = reader.read(f"contract3:{request['task_id']}")
+        if context["provider"] != "ollama" or context["response_schema"] != worker_response_schema(contract):
+            raise ValueError("untrusted worker response schema")
     for message in context["messages"]:
         if type(message) is not dict or set(message) != {"role", "content"} or message["role"] not in {"system", "user"} or type(message["content"]) is not str:
             raise ValueError("invalid model message")

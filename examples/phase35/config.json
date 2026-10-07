@@ -14,7 +14,7 @@
   "scope_revision": "pilot-scope-v2",
   "prompt_versions": [
     "author-v2",
-    "worker-v2"
+    "worker-v3"
   ],
   "business_budget_limit": 0,
   "classification_enabled": false,

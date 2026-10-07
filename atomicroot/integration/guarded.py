@@ -37,7 +37,8 @@ class GuardedTools:
         action = freeze_json(action)
         if type(action) is not dict or set(action) != {"tool", "args"}: raise ValueError("protected/unsupported model fields")
         allowed = {"classify_document", "model_inference"} if host_inference else WORKER_TOOLS
-        if action["tool"] not in allowed: raise ValueError("tool outside worker capability")
+        if action["tool"] not in allowed:
+            raise ValueError("tool outside worker capability; model_inference/classify_document are host-managed; choose from available_actions")
         request = {"task_id": task, "agent_id": principal.subject, "operation_id": operation,
                    "purpose": purpose, "tool": action["tool"], "args": action["args"]}
         return validate_request(request, principal)

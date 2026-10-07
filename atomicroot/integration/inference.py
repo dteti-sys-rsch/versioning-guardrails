@@ -9,7 +9,7 @@ from atomicroot.framework.classification import ClassificationProposals
 from atomicroot.integration.memo import InferenceMemo, InferenceInProgress
 from atomicroot.integration.providers import CRITERIA, CRITERIA_VERSION, OPTIONS, Limits, validate_choice
 from atomicroot.integration.guarded import GuardedTools
-from atomicroot.integration.prompts import AUTHOR_VERSION, WORKER_VERSION
+from atomicroot.integration.prompts import AUTHOR_VERSION, WORKER_VERSION, worker_response_schema
 
 
 class InferenceReceiver:
@@ -40,8 +40,11 @@ class InferenceReceiver:
             context = json.loads(document["content"])
             if context["model"] != self.model.model or context["provider"] != self.model.provider:
                 raise ValueError("configured model changed; new inference intent required")
-            result = await self.memo.run(operation, job["budget"], "LLM", self.model.model, context, self.llm_limits,
-                                          lambda: self.model.generate(context["messages"]))
+            async def generate():
+                if "response_schema" in context:
+                    return await self.model.generate(context["messages"], response_schema=context["response_schema"])
+                return await self.model.generate(context["messages"])
+            result = await self.memo.run(operation, job["budget"], "LLM", self.model.model, context, self.llm_limits, generate)
         else:
             if payload["args"]["to"] != self.classifier.provider or job["model"] != self.classifier.model:
                 raise ValueError("classifier provider/model changed; new intent required")
@@ -101,6 +104,9 @@ class ModelBridge:
     def worker(self, key, budget, *, messages, sources, context_resource, principal, task, purpose):
         context = {"messages": messages, "sources": sources, "provider": self.model.provider,
                    "model": self.model.model, "prompt_version": WORKER_VERSION}
+        if getattr(self.model, "structured_worker_output", False):
+            with self.runtime.store.snapshot() as snap: contract = snap.read(f"contract3:{task}")[1]
+            context["response_schema"] = worker_response_schema(contract)
         job = self.memo.job(key)
         if job:
             if job["context_hash"] != args_hash(context): raise ValueError("model node replay context changed")

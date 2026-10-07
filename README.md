@@ -65,7 +65,7 @@ Dengan Ollama sudah berjalan dan `qwen3:8b` sudah tersedia:
 
 ```powershell
 .\.venv\Scripts\python.exe phase35_cli.py --directory .runs/ollama-models --provider ollama --list-models
-.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/ollama-live --provider ollama --model qwen3:8b --model-mode live --authorize-model-usage --timeout 120 --max-calls 12 --max-tokens 200000 --max-output-tokens 1600 --max-retries 0
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/ollama-live-v3 --provider ollama --model qwen3:8b --model-mode live --authorize-model-usage --timeout 120 --max-calls 12 --max-tokens 200000 --max-output-tokens 1600 --max-retries 0
 ```
 
 Tidak membutuhkan API key. Default model `qwen3:8b`, override melalui `--model`
@@ -74,6 +74,10 @@ JSON output, thinking off, dan context 16384. Author dan kedua worker memakai mo
 terpilih; review manusia dan guarded tools tetap berlaku. JEV default DISABLED.
 Gunakan directory baru untuk berpindah provider/model. `progress.jsonl` tetap aktif.
 Audit, hasil aktual dan batas integrasi ada di [OLLAMA.md](OLLAMA.md).
+Worker prompt v3 menjelaskan aksi bisnis vs host-managed inference. Worker Ollama
+memakai schema output per tool yang tersedia; schema ikut content/memo binding
+dan diperiksa pada snapshot Authority. Run/checkpoint prompt lama memakai directory
+baru. Schema membantu generation; host validator dan Z3 tetap melakukan enforcement.
 
 Pilot scope diperketat per skenario. `literature/injection/sensitive/unknown`
 memakai budget 0, tanpa transfer/account. `budget` hanya memakai transfer dan

@@ -252,20 +252,36 @@ class NineRouterModel(GroqModel):
 class OllamaModel:
     """Fixed loopback native API; no cloud routing, automatic pull or retries."""
     provider, live, mode = "ollama", True, "live"
+    structured_worker_output = True
 
     def __init__(self, model=None, limits=Limits(), *, client_factory=None):
         self.model = model_configuration(self.provider, model)["model"]
         self.limits, self.client_factory = limits, client_factory
 
-    async def generate(self, messages):
+    async def generate(self, messages, *, response_schema=None):
         import httpx2
         factory = self.client_factory or httpx2.AsyncClient
+        response_format = freeze_json(response_schema) if response_schema is not None else "json"
+        def order_properties(node):
+            if isinstance(node, dict):
+                if "properties" in node:
+                    props = node["properties"]
+                    # Canonical context serialization sorts object keys. Restore
+                    # discriminator-first generation order from the bound required
+                    # array, so grammar does not force args before kind/tool.
+                    names = node.get("required", [])
+                    node["properties"] = {name: props[name] for name in names if name in props}
+                    node["properties"].update({k:v for k,v in props.items() if k not in names})
+                for value in node.values(): order_properties(value)
+            elif isinstance(node, list):
+                for value in node: order_properties(value)
+        order_properties(response_format)
         # Native API exposes think/num_ctx explicitly. No env credentials,
         # redirects, proxy settings, provider tools or mutable URL overrides.
         async with factory(timeout=self.limits.timeout, follow_redirects=False, trust_env=False) as client:
             response = await client.post(OLLAMA_ENDPOINT + "/chat", json={
                 "model": self.model, "messages": freeze_json(messages), "stream": False,
-                "format": "json", "think": False,
+                "format": response_format, "think": False,
                 "options": {"num_predict": self.limits.max_output_tokens,
                             "num_ctx": OLLAMA_CONTEXT, "temperature": 0}})
             response.raise_for_status()

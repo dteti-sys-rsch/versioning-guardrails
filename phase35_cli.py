@@ -104,6 +104,7 @@ def execute(args):
                          llm_limits=limits, jev_limits=limits, threshold=args.threshold,
                          progress=Progress(directory / "progress.jsonl", quiet=args.quiet_progress))
     bound = {"scenario": args.scenario, "model": model.model, "model_mode": args.model_mode,
+             "prompt_versions": [AUTHOR_VERSION, WORKER_VERSION],
              "scope_revision": host.scope_limits["revision"], "classification_enabled": classification_enabled,
              "classifier_mode": args.classifier, "classifier_model": classifier.model if classification_enabled else None}
     # Preserve old OpenAI run bindings. New providers require their own directory;
