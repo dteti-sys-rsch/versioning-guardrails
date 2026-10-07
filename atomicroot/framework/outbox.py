@@ -60,13 +60,15 @@ class Dispatcher:
         if not 0 < lease_seconds <= 300: raise ValueError("invalid lease")
         self.store, self.receiver, self.lease_seconds = store, receiver, lease_seconds
 
-    def claim(self):
+    def claim(self, *, task=None, operation=None):
+        if (task is None) != (operation is None): raise ValueError("task and operation required together")
         with self.store.transaction() as conn:
             now = self.store.now()
             # Expiry does not prove absence of an effect. Keep reservation bound.
             conn.execute("UPDATE outbox SET status='UNKNOWN',lease=NULL,lease_until=NULL,error='lease expired; reconcile by idempotent retry' "
                          "WHERE status='RELEASING' AND lease_until<=?", (now,))
-            row = self.store.row(conn, "SELECT * FROM outbox WHERE status IN ('PENDING','UNKNOWN') ORDER BY rowid LIMIT 1")
+            where, params = ("", ()) if task is None else (" AND task=? AND operation=?", (task, operation))
+            row = self.store.row(conn, "SELECT * FROM outbox WHERE status IN ('PENDING','UNKNOWN')" + where + " ORDER BY rowid LIMIT 1", params)
             if row is None: return None
             lease = uid("lease")
             conn.execute("UPDATE outbox SET status='RELEASING',lease=?,lease_until=?,attempts=attempts+1 WHERE task=? AND operation=?",

@@ -51,10 +51,18 @@ class ClassificationProposal:
     reason: str = "awaiting classifier evidence"
     accepted: dict | None = None
     base_label: dict | None = None
+    option_order: tuple[str, ...] = ("PUBLIC", "SENSITIVE", "UNKNOWN")
+    usage: dict | None = None
+    extraction: dict | None = None
+    threshold: float = MIN_CONFIDENCE
+    reported_model: str | None = None
+    provider_mode: str | None = None
 
 
 class ClassificationProposals:
-    def __init__(self, store): self.store = store
+    def __init__(self, store, *, threshold=MIN_CONFIDENCE):
+        self.store = store
+        self.threshold = probability(threshold)
 
     def load(self, conn, proposal_id):
         row = self.store.row(conn, "SELECT data FROM classification_proposals WHERE id=?", (proposal_id,))
@@ -85,7 +93,7 @@ class ClassificationProposals:
                 base_label_version=label_version, base_label_hash=args_hash(label), base_label=freeze_json(label),
                 model_id=model_id, model_version=model_version, criteria_version=criteria_version, criteria_hash=criteria_hash,
                 created_at=self.store._clock().isoformat(), submitted_by=principal.subject,
-                input_bytes=len(document["content"].encode("utf-8")))
+                input_bytes=len(document["content"].encode("utf-8")), threshold=self.threshold)
             conn.execute("INSERT INTO classification_proposals(id,resource,status,data) VALUES (?,?,?,?)",
                          (proposal.proposal_id, resource, proposal.status, dumps(asdict(proposal))))
             self.store.audit(conn, "CLASSIFICATION_REQUESTED", principal.subject, asdict(proposal))
@@ -97,7 +105,24 @@ class ClassificationProposals:
         required = {"resource", "digest", "content_version", "model_id", "model_version",
                     "criteria_version", "criteria_hash", "outcome", "candidate_label",
                     "confidence", "probabilities", "covered_bytes", "truncated", "reason"}
-        if type(result) is not dict or set(result) != required: raise ValueError("invalid classification result schema")
+        optional = {"option_order", "usage", "extraction", "reported_model", "provider_mode"}
+        if type(result) is not dict or not required <= set(result) or not set(result) <= required | optional:
+            raise ValueError("invalid classification result schema")
+        if "option_order" in result and result["option_order"] != ["PUBLIC", "SENSITIVE", "UNKNOWN"]:
+            raise ValueError("classification option order mismatch")
+        usage = result.get("usage")
+        if usage is not None:
+            if type(usage) is not dict or not set(usage) <= {"input_tokens", "output_tokens"}:
+                raise ValueError("invalid usage")
+            if any(v is not None and (type(v) is not int or v < 0) for v in usage.values()):
+                raise ValueError("invalid token usage")
+        extraction = result.get("extraction")
+        if extraction is not None and type(extraction) is not dict: raise ValueError("invalid extraction metadata")
+        reported_model = result.get("reported_model")
+        if reported_model is not None: text(reported_model, "reported model")
+        provider_mode = result.get("provider_mode")
+        if provider_mode is not None and provider_mode not in {"disabled", "fake", "replay", "jev"}:
+            raise ValueError("invalid classifier mode")
         if (type(result["candidate_label"]) is not str or result["candidate_label"] not in LABELS or
                 type(result["outcome"]) is not str or result["outcome"] not in {"SUCCESS", "TIMEOUT", "ERROR", "MISSING_CONTENT"}):
             raise ValueError("unknown label/outcome")
@@ -126,11 +151,12 @@ class ClassificationProposals:
             if result["outcome"] != "SUCCESS":
                 candidate, status, reason = "UNKNOWN", "ERROR", result["outcome"] + ": " + reason
             elif (result["truncated"] or result["covered_bytes"] < proposal.input_bytes or
-                  (confidence is not None and confidence < MIN_CONFIDENCE) or candidate == "UNKNOWN"):
+                  confidence is None or confidence < proposal.threshold or candidate == "UNKNOWN"):
                 candidate, status, reason = "UNKNOWN", "ABSTAINED", "incomplete/low-confidence/UNKNOWN: " + reason
             proposal = replace(proposal, candidate_label=candidate, reported_candidate=result["candidate_label"],
                 probabilities=probabilities, confidence=confidence, evaluated_at=self.store._clock().isoformat(),
-                covered_bytes=result["covered_bytes"], truncated=result["truncated"], status=status, reason=reason)
+                covered_bytes=result["covered_bytes"], truncated=result["truncated"], status=status, reason=reason,
+                usage=usage, extraction=extraction, reported_model=reported_model, provider_mode=provider_mode)
             self.save(conn, proposal)
             self.store.audit(conn, "CLASSIFICATION_RESULT", principal.subject, asdict(proposal))
         return asdict(proposal)

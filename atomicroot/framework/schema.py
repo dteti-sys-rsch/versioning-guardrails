@@ -52,6 +52,13 @@ def schema():
                                                    for name in ("PUBLIC", "SENSITIVE", "UNKNOWN")}},
                   "covered_bytes": {"type": "integer", "minimum": 0}, "truncated": {"type": "boolean"},
                   "reason": {"type": "string", "maxLength": 256}})
+    result["properties"].update({
+        "option_order": {"const": ["PUBLIC", "SENSITIVE", "UNKNOWN"]},
+        "reported_model": {"type": ["string", "null"], "maxLength": 256},
+        "provider_mode": {"enum": ["disabled", "fake", "replay", "jev", None]},
+        "usage": {"type": ["object", "null"], "additionalProperties": False,
+                  "properties": {k: {"type": ["integer", "null"], "minimum": 0} for k in ("input_tokens", "output_tokens")}},
+        "extraction": {"type": ["object", "null"]}})
     arguments = {"to": TEXT, "body": {"type": "string", "minLength": 1, "maxLength": 8192},
                  "amount": MONEY, "resource": IDENTITY, "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}
     requests = [obj({"task_id": IDENTITY, "agent_id": IDENTITY, "operation_id": IDENTITY,

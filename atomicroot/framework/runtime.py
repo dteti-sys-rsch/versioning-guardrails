@@ -117,6 +117,9 @@ class RuntimeAuthority:
                 if spec.resource:
                     resource, label = LabelManager.resolve(reader, normalized["resource"], request["args"]["digest"], request["purpose"])
                     normalized["resolved_label"] = label
+                if request["tool"] == "model_inference":
+                    from atomicroot.integration.egress import validate_model_context
+                    normalized["model_source_bindings"] = validate_model_context(reader, resource, normalized)
                 results = [(name, disposition, solve(name, expr, normalized, reader, []))
                            for name, expr, disposition in builtin_constraints(normalized)]
                 if type(members) is not list or len(members) > 8: raise EvaluationError("invalid policy set")

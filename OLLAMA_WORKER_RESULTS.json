@@ -1,0 +1,344 @@
+{
+  "task": "Fix local worker action selection",
+  "date": "2026-10-07",
+  "audit": {
+    "original_run": ".runs/ollama-live",
+    "status": "STEP_LIMIT",
+    "successful_reads": 2,
+    "rejected_host_inference_actions": 6,
+    "email_delivered": false,
+    "source": "status.json and inference_memo/outbox inspected"
+  },
+  "baseline": {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest -q",
+    "passed": 294,
+    "seconds": 10.51
+  },
+  "targeted_final": {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest atomicroot/tests/test_worker_output_schema.py -q",
+    "passed": 7,
+    "seconds": 1.15
+  },
+  "regression_final": {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest -q",
+    "passed": 301,
+    "seconds": 20.83
+  },
+  "diff_check": {
+    "exit": 0
+  },
+  "dependency_changes": [],
+  "database_migrations": [],
+  "changes": [
+    "worker-v3 explicit business action grammar and host-managed operations",
+    "native Ollama per-tool JSON schema with discriminator-first serialization",
+    "schema bound in immutable context/memo and validated in Authority snapshot",
+    "schema emitted once to retain existing 8192-byte context bound",
+    "CLI binds prompt versions; legacy config requires new directory"
+  ],
+  "live_runs": [
+    {
+      "command": [
+        "C:\\Main Storage\\Documents\\UGM\\.PROYEK INDIVIDU\\System\\.venv\\Scripts\\python.exe",
+        "phase35_cli.py",
+        "--directory",
+        ".runs/ollama-worker-v3-test",
+        "--provider",
+        "ollama",
+        "--model",
+        "qwen3:8b",
+        "--model-mode",
+        "live",
+        "--authorize-model-usage",
+        "--fixture-approve",
+        "--timeout",
+        "120",
+        "--max-calls",
+        "12",
+        "--max-tokens",
+        "200000",
+        "--max-output-tokens",
+        "1600",
+        "--max-retries",
+        "0"
+      ],
+      "approval": "EXPLICIT_TRUSTED_SYNTHETIC_FIXTURE",
+      "exit": 1,
+      "workflow_status": "STEP_LIMIT",
+      "LLM": "FAILED",
+      "error": null,
+      "actual_models": [
+        "qwen3:8b"
+      ],
+      "attempts": 9,
+      "elapsed_seconds": 83.42,
+      "actions": [],
+      "variant": "first schema version: repeated contract proposals",
+      "raw_directory": ".runs/ollama-worker-v3-test",
+      "prompt_versions": [
+        "author-v2",
+        "worker-v3"
+      ],
+      "limits": {
+        "max_calls": 12,
+        "max_tokens": 200000,
+        "max_output_tokens": 1600,
+        "max_retries": 0,
+        "timeout": 120.0,
+        "spend_cap_usd": null,
+        "input_price_per_million": null,
+        "output_price_per_million": null
+      },
+      "returned_attempts": 9,
+      "usage": [
+        {
+          "input_tokens": 4565,
+          "output_tokens": 185
+        },
+        {
+          "input_tokens": 982,
+          "output_tokens": 184
+        },
+        {
+          "input_tokens": 982,
+          "output_tokens": 184
+        },
+        {
+          "input_tokens": 982,
+          "output_tokens": 184
+        },
+        {
+          "input_tokens": 982,
+          "output_tokens": 184
+        },
+        {
+          "input_tokens": 982,
+          "output_tokens": 184
+        },
+        {
+          "input_tokens": 982,
+          "output_tokens": 184
+        },
+        {
+          "input_tokens": 982,
+          "output_tokens": 184
+        },
+        {
+          "input_tokens": 982,
+          "output_tokens": 184
+        }
+      ]
+    },
+    {
+      "command": [
+        "C:\\Main Storage\\Documents\\UGM\\.PROYEK INDIVIDU\\System\\.venv\\Scripts\\python.exe",
+        "phase35_cli.py",
+        "--directory",
+        ".runs/ollama-worker-v3-ordered-test",
+        "--provider",
+        "ollama",
+        "--model",
+        "qwen3:8b",
+        "--model-mode",
+        "live",
+        "--authorize-model-usage",
+        "--fixture-approve",
+        "--timeout",
+        "120",
+        "--max-calls",
+        "12",
+        "--max-tokens",
+        "200000",
+        "--max-output-tokens",
+        "1600",
+        "--max-retries",
+        "0"
+      ],
+      "approval": "EXPLICIT_TRUSTED_SYNTHETIC_FIXTURE",
+      "exit": 1,
+      "workflow_status": "MODEL_BLOCKED_OR_FAILED",
+      "LLM": "FAILED",
+      "error": null,
+      "actual_models": [
+        "qwen3:8b"
+      ],
+      "attempts": 4,
+      "elapsed_seconds": 33.05,
+      "actions": [
+        {
+          "status": "COMMITTED",
+          "tool": "read_document",
+          "delivery": "RELEASED",
+          "reason": null
+        },
+        {
+          "status": "COMMITTED",
+          "tool": "read_document",
+          "delivery": "RELEASED",
+          "reason": null
+        },
+        {
+          "status": "COMMITTED",
+          "tool": "read_document",
+          "delivery": "RELEASED",
+          "reason": null
+        }
+      ],
+      "variant": "discriminator order restored: repeated source read then context size limit",
+      "raw_directory": ".runs/ollama-worker-v3-ordered-test",
+      "prompt_versions": [
+        "author-v2",
+        "worker-v3"
+      ],
+      "limits": {
+        "max_calls": 12,
+        "max_tokens": 200000,
+        "max_output_tokens": 1600,
+        "max_retries": 0,
+        "timeout": 120.0,
+        "spend_cap_usd": null,
+        "input_price_per_million": null,
+        "output_price_per_million": null
+      },
+      "returned_attempts": 4,
+      "usage": [
+        {
+          "input_tokens": 4565,
+          "output_tokens": 185
+        },
+        {
+          "input_tokens": 1035,
+          "output_tokens": 80
+        },
+        {
+          "input_tokens": 1325,
+          "output_tokens": 86
+        },
+        {
+          "input_tokens": 1623,
+          "output_tokens": 80
+        }
+      ]
+    },
+    {
+      "command": [
+        "C:\\Main Storage\\Documents\\UGM\\.PROYEK INDIVIDU\\System\\.venv\\Scripts\\python.exe",
+        "phase35_cli.py",
+        "--directory",
+        ".runs/ollama-worker-v3-compact-test",
+        "--provider",
+        "ollama",
+        "--model",
+        "qwen3:8b",
+        "--model-mode",
+        "live",
+        "--authorize-model-usage",
+        "--fixture-approve",
+        "--timeout",
+        "120",
+        "--max-calls",
+        "12",
+        "--max-tokens",
+        "200000",
+        "--max-output-tokens",
+        "1600",
+        "--max-retries",
+        "0"
+      ],
+      "approval": "EXPLICIT_TRUSTED_SYNTHETIC_FIXTURE",
+      "exit": 0,
+      "workflow_status": "DONE",
+      "LLM": "LIVE VERIFIED",
+      "error": null,
+      "actual_models": [
+        "qwen3:8b"
+      ],
+      "attempts": 6,
+      "elapsed_seconds": 32.53,
+      "actions": [
+        {
+          "status": "COMMITTED",
+          "tool": "read_document",
+          "delivery": "RELEASED",
+          "reason": null
+        },
+        {
+          "status": "COMMITTED",
+          "tool": "read_document",
+          "delivery": "RELEASED",
+          "reason": null
+        },
+        {
+          "status": "COMMITTED",
+          "tool": "send_email",
+          "delivery": "RELEASED",
+          "reason": null
+        }
+      ],
+      "variant": "final: explicit worker instructions and single schema representation",
+      "raw_directory": ".runs/ollama-worker-v3-compact-test",
+      "prompt_versions": [
+        "author-v2",
+        "worker-v3"
+      ],
+      "limits": {
+        "max_calls": 12,
+        "max_tokens": 200000,
+        "max_output_tokens": 1600,
+        "max_retries": 0,
+        "timeout": 120.0,
+        "spend_cap_usd": null,
+        "input_price_per_million": null,
+        "output_price_per_million": null
+      },
+      "returned_attempts": 6,
+      "usage": [
+        {
+          "input_tokens": 4565,
+          "output_tokens": 185
+        },
+        {
+          "input_tokens": 824,
+          "output_tokens": 80
+        },
+        {
+          "input_tokens": 1110,
+          "output_tokens": 86
+        },
+        {
+          "input_tokens": 1408,
+          "output_tokens": 104
+        },
+        {
+          "input_tokens": 1609,
+          "output_tokens": 52
+        },
+        {
+          "input_tokens": 1609,
+          "output_tokens": 37
+        }
+      ]
+    }
+  ],
+  "final_verification": {
+    "status": "LIVE VERIFIED",
+    "successful_synthetic_workflows": 1,
+    "final_variant_runs": 1,
+    "returned_calls": 6,
+    "total_calls": 6,
+    "reads": [
+      "paper",
+      "paper-2"
+    ],
+    "simulated_email_recipient": "alice@corp.id",
+    "simulated_email_delivery": "RELEASED",
+    "email_body_review": "Matches observations on atomic authorization/versioned state and replay prevention/durable operation identity",
+    "approval_source": "EXPLICIT_TRUSTED_SYNTHETIC_FIXTURE",
+    "JEV": "DISABLED"
+  },
+  "limitations": [
+    "One final synthetic workflow is not a general model-quality or latency benchmark.",
+    "Generation schema never grants permission; malformed/unauthorized results still face host/Z3/Gateway checks.",
+    "No new stale-authorization race claim from this smoke; existing deterministic regression tests remain the evidence."
+  ]
+}

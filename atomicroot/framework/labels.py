@@ -57,8 +57,31 @@ class LabelManager:
             if previous and previous.get("restrictions"):
                 data["restrictions"] = previous["restrictions"]
             self.store.put(conn, f"label:{resource}", data)
+            # A result already in shared memory keeps its task-level provenance.
+            # Tightening the official basis invalidates pending release intents
+            # in this same transaction, just like accepting a restriction.
+            affected = self._propagate_label(conn, resource, digest, label, purposes)
             self.store.audit(conn, "LABEL", principal.subject, data)
+            if affected:
+                self.store.audit(conn, "LABEL_EXPOSURE", principal.subject, {"resource": resource, "affected_tasks": affected})
         return data
+
+    def _propagate_label(self, conn, resource, digest, label, purposes):
+        affected = set()
+        rows = conn.execute("SELECT o.task,o.request FROM operations o JOIN outbox b "
+                            "ON o.task=b.task AND o.operation=b.operation").fetchall()
+        for task, raw in rows:
+            request = json.loads(raw)
+            if request["tool"] != "read_document" or request["args"] != {"resource": resource, "digest": digest}: continue
+            effective = label if request["purpose"] in purposes else "UNKNOWN"
+            key = f"exposure:{task}"
+            _, exposure = self.store.value(conn, key)
+            if exposure is None: raise ValueError("missing exposure for recorded read")
+            updated = sorted(set(exposure) | {effective})
+            if updated != exposure:
+                self.store.put(conn, key, updated)
+                affected.add(task)
+        return sorted(affected)
 
     def accept_classification(self, proposal_id, task_id, purpose, principal):
         """Owner review can only add a contract-approved conservative restriction."""

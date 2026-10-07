@@ -12,6 +12,11 @@ dependencies = [
     "uvicorn>=0.23",
     "pynacl>=1.5",
     "z3-solver>=4.12",
+    "langgraph==1.2.12",
+    "langgraph-checkpoint-sqlite==3.1.1",
+    "openai==3.24.0",
+    "typesafe-sdk==0.7.2",
+    "pypdf==6.19.0",
 ]
 
 [project.optional-dependencies]
