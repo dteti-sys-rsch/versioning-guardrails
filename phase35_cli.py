@@ -72,11 +72,12 @@ def execute(args):
         print(dumps(report))
         return 2
     report["model_configuration"] = {k: config[k] for k in ("provider", "model", "endpoint")}
+    if args.provider == "ollama": report["model_configuration"]["options"] = config["options"]
     if args.provider == "9router":
         report["model_configuration"]["trusted_route"] = vars(config["route"])
     missing = []
     if args.model_mode == "live":
-        if not os.environ.get(config["key_environment"]): missing.append(config["key_environment"])
+        if config["key_environment"] and not os.environ.get(config["key_environment"]): missing.append(config["key_environment"])
         if not config["model"]: missing.append(args.provider.upper() + "_MODEL or --model")
         if not args.authorize_model_usage: missing.append("--authorize-model-usage (initial prompt provider scope)")
         if args.provider == "9router" and not args.trust_router_route:
@@ -108,6 +109,7 @@ def execute(args):
     # Preserve old OpenAI run bindings. New providers require their own directory;
     # checkpoint reuse must never redirect an existing task's data egress.
     if args.provider != "openai": bound["provider"] = config["provider"]
+    if args.provider == "ollama": bound["local_configuration"] = report["model_configuration"]
     saved = bridge.memo.job("cli-config")
     if saved and saved != bound:
         report.update(LLM="BLOCKED", error="RUN_CONFIGURATION_CHANGED", next_step="use a new directory; existing ledger/checkpoint is preserved")
@@ -242,6 +244,7 @@ def main():
     p.add_argument("--input-price", type=float)
     p.add_argument("--output-price", type=float)
     args = p.parse_args()
+    if args.provider == "ollama" and args.prompt_api_key: p.error("local Ollama does not require --prompt-api-key")
     if args.model_mode == "replay" and not args.model_replay: p.error("--model-replay required")
     if args.classifier == "replay" and not args.classifier_replay: p.error("--classifier-replay required")
     if args.classify and args.classifier == "disabled": p.error("--classify requires --classifier fake|replay|jev")

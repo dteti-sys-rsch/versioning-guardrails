@@ -1,7 +1,16 @@
-# Provider selection: Groq, OpenAI, local 9Router
+# Provider selection: Groq, OpenAI, Ollama, local 9Router
 
 Pembaruan terarah setelah Fase 3.5; bukan Fase 4. Z3, tiket, CAS, approval,
 label, outbox dan classifier JEV mempertahankan semantik sebelumnya.
+
+## Ollama lokal
+
+Pilihan `--provider ollama` memakai `qwen3:8b` secara default, tanpa API key.
+Endpoint tetap `http://localhost:11434/api`; tidak memakai 9Router. JSON object,
+thinking off, timeout/call/token caps, provider scope dan persisted run binding
+tetap diperiksa. Tidak ada fallback cloud atau pull model otomatis dari adapter.
+Model/tag lokal dan daemon dikelola oleh host tepercaya. Setup, audit serta
+status verifikasi terpisah tercatat di [OLLAMA.md](OLLAMA.md).
 
 ## Audit sebelum patch
 

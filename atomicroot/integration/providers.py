@@ -110,7 +110,10 @@ class OpenAIModel:
 
 
 DEFAULT_GROQ_MODEL = "openai/gpt-oss-120b"
-MODEL_PROVIDERS = ("openai", "groq", "9router")
+DEFAULT_OLLAMA_MODEL = "qwen3:8b"
+OLLAMA_ENDPOINT = "http://localhost:11434/api"
+OLLAMA_CONTEXT = 16384
+MODEL_PROVIDERS = ("openai", "groq", "9router", "ollama")
 
 
 def router_endpoint(value):
@@ -161,9 +164,18 @@ def model_configuration(provider, model=None):
     if model is None:
         model = os.environ.get(provider.upper() + "_MODEL")
         if provider == "groq" and not model: model = DEFAULT_GROQ_MODEL
+        if provider == "ollama" and not model: model = DEFAULT_OLLAMA_MODEL
     if model is not None and (type(model) is not str or not model or len(model) > 128 or
                               any(c.isspace() or ord(c) < 32 for c in model)):
         raise ValueError("invalid model ID")
+    if provider == "ollama":
+        # Only explicit local model tags; cloud models through the local daemon
+        # are a different destination and are not delegated by this adapter.
+        if (not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._/-]*:[A-Za-z0-9][A-Za-z0-9._-]*", model) or
+                "cloud" in model.lower() or model.endswith(":latest")):
+            raise ValueError("explicit local Ollama model tag required; no cloud/latest")
+        return {"provider": provider, "model": model, "endpoint": OLLAMA_ENDPOINT,
+                "key_environment": None, "options": {"think": False, "num_ctx": OLLAMA_CONTEXT}}
     return {"provider": provider, "model": model,
             "endpoint": "https://api.groq.com/openai/v1" if provider == "groq" else "https://api.openai.com/v1",
             "key_environment": provider.upper() + "_API_KEY"}
@@ -237,11 +249,48 @@ class NineRouterModel(GroqModel):
         return {"output": output, "actual_model": response.model, "usage": usage}
 
 
+class OllamaModel:
+    """Fixed loopback native API; no cloud routing, automatic pull or retries."""
+    provider, live, mode = "ollama", True, "live"
+
+    def __init__(self, model=None, limits=Limits(), *, client_factory=None):
+        self.model = model_configuration(self.provider, model)["model"]
+        self.limits, self.client_factory = limits, client_factory
+
+    async def generate(self, messages):
+        import httpx2
+        factory = self.client_factory or httpx2.AsyncClient
+        # Native API exposes think/num_ctx explicitly. No env credentials,
+        # redirects, proxy settings, provider tools or mutable URL overrides.
+        async with factory(timeout=self.limits.timeout, follow_redirects=False, trust_env=False) as client:
+            response = await client.post(OLLAMA_ENDPOINT + "/chat", json={
+                "model": self.model, "messages": freeze_json(messages), "stream": False,
+                "format": "json", "think": False,
+                "options": {"num_predict": self.limits.max_output_tokens,
+                            "num_ctx": OLLAMA_CONTEXT, "temperature": 0}})
+            response.raise_for_status()
+        data = response.json()
+        if type(data) is not dict or data.get("model") != self.model:
+            raise ValueError("actual Ollama model mismatch; no fallback")
+        message = data.get("message")
+        if (data.get("done") is not True or data.get("done_reason") != "stop" or
+                type(message) is not dict or message.get("role") != "assistant" or
+                message.get("tool_calls") or not message.get("content")):
+            raise ValueError("incomplete/unsupported Ollama output")
+        output = freeze_json(json.loads(message["content"]))
+        if type(output) is not dict: raise ValueError("JSON object required")
+        usage = {"input_tokens": data.get("prompt_eval_count"), "output_tokens": data.get("eval_count")}
+        if any(type(v) is not int or v < 0 for v in usage.values()): raise ValueError("invalid Ollama usage")
+        return {"output": output, "actual_model": data["model"], "usage": usage}
+
+
 async def discover_models(provider, timeout=10):
     """One host metadata request, no prompt/content or inference. No redirects."""
     import httpx2
     if not 0 < timeout <= 30: raise ValueError("bounded metadata timeout required")
-    if provider == "9router":
+    if provider == "ollama":
+        endpoint, key = OLLAMA_ENDPOINT, None
+    elif provider == "9router":
         endpoint = router_endpoint(os.environ.get("NINEROUTER_BASE_URL", "http://localhost:20128/v1"))
         key = os.environ.get("NINEROUTER_API_KEY")
     else:
@@ -249,8 +298,11 @@ async def discover_models(provider, timeout=10):
         endpoint, key = config["endpoint"], os.environ.get(config["key_environment"])
         if not key: raise ValueError(config["key_environment"] + " missing")
     async with httpx2.AsyncClient(follow_redirects=False, trust_env=False, timeout=timeout) as client:
-        response = await client.get(endpoint + "/models", headers={"Authorization": "Bearer " + key} if key else {})
+        response = await client.get(endpoint + ("/tags" if provider == "ollama" else "/models"),
+                                   headers={"Authorization": "Bearer " + key} if key else {})
         response.raise_for_status()
+        if provider == "ollama":
+            return sorted(m["name"] for m in response.json()["models"] if type(m) is dict and type(m.get("name")) is str)
         return sorted(m["id"] for m in response.json()["data"] if type(m) is dict and type(m.get("id")) is str)
 
 
@@ -258,7 +310,7 @@ def live_model(provider, model=None, limits=Limits(), *, trusted_router=False):
     config = model_configuration(provider, model)
     if provider == "9router": return NineRouterModel(config["route"], limits, trusted_route=trusted_router)
     if not config["model"]: raise ValueError(provider.upper() + "_MODEL must be configured explicitly")
-    return {"openai": OpenAIModel, "groq": GroqModel}[provider](config["model"], limits)
+    return {"openai": OpenAIModel, "groq": GroqModel, "ollama": OllamaModel}[provider](config["model"], limits)
 
 
 class DisabledClassifier:

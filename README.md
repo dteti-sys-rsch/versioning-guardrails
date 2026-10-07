@@ -24,7 +24,7 @@ additive migration, API changes and actual test results.
 
 Phase 3.5 adds LangGraph, two worker roles, durable checkpoints/Broker interrupts,
 one OpenAI model adapter, guarded tools, and optional TypeSafe JEV inference.
-Provider selection now also supports Groq and a pinned trusted local 9Router;
+Provider selection now also supports Groq, direct local Ollama, and a pinned trusted local 9Router;
 see [PROVIDERS.md](PROVIDERS.md) for setup, audit and verification status.
 **The original Phase 3.5 run passed 231 tests offline. Live OpenAI/JEV smoke has NOT RUN: credentials are
 unavailable. Phase 3.5 is not live validated.** See [PHASE35.md](PHASE35.md) for
@@ -58,6 +58,22 @@ task. Existing Phase 2 task data needs a reviewed explicit migration; it is not
 silently relabelled or reset by the new Contract Service.
 
 ## Fase 3.5: CLI, checkpoint, model dan JEV
+
+### Ollama lokal (Qwen)
+
+Dengan Ollama sudah berjalan dan `qwen3:8b` sudah tersedia:
+
+```powershell
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/ollama-models --provider ollama --list-models
+.\.venv\Scripts\python.exe phase35_cli.py --directory .runs/ollama-live --provider ollama --model qwen3:8b --model-mode live --authorize-model-usage --timeout 120 --max-calls 12 --max-tokens 200000 --max-output-tokens 1600 --max-retries 0
+```
+
+Tidak membutuhkan API key. Default model `qwen3:8b`, override melalui `--model`
+atau `OLLAMA_MODEL`. Adapter memakai API native tetap `http://localhost:11434/api`,
+JSON output, thinking off, dan context 16384. Author dan kedua worker memakai model
+terpilih; review manusia dan guarded tools tetap berlaku. JEV default DISABLED.
+Gunakan directory baru untuk berpindah provider/model. `progress.jsonl` tetap aktif.
+Audit, hasil aktual dan batas integrasi ada di [OLLAMA.md](OLLAMA.md).
 
 Pilot scope diperketat per skenario. `literature/injection/sensitive/unknown`
 memakai budget 0, tanpa transfer/account. `budget` hanya memakai transfer dan
