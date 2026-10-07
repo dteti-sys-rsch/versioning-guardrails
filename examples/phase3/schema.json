@@ -492,13 +492,14 @@
         "applies_to": {
           "type": "array",
           "minItems": 1,
-          "maxItems": 4,
+          "maxItems": 5,
           "items": {
             "enum": [
               "read_document",
               "send_email",
               "transfer_funds",
-              "deploy"
+              "deploy",
+              "classify_document"
             ]
           }
         },
@@ -551,13 +552,14 @@
         "allowed_tools": {
           "type": "array",
           "minItems": 1,
-          "maxItems": 4,
+          "maxItems": 5,
           "items": {
             "enum": [
               "read_document",
               "send_email",
               "transfer_funds",
-              "deploy"
+              "deploy",
+              "classify_document"
             ]
           }
         },
@@ -622,6 +624,52 @@
                 "additionalProperties": false
               }
             ]
+          }
+        },
+        "classification_restrictions": {
+          "type": "boolean",
+          "default": false
+        },
+        "inference_egress": {
+          "type": "array",
+          "maxItems": 16,
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+              },
+              "resource": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+              },
+              "purpose": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "labels": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 3,
+                "items": {
+                  "enum": [
+                    "PUBLIC",
+                    "SENSITIVE",
+                    "UNKNOWN"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "provider",
+              "resource",
+              "purpose",
+              "labels"
+            ],
+            "additionalProperties": false
           }
         }
       },
@@ -858,8 +906,242 @@
             "args"
           ],
           "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "agent_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "operation_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "purpose": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "tool": {
+              "const": "classify_document"
+            },
+            "args": {
+              "type": "object",
+              "properties": {
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[0-9a-f]{64}$"
+                },
+                "resource": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                },
+                "to": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "required": [
+                "digest",
+                "resource",
+                "to"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "task_id",
+            "agent_id",
+            "operation_id",
+            "purpose",
+            "tool",
+            "args"
+          ],
+          "additionalProperties": false
         }
       ]
+    },
+    "classification_begin": {
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "content_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "model_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "model_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "criteria_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "criteria_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "resource",
+        "digest",
+        "content_version",
+        "model_id",
+        "model_version",
+        "criteria_version",
+        "criteria_hash"
+      ],
+      "additionalProperties": false
+    },
+    "classification_result": {
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "content_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "model_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "model_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "criteria_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "criteria_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "outcome": {
+          "enum": [
+            "SUCCESS",
+            "ERROR",
+            "TIMEOUT",
+            "MISSING_CONTENT"
+          ]
+        },
+        "candidate_label": {
+          "enum": [
+            "PUBLIC",
+            "SENSITIVE",
+            "UNKNOWN"
+          ]
+        },
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "probabilities": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "PUBLIC": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "SENSITIVE": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "UNKNOWN": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        "covered_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "truncated": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "resource",
+        "digest",
+        "content_version",
+        "model_id",
+        "model_version",
+        "criteria_version",
+        "criteria_hash",
+        "outcome",
+        "candidate_label",
+        "confidence",
+        "probabilities",
+        "covered_bytes",
+        "truncated",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "classification_accept": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "task_id",
+        "purpose"
+      ],
+      "additionalProperties": false
     }
   },
   "oneOf": [

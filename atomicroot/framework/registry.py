@@ -40,10 +40,10 @@ FACT_REGISTRY = MappingProxyType({f.fact_id: f for f in (
     fact("unknown_release", "str", "contract3", "approved contract", "ContractService", ["DENY", "ESCALATE"], "exact proposal", "unknown_release"),
     fact("budget_used", "int", "budget", "receiver settlement ledger", "Dispatcher", ["settle reservation"]),
     fact("budget_reserved", "int", "reserved", "accepted intent ledger", "Gateway/Dispatcher", ["reserve", "settle", "definite failure release"]),
-    fact("exposure", "set", "exposure", "committed read events", "Gateway", ["monotone union"]),
+    fact("exposure", "set", "exposure", "committed reads / accepted restrictions", "Gateway/LabelManager", ["monotone union", "propagate accepted restriction"]),
     fact("document_version", "int", "document", "storage content digest", "StorageService", ["ingest new version"], field="version", scope="document"),
     fact("document_digest", "str", "document", "storage content digest", "StorageService", ["ingest new version"], field="digest", scope="document"),
-    fact("label", "str", "label", "owner attestation of digest/purpose", "LabelManager", ["set for current digest", "invalidate on content change"], "owner authentication", "label", "document"),
+    fact("label", "str", "label", "owner attestation of digest/purpose", "LabelManager", ["set for current digest", "invalidate on content change", "accept conservative classification restriction"], "owner authentication", "label", "document"),
     fact("approval", "str", "consent", "review record", "ApprovalBroker/Gateway", ["NONE -> APPROVED -> CONSUMED", "REJECTED"], "operation review", "status", "operation"),
     fact("operation_committed", "bool", "operation", "committed intent", "Gateway", ["false -> true"], scope="operation"),
 )})
@@ -77,6 +77,7 @@ TOOLS = MappingProxyType({t.name: t for t in (
     ToolDefinition("send_email", "send", True, False, False, frozenset({"to", "body"})),
     ToolDefinition("transfer_funds", "transfer", True, True, False, frozenset({"to", "amount"}), ("reserved",)),
     ToolDefinition("deploy", "deploy", True, False, True, frozenset({"resource", "digest", "to"})),
+    ToolDefinition("classify_document", "classification", True, False, True, frozenset({"resource", "digest", "to"})),
 )})
 
 

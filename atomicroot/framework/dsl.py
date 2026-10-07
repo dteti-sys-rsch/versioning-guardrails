@@ -9,7 +9,7 @@ from atomicroot.framework.registry import SOURCES, TOOLS
 
 BINARY = {"add": Add, "sub": Sub, "eq": Eq, "le": Le, "lt": Lt,
           "member": Member, "subset": Subset}
-RESERVED_POLICIES = frozenset({"no_exfil_after_sensitive", "budget_monotone", "scope", "unknown_release"})
+RESERVED_POLICIES = frozenset({"no_exfil_after_sensitive", "budget_monotone", "scope", "unknown_release", "provider_scope"})
 
 
 def parse_expr(data):
@@ -88,9 +88,22 @@ def builtin_constraints(request):
     if tool.resource and tool.external:
         sensitive = Or((sensitive, Const(request["resolved_label"] == "SENSITIVE")))
         unknown = Or((unknown, Const(request["resolved_label"] == "UNKNOWN")))
+    inference = request["tool"] == "classify_document"
+    # Separate pre-existing ingestion authorization, never a predicted label.
+    provider_rules = []
+    if inference:
+        for rule in request.get("inference_egress", []):
+            provider_rules.append(And((
+                Eq(RequestField("recipient"), Const(rule["provider"])),
+                Eq(RequestField("resource"), Const(rule["resource"])),
+                Eq(RequestField("purpose"), Const(rule["purpose"])),
+                Member(Const(request["resolved_label"]), SetConst(tuple(rule["labels"])))
+            )))
+    provider_scope = Or(tuple(provider_rules)) if inference else Const(True)
     return [
         ("scope", And(tuple(scope)), "DENY"),
+        ("provider_scope", provider_scope, "DENY"),
         ("budget_monotone", Le(Add(Add(task("budget_used"), task("budget_reserved")), RequestAmount()), task("budget_limit")), "DENY"),
         ("no_exfil_after_sensitive", If(Const(tool.external), Not(sensitive), Const(True)), "DENY"),
-        ("unknown_release", If(Const(tool.external), Not(unknown), Const(True)), request["unknown_release"]),
+        ("unknown_release", If(Const(tool.external and not inference), Not(unknown), Const(True)), request["unknown_release"]),
     ]

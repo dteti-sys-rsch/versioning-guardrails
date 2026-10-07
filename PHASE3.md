@@ -1,5 +1,10 @@
 # AtomicRoot Fase 3 — framework foundation
 
+Catatan ini merekam hasil Fase 3 awal. Audit/patch kompatibilitas kondisional
+5 Oktober 2026 berada di [PHASE3_COMPAT_AUDIT.md](PHASE3_COMPAT_AUDIT.md),
+termasuk proposal klasifikasi, restriction, scope inference simulasi dan hasil
+regression terbaru. Bagian historis di bawah tidak mengklaim integrasi live.
+
 ## Status dan cara menjalankan
 
 Prasyarat aktual: **84 test Fase 2 lulus** sebelum perubahan. Fase 3 memperluas
